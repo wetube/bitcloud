@@ -1,64 +1,68 @@
-#+SEQ_TODO: TO-THINK EARLY-DRAFT TO-IMPROVE FINISHED
+#+SEQ_TODO: TO-THINK EARLY-DRAFT TO-IMPROVE TO-VOTE FINISHED
 #+TITLE: Bitcloud: A Peer to Peer System for Sharing Bandwidth
 #+LANGUAGE: en
 #+STARTUP: align fold hidestars
 
 * TO-IMPROVE Introduction
 
-  *Bitcloud* is a new protocol based on the ideas of *Bittorrent*, *Bitcoin*,
-  *Mastercoin* and *Datacoin* that is meant to change forever the human way of
-  *interchanging information.
+  Bitcloud is a new protocol proposal based on some of the ideas of
+  BitTorrent and Bitcoin related technologies such as Mastercoin and
+  Datacoin, and it is meant to change the way of exchanging digital
+  information as opposed by the current centralized trends.
 
   Users adhering to this protocol will be able to:
 
   - Upload any file to the Bitcloud net and make it available to anyone.
-  - Download and stream the content.
-  - Select moderation.
-  - Earn money from advertising, or disable advertising.
+  - Download and stream the content to anyone.
+  - Select which moderator you want to use, from anyone.
+  - Earn money from advertising or disable advertising completely.
 
   Nodes adhering to this protocol will be able to:
 
-  - Generate and earn money in relation to the bandwidth they share.
+  - Generate and earn profitable income in relation to the bandwidth
+    they share.
   - Select what content they cache and serve by selecting moderators.
 
   Moderators adhering to this protocol will be able to:
 
-  - Approve user content.
-  - Categorize content.
-  - Approve nodes.
-  - Earn money throughout advertising.
+  - Approve and categorize user content.
+  - Approve or ban nodes.
+  - Earn profitable income throughout advertising.
 
-  Any person can become a User, a Node and a Moderator at any time. In addition
-  to this, there will be Client Applications, which serve as an interface to the
-  general protocol named Bitcloud.  We are presenting Wetube as the primary
-  interface for our first version, but programmers can make any kind of
-  interface, providing that they follow the rules described in this protocol.
+  Any person can become a *user*, a *node* and/or a *moderator* at any
+  time. In addition to this, there will be client applications which
+  serve as an interface to the general protocol named Bitcloud. We are
+  presenting Wetube as the primary interface for our first version,
+  but programmers can make any kind of interface, providing that they
+  follow the rules described in this protocol.
 
-  Our Blockchain can be independently accessed for money transactions, so
-  external wallets without using the main interface are perfectly feasible.
+  The Bitcloud blockchain can be independently accessed for money
+  transactions, so external wallets without using the main interface
+  are perfectly feasible.
 
-  Bitcloud is the first protocol in the world that adheres to the concept of
-  Laws. The laws in the software ensure that the system is running smooth
-  without spammers and selfish serving, so everybody can trust the system. These
-  laws are initially imposed by the programmers and can dynamically change over
-  versions.
+  Bitcloud works by following a special set of premises refered as
+  /laws/. The laws in the software ensure that the system is running
+  smooth without spammers and selfish serving, so everybody can trust
+  the system. These laws are initially imposed by the programmers and
+  can dynamically change over versions.
 
-  The entire system can be fully scriptable in real time using simple to use and
-  parse lambda expressions, so advanced users and programmers can tweak and
-  modify the way in which they are connected to the Bicloud net, embed actions
-  into web pages, use in their internal programs (in any language), etc. Even
-  nodes can be accessed in real time by their owners, with full control (without
-  restrictions) to the entire code base of the system (including functions
-  already compiled), thanks to Lisp. We are achieving an incredible level of
-  flexibility mostly unknown in today systems, comparable to the Emacs editor.
+  The entire system can be fully scriptable in real time using simple
+  to use and parse lambda expressions, so advanced users and
+  programmers can tweak and modify the way in which they are connected
+  to the Bicloud net, embed actions into web pages, use in their
+  internal programs (in any language), etc. Nodes can be accessed in
+  real time by their owners with full control to the entire running
+  system thanks to the power of lisp. We are looking forward an
+  incredible level of flexibility in where all users can review and
+  enhance the living (running) network.
 
 * EARLY-DRAFT Workers
 ** TO-IMPROVE General
 
-   A worker is bassically somebody that is a User, a Moderator or a Node. We
-   encapsulate this into a general class because all workers have some variables
-   in common, like the alias or the public-key. Then we derive the specifics
-   workers from this class.
+   A worker is basically any entity that is a *user*, a *moderator* or a
+   *node*. We encapsulate this into a general class because all workers
+   have some variables in common, like the alias or the
+   public-key. Then we derive the specifics workers from this class.
 
    #+BEGIN_SRC lisp
    (defclass worker ()
@@ -72,58 +76,65 @@
 
 **** TO-THINK alias
 
-     Is usually the name or nick chosen by the worker. _TODO We have to think if
-     we want to implement our own ID system or use an existing one like Keyhotee
-     or Namecoin_.
+     Is usually the name or nick chosen by the worker. _TODO We have
+     to think if we want to implement our own ID system or use an
+     existing one like Keyhotee or Namecoin_.
 
 **** private-key
 
-     The private key of the worker, used to sign actions. Normally this variable
-     is only avaiable in the computer of the worker and nowhere else.
+     The private key of the worker used to sign actions. Normally this
+     variable is only available in the computer of the worker and
+     nowhere else.
 
 **** public-key
 
-     Is generated from the private key and is used for all wallet operations
-     plus to verify signatures in the judges and enforcement (see bellow).
+     Is generated from the private key and is used for all wallet
+     operations plus to verify signatures in the judges and
+     enforcement (see below).
 
 **** banned?
 
-     Is *t* when the enforcement rutine determines so. A banned worker cannot use
-     the Bitcloud for a specific period of time defined in *banned-time*.
+     Is *t* when the enforcement rutine determines so. A banned worker
+     cannot use the Bitcloud for a specific period of time defined in
+     *banned-time*.
 
 **** protected?
 
-     Is *t* if the worker enters into a special mode in which all the content it
-     uploads, moderates or stores is encrypted and enrouted protected (the IP
-     cannot be determined). More bellow.
+     Is *t* if the worker enters into a special mode in which all the
+     content it uploads, moderates or stores is encrypted and enrouted
+     protected (the IP cannot be determined). More below.
 
 ** EARLY-DRAFT Nodes
 
-   Nodes are the primordial base for the Bitcloud network, and most of the work
-   is done there.
+   Nodes are the primordial base for the Bitcloud network and most of
+   the work is done there.
 
-   Nodes run the program *bitcloud*. This program maintains a cache of files
-   served and provides the necessary bandwidth for the *Client Applications* to
-   work.
+   Nodes run the program *bitcloud*. This program maintains a cache of
+   files served and provides the necessary bandwidth for the *Client
+   Applications* to work.
 
-   Nodes also do the important work of providing [[https://github.com/wetube/bitcloud/wiki/Proof-of-Bandwidth][Prof of Bandwidth]] so the cloud
-   runs consistently and everyone generates the money they only deserve.
+   Nodes also do the important work of providing [[https://github.com/wetube/bitcloud/wiki/Proof-of-Bandwidth][Proof of Bandwidth]] so
+   the cloud runs consistently and everyone generates the money they
+   only deserve.
 
-   Like it happens with Bitcoin, a block reflecting all the transactions are
-   generated once every 10 minutes. This block represents the consensus of the
-   Bitcloud net about the operations made in itself since the last block. It
-   contains all the money transactions made, including the ones generated by the
-   nodes by bandwidth sharing. In order to preserve space, it does not contain
+   Like it happens with Bitcoin, a block reflecting all the
+   transactions are generated once every 10 minutes. This block
+   represents the consensus of the Bitcloud net about the operations
+   made in itself since the last block. It contains all the money
+   transactions made, including the ones generated by the nodes by
+   bandwidth sharing. In order to preserve space, it does not contain
    all the details of the nodes states nor any content at all.
 
-   The blockchain is the chained collection of all blocks generated since the
-   born of Bitcloud. Its contents are perpetual and immutable.
+   The blockchain is the chained collection of all blocks generated
+   since the born of Bitcloud. It's contents are perpetual and
+   immutable.
 
-   In addition, there will be a *Node Pool*. This pool is regenerated every 10
-   minutes after a new block is generated and contains the state of all
-   nodes. When regenerated, all nodes apply the rules under the section **Proof
-   of Stake** to it, to ensure that every node meets the rules and no one tries
-   to take advantages over the rest.
+   In addition, there will be a *Node Pool*. This pool is regenerated
+   every 10 minutes after a new block is generated and contains the
+   state of all nodes. When regenerated, all nodes apply the rules
+   under the section *Proof of Stake* to it, to ensure that every
+   node meets the rules and no one tries to take advantages over the
+   rest.
 
    #+BEGIN_SRC lisp
    (defclass node (worker)
@@ -142,87 +153,89 @@
 
 **** max-download-speed and **max-upload-speed**
 
-     Are the variables that define how much the owner of the node wants to
-     share, expressed in Mb/s.
+     Are the variables that define how much the owner of the node
+     wants to share, expressed in Mb/s.
 
 **** max-space
 
-     Is in Mb and it is the maximum size to allocate for the files cache. When
-     the space occupied by the cache pass this variable, the least requested
-     files are deleted.
+     Is in Mb and it is the maximum size to allocate for the files
+     cache. When the space occupied by the cache pass this variable,
+     the least requested files are deleted.
 
 **** signature
 
-     Refers to the public key of the node, used to sign transactions in the
-     *Proof of Stake (POS)* routines.
+     Refers to the public key of the node, used to sign transactions
+     in the *Proof of Stake (POS)* routines.
 
 **** accepted-coins
 
-     Is a list of accepted coins for exchange. For example `'(BTC LTC)`. If a
-     node accept BTC, it must run the *bitcoind* daemon.
+     Is a list of accepted coins for exchange. For example `'(BTC
+     LTC)`. If a node accept BTC, it must run the *bitcoind* daemon.
 
 **** moderators
 
-     Is a list of normal moderators for which the content is accepted to be
-     cached. The content cached can vary, so a node can automatically select the
-     content to be cached in function of the number of requests. If this
-     variable is NIL, the node becomes unmoderated and caches everything that
-     goes through.
+     Is a list of normal moderators for which the content is accepted
+     to be cached. The content cached can vary, so a node can
+     automatically select the content to be cached in function of the
+     number of requests. If this variable is NIL, the node becomes
+     unmoderated and caches everything that goes through.
 
 **** preferential-moderators
 
-     Is a list of moderators whose content is always going to be cached
-     entirely. This is useful for moderators that also own nodes.
+     Is a list of moderators whose content is always going to be
+     cached entirely. This is useful for moderators that also own
+     nodes.
 
 **** cloud-moderators
 
-     A list of moderators for cloud personal storage. These moderators put a
-     price for content storage. This content is guarantied to be stored until 1
-     year has passed since the user paid, or until the user deletes it or the
-     moderator stops supporting the user.
+     A list of moderators for cloud personal storage. These moderators
+     put a price for content storage. This content is guaranteed to be
+     stored until 1 year has passed since the user paid, or until the
+     user deletes it or the moderator stops supporting the user.
 
      *Note*: the sum of the space required by the moderators in
-     **cloud-moderators** and **preferential-moderators** should be less than
-     **max-space**. *bitcloud* daemon should log a warning if that happens, and
-     POS policies could ban the node.
+     **cloud-moderators** and **preferential-moderators** should be
+     less than **max-space**. *bitcloud* daemon should log a warning if
+     that happens, and POS policies could ban the node.
 
 **** content-waiting-for-approval
 
-     A list of contents uploaded from the users that are waiting for the
-     approval of the moderators adhered to this node.
+     A list of contents uploaded from the users that are waiting for
+     the approval of the moderators adhered to this node.
 
 **** approval-timeout
 
-     How much time this node is going to wait for the approval on any moderator
-     adhered to this node. Passed that time the awaiting content is deleted from
-     the cache. Minimum time allowed is 12 hours. Defaults to 48.
+     How much time this node is going to wait for the approval on any
+     moderator adhered to this node. Passed that time the awaiting
+     content is deleted from the cache. Minimum time allowed is 12
+     hours. Defaults to 48.
 
 **** protected?
 
-     Whether the node IP is protected, and the content in the local cache is
-     encrypted with the private key of the node. But this has some downsides,
-     the most important is that data is routed throughout many nodes, adding
-     costs in bandwidth and latency.
+     Whether the node IP is protected and the content in the local
+     cache is encrypted with the private key of the node. But this has
+     some downsides, the most important is that data is routed
+     throughout many nodes, adding costs in bandwidth and latency.
 
 **** shutdown-date
 
-     When is the node going to be shut down automatically. Useful for protected
-     nodes that serve delicate content.
+     When is the node going to be shut down automatically. Useful for
+     protected nodes that serve delicate content.
 
 ** TO-THINK Moderators
 
-   Moderators are crucial to the well-working of the Bitcloud. Their main tasks
-   are:
+   Moderators are crucial to the well-working of the Bitcloud. Their
+   main tasks are:
 
-   + Approve user content. The user select a list of moderators to which s/he
-     wants to adhere, the moderator receives the request, and decides if the
-     user meets his/her requirements.
-   + Categorize. A moderator properly corrects tagging of the content s/he
-     receives from the user.
-   + Advertising. Advertisers select which moderators they want to adhere, and
-     ads are only shown in the content approved by that moderator. Moderators
-     are paid for this, and they put the price. A part of this price goes to the
-     publisher.
+   + Approve user content. The user select a list of moderators to
+     which s/he wants to adhere, the moderator receives the request
+     and decides if the user meets his/her requirements.
+   + Categorize. A moderator properly corrects tagging of the content
+     s/he receives from the user.
+   + Advertising. Advertisers select which moderators they want to
+     adhere, and ads are only shown in the content approved by that
+     moderator. Moderators are paid for this, and they put the
+     price. A part of this price goes to the publisher.
 
    #+BEGIN_SRC lisp
    (defclass moderator (worker)
@@ -249,38 +262,41 @@
 
 * EARLY-DRAFT The Bitcloud Cryptography Law (BCL)
 
-  The Cryptography Law, also called *Proof of Stake* in more simple projects, is
-  the law of Bitcloud - what governs it - providing the rules in the form of
-  algorithms executed by the nodes and clients in real time.
+  The Cryptography Law, also called *Proof of Stake* in more simple
+  projects, is the law of Bitcloud - what governs it - providing the
+  rules in the form of algorithms executed by the nodes and clients in
+  real time.
 
-  Each rule must be applied for every node or client in the net. Appliance to
-  every rule is rewarded in the way described in the rule. Non-compliance
-  results in penalization.
+  Each rule must be applied for every node or client in the
+  net. Appliance to every rule is rewarded in the way described in the
+  rule. Non-compliance results in penalization.
 
-  This fine equilibrium ensures that every node does the work correctly and
-  there are no abuses.
+  This fine equilibrium ensures that every node does the work
+  correctly and there are no abuses.
 
-  Like in the real world, here there are laws, judges and rule enforcers. The
-  main difference is that here all nodes and clients are the judges and the rule
-  enforcers, so the law coming in the form of computer algorithms is applied by
-  the consensus of the entire Bitcloud net.
+  Like in the real world, here there are laws, judges and rule
+  enforcers. The main difference is that here all nodes and clients
+  are the judges and the rule enforcers, so the law coming in the form
+  of computer algorithms is applied by the consensus of the entire
+  Bitcloud net.
 
-  We have named every rule with an easy to remember name, so workers of the
-  system can refer to them when talking to other workers and non technical
-  people.
+  We have named every rule with an easy to remember name, so workers
+  of the system can refer to them when talking to other workers and
+  non technical people.
 
 ** TO-IMPROVE Law appliance
 
-   Basically, the law is applied by judging (checking) that every node and
-   client is doing the work as it should, so, when asked, it should answer with
-   the truth of what is asked. If it is found that the node or client is lying,
-   it is penalized or its IP banned, and its transactions rejected are not
-   included in the blockchain.
+   Basically, the law is applied by judging (checking) that every node
+   and client is doing the work as it should, so, when asked, it
+   should answer with the truth of what is asked. If it is found that
+   the node or client is lying, it is penalized or banned, and its
+   transactions rejected are not included in the blockchain.
 
    Laws are written in the source code in the form of *generics* and the
-   corresponding *methods*. A *method* is a specific application of a *generic*. For
-   example, for the *generic* of the Law of Bandwidth there are going to be
-   several *methods* for judging nodes, users and moderators.
+   corresponding *methods*. A *method* is a specific application of a
+   *generic*. For example, for the *generic* of the Law of Bandwidth there
+   are going to be several *methods* for judging nodes, users and
+   moderators.
 
    #+BEGIN_SRC lisp
    (defgeneric judge-bandwidth (worker))
@@ -289,17 +305,17 @@
    (defmethod judge-bandwidth ((user USER)))
    #+END_SRC
 
-   The return of those functions is always a verdict, in the form of lambda
-   expression, so it is easy to parse from scripts:
+   The return of those functions is always a verdict, in the form of
+   lambda expression, so it is easy to parse from scripts:
 
    #+BEGIN_SRC lisp
    (verdict t :reward 0.2345)
    (verdict nil :penalization 1.3 :ban 6)
    #+END_SRC
 
-   The first var is *t* or *nil* indicating if the verdict is favorable or not. The
-   rest indicates the properties of the verdict, to be applied by the
-   **enforce** *generic*:
+   The first var is *t* or *nil* indicating if the verdict is favorable or
+   not. The rest indicates the properties of the verdict, to be
+   applied by the **enforce** *generic*:
 
    #+BEGIN_SRC lisp
    (defgeneric enforce (worker verdict))
@@ -307,24 +323,25 @@
    ...
    #+END_SRC
 
-   The purpose of it is to certificate (sign) the verdict and write it in the
-   Blockchain and/or in the Node Pool State when appropriate. When there is
-   general consensus (for example, 80% or more of the workers agree with the
-   verdict), the current Block is frozen and added to the Blockchain, and the
-   Node Pool State is regenerated using relevant parts of the old data for the
-   new start.
+   The purpose of it is to certificate (sign) the verdict and write it
+   in the Blockchain and/or in the Node Pool State when
+   appropriate. When there is general consensus (for example, 80% or
+   more of the workers agree with the verdict), the current Block is
+   frozen and added to the Blockchain, and the Node Pool State is
+   regenerated using relevant parts of the old data for the new start.
 
 ** EARLY-DRAFT The laws
 *** Time Law
 **** TO-IMPROVE GMT sync Law
 
-     - All nodes must be in sync of time with the official world time at GMT
-       with a maximum variation of 10 seconds. Clients are not forced.
+     - All nodes must be in sync of time with the official world time
+       at GMT with a maximum variation of 10 seconds. Clients are not
+       forced.
 
        : (defgeneric judge-time (worker))
 
-     - Check is made sending a request to the other node and comparing to the
-       actual date in the moment of sending the request.
+     - Check is made sending a request to the other node and comparing
+       to the actual date in the moment of sending the request.
 
        : (defun request-time (node))
 
@@ -334,40 +351,41 @@
 
        : (verdict t)
 
-     - Penalization of 1 MAC (X) for every 10 seconds out of sync on each block
-       generation. Ban for Y periods if it is 30s or more or the node hasn't got
-       enough money to pay penalization. All operations of the node for the
-       current block are rejected (Z) only if time variation is bigger than 30s.
+     - Penalization of 1 MAC (X) for every 10 seconds out of sync on
+       each block generation. Ban for Y periods if it is 30s or more
+       or the node hasn't got enough money to pay penalization. All
+       operations of the node for the current block are rejected (Z)
+       only if time variation is bigger than 30s.
 
        : (verdict nil :penalization X :ban Y :reject Z)
 
-       Y is 1 for one time ban. Y is 6 if the node persists. Y is 144 if it
-       persists even more. Y (1,6,144)
+       Y is 1 for one time ban. Y is 6 if the node persists. Y is 144
+       if it persists even more. Y (1,6,144)
 
 **** TO-IMPROVE Timestamps Law
 
-     - All nodes must write the correct dates in all connections and associated
-       transactions.
+     - All nodes must write the correct dates in all connections and
+       associated transactions.
 
        : (defgeneric judge-timestamps (node connection))
 
-     - Check is made looking at the states written by the node in the pool. All
-       dates must be correctly dated within the period of the block being
-       analyzed.
+     - Check is made looking at the states written by the node in the
+       pool. All dates must be correctly dated within the period of
+       the block being analyzed.
 
      - No rewards for appliance.
 
        : (verdict t)
 
-     - Immediate penalization of 1 MAC and ban for Y (6, 144, 288). Reject all
-       transactions.
+     - Immediate penalization of 1 MAC and ban for Y (6, 144,
+       288). Reject all transactions.
 
        : (verdict nil :penalization 1 :ban Y :reject 'all)
 
 *** EARLY-DRAFT Lag Law
 
-    - All workers must answer in less than X seconds to any query or **sync**
-      function.
+    - All workers must answer in less than X seconds to any query or
+      **sync** function.
 
     - No rewards for appliance.
 
@@ -402,38 +420,41 @@
 * TO-THINK Nodepool format
 * TO-THINK Node Interface
 
-  This is the interface for the node (not the users) so the administrator can
-  see and tweak values in real time.
+  This is the interface for the node (not the users) so the
+  administrator can see and tweak values in real time.
 
 * TO-IMPROVE Why Lisp
 
-  Bitcloud is much more dynamic than Bitcoin, we need dynamic constructs and
-  easy adaptation to the real time requirements.
+  Bitcloud is much more dynamic than Bitcoin, we need dynamic
+  constructs and easy adaptation to the real time requirements.
 
-  - The REPL if very powerful and really useful, allowing to program and tweak
-    the nodes in real time. Advanced users will love this.
-  - Saving the blockchain in text format, and the language of queries in simple
-    lambda expressions would allow many scripting languages to parse the
-    blockchain and node pool states easily.
-  - SBCL implementation is really fast, much faster than Python, Ruby or any
-    other dynamic language. Almost as fast as C for most cases.
-  - Easy to design and integrate the query language into the program, in
-    contrast to what would happen in C++ having to integrate an alien language.
-  - Bitcloud will be scriptable in the same language that has been made.
-  - Powerful language constructors like macros and CLOS which will reduce
-    programming costs.
-  - Lets do the things right for once! We have the opportunity to avoid using a
-    crappy language like C++ before it is too late. :)
+  - The REPL if very powerful and really useful, allowing to program
+    and tweak the nodes in real time. Advanced users will love this.
+  - Saving the blockchain in text format, and the language of queries
+    in simple lambda expressions would allow many scripting languages
+    to parse the blockchain and node pool states easily.
+  - SBCL implementation is really fast, much faster than Python, Ruby
+    or any other dynamic language. Almost as fast as C for most cases.
+  - Easy to design and integrate the query language into the program,
+    in contrast to what would happen in C++ having to integrate an
+    alien language.
+  - Bitcloud will be scriptable in the same language that has been
+    made.
+  - Powerful language constructors like macros and CLOS which will
+    reduce programming costs.
+  - Lets do the things right for once! We have the opportunity to
+    avoid using a crappy language like C++ before it is too late. :)
 
 * TO-THINK LOGs examples
 
-  - This moderators offer you X mediacoins by inserting an ad into your content.
+  - This moderators offer you X mediacoins by inserting an ad into
+    your content.
 
-  - You have been accused of denying storage for the moderator X. Verdict is:
-    banned for 1 period and penalized with 1 MAC.
+  - You have been accused of denying storage for the moderator
+    X. Verdict is: banned for 1 period and penalized with 1 MAC.
 
 * TO-THINK Future as a Social Distributed application
 
-  With not so much modifications, this DA could also provide social content with
-  characteristics competing to those of centralized privated sites like Facebook
-  and Twitter.
+  With not so much modifications, this DA could also provide social
+  content with characteristics competing to those of centralized
+  privated sites like Facebook and Twitter.
