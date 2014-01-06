@@ -1,4 +1,7 @@
 #+SEQ_TODO: TO-THINK EARLY-DRAFT TO-IMPROVE FINISHED
+#+TITLE: Bitcloud: A Peer to Peer System for Sharing Bandwidth
+#+LANGUAGE: en
+#+STARTUP: align fold hidestars
 
 * TO-IMPROVE Introduction
 
