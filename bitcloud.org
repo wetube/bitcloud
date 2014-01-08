@@ -293,6 +293,7 @@ Worker --|> User
 
 * EARLY-DRAFT The Bitcloud Cryptography Law (BCL)
 
+
   The Cryptography Law, also called *Proof of Stake* in more simple
   projects, is the law of Bitcloud - what governs it - providing the
   rules in the form of algorithms executed by the nodes and clients in
