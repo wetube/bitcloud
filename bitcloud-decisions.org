@@ -157,8 +157,8 @@ explain it clearly, point by point:
    nodes must be run and more bandwidth must be shared. The more nodes there
    are, the less they can earn, so prices must go up for our currency.
    No node is going to sell below the price of real bandwidth.
-   ---Kyle's Response:
-      What you describe assumes that the nodes are the only ones selling
+   - Kyle:
+     What you describe assumes that the nodes are the only ones selling
       mediacoins at any one time. That's not how it works in reality. This is 
       like saying that bitcoin miners control the price of bitcoin. Once there 
       are a large number of mediacoins in circulation, the holders of those 
@@ -173,7 +173,7 @@ explain it clearly, point by point:
    value of our network, and the services that provide our workers (mostly
    moderators).  We have *more* intrinsic value than Bitcoin, because we
    provide a *real* service beyond just being a currency.
-   ---Kyle's Response:
+   - Kyle:
       Providing extra value during the mining process does not mean anything. If 
       that were true, Primecoin and Peercoin would have more value than Bitcoin. What
       gives a coin value is its utility. This is why no one cares about Primecoin 
@@ -184,7 +184,7 @@ explain it clearly, point by point:
    stocks is because they believe that Apple is doing well. Apple is not
    crashing because they are backed up by the products they sell. We are going
    to be backed up by the services we provide.
-   ---Kyle's Response:
+   - Kyle:
       This is false. A DAC needs to be a stock/commodity first. If it becomes 
       a currency, that is something for the market to decide. Option 2 does not 
       back up the mediacoins currency with the WeTube service because they are 
@@ -194,14 +194,14 @@ explain it clearly, point by point:
    interchange goods and services, and we can maintain even a better
    equilibrium than Bitcoin just because we are also backed up by the services
    we provide.
-   ---Kyle's Response:
+   - Kyle:
       Saying the currency is backed up by our services and actually backing up 
       the currency with the services are two different things. As I've explained 
       many times, the currency is not backed up by the services because the nodes 
       don't have control over the price at a certain point.
 4. You assume that moderators are going to sell. Why? You're unable to give
    good answer except your biased opinion.
-   ---Kyle's Response:
+   - Kyle:
       You assume that moderators are going to hold. Why? You're unable to give a 
       good answer except your biased opinion.
 5. *Even if all moderators sell everything in the moment they are paid (a very
@@ -209,7 +209,7 @@ explain it clearly, point by point:
    moderator can sell, he must first have received a payment. And who is the
    one who pays? The advertiser. And who is the one who sell our coins to
    advertisers? The nodes.
-   ---Kyle's Response:
+   - Kyle:
       As pointed out in other responses, this assumes nodes are the majority of the 
       market, which they are not. They are at the beginning, but they lose their 
       control of the market over time as more mediacoins are created. Just like with
@@ -218,7 +218,7 @@ explain it clearly, point by point:
    Note that there is a buy and a sell. Advertisers buy, moderators sell, so
    there is an equilibrium. And meanwhile the prices increases because more users
    and nodes come to the system.
-   ---Kyle's response:
+   - Kyle:
      Same answer as above. The price does not increase because nodes don't control 
      the price after a certain point in time.
 
