@@ -31,14 +31,40 @@ There aren't really any huge advantages to this system. The problem is that the 
 8. People will switch to alternative p2p protocols with real moderation or
    free of ads.
    
-   Responses from Kyle:
-1. This is not necesarily a huge problem. An interface can be placed into the Bitcloud software so advertisers can bid on ad space in different channels/categories. I would also personally tell other people that they can advertise on WeTube/Bitcloud. I'm sure I wouldn't be the only one as everyone who owns mediacoins would benefit from advertisers bidding higher prices for ad space. This isn't really a problem that causes any systemic risk to the Bitcloud network.
-2. This is true. Unless I am able to think of an alternative, all advertising decisions will be made by all of the Bitcloud nodes put together rather than individual moderators.
-3. As mentioned in part one, of this response, advertisers would be able to bid on ad space for particular channels, so the ads would still be related to the content.
+**** Responses from Kyle:
+1. This is not necesarily a huge problem. An interface can be placed into the
+   Bitcloud software so advertisers can bid on ad space in different
+   channels/categories. I would also personally tell other people that they
+   can advertise on WeTube/Bitcloud. I'm sure I wouldn't be the only one as
+   everyone who owns mediacoins would benefit from advertisers bidding higher
+   prices for ad space. This isn't really a problem that causes any systemic
+   risk to the Bitcloud network.
+   - Javier: you can't control the interface. The day 2 there will be a
+     version of the Wetube interface with an adblock like feature removing the
+     bid thing.
+2. This is true. Unless I am able to think of an alternative, all advertising
+   decisions will be made by all of the Bitcloud nodes put together rather
+   than individual moderators.
+   - Javier: Every node is going to serve different things. There is no posible
+     consensus on whom to admit as advertisers. Sex ads cannot be shown in
+     non-sex content, for example, but you can apply this to every discipline.
+3. As mentioned in part one, of this response, advertisers would be able to
+   bid on ad space for particular channels, so the ads would still be related
+   to the content.
+   - Javier: forget about this. This is open source and that part can be very
+     easily removed. You cannot force the interface to do this things.
 4. I've thought of this issue as well and will need to find a solution.
 5. 
-6. Since nodes are moderating themselves, moderation still takes place. I'm not sure I understand this argument.
-7. One solution to this could be default channels/categories in the protocol instead of nodes creating their own categories. I'd have to think about others if that solution was not preferred.
+6. Since nodes are moderating themselves, moderation still takes place. I'm
+   not sure I understand this argument.
+   - Javier: that makes things even worse, because now not only you prevent
+     people for being moderators, but also to be nodes!
+7. One solution to this could be default channels/categories in the protocol
+   instead of nodes creating their own categories. I'd have to think about
+   others if that solution was not preferred.
+   - Javier: very bad idea, moderators should be able to create their own
+     categories or the system will be very inflexible. For example, a news
+     moderation should be able to create categories about news types.
 8. An alternative protocol built in the form of Option 2 could still pop up, but obviously I think it would fail due to the same problems related to the value of the currency and network stability. It should also be noted that videos could be uploaded for free in option 1, but ads would need to be placed on the video once they received a certain number of views.
 
 While a few of these disadvantages are legitimate, they still don't compare to the disadvantage in option 2 where the entire network is unstable becaue the value of mediacoins is not tied to the number of users on the network.
@@ -56,11 +82,33 @@ While a few of these disadvantages are legitimate, they still don't compare to t
    select paid only moderators, and choose if they want dedicate some of their
    space to free content or not.
    
-   Responses from Kyle
+****   Responses from Kyle
 1. As mentioned in my response to this as a disadvantage in option 1, this is not a serious issue. Advertisers can still bid up prices for ad space in the "Advertise on WeTube" tab on the WeTube software client.
 2. This applies to both options.
-3. I'm not sure how this is an advantage. I look at it as a disadvantage because a certain percentage of moderators will sell their mediacoins for some other currency. It hurts the growth of mediacoins as a currency because money will be going into the system and then back out of it instead of just staying in the system. It is similar to someone buying bitcoins in one country to send to a friend in another country. That friend sells the bitcoins when he receives them. Money went in, but then it went back out, so there is no increased value for bitcoins, the currency.
-4. Free content is still possible in option 1. Content can be uploaded by users for free, but ads will be added once a certain video or other files starts to require a lot of bandwidth. Allowing unlimited uploads for free without ads is a recipe for disaster because everyone would just choose that option. No current video host offers this option because they would go bankrupt.
+3. I'm not sure how this is an advantage. I look at it as a disadvantage
+   because a certain percentage of moderators will sell their mediacoins for
+   some other currency. It hurts the growth of mediacoins as a currency
+   because money will be going into the system and then back out of it instead
+   of just staying in the system. It is similar to someone buying bitcoins in
+   one country to send to a friend in another country. That friend sells the
+   bitcoins when he receives them. Money went in, but then it went back out,
+   so there is no increased value for bitcoins, the currency.
+   - Javier: and what is the problem of that in bitcoin? Bitcoin is a way to
+     pay, our system will to. *NOTE*: an advertiser has to *buy* money from
+     nodes before they can pay to the moderators. When a buy happens, our coin
+     raise in value. Yes, then the moderator may or may not sell the money. If
+     it sells, price of our coin *compensates* because the money to pay
+     moderators was increased before. If they hold, price increases.
+4. Free content is still possible in option 1. Content can be uploaded by
+   users for free, but ads will be added once a certain video or other files
+   starts to require a lot of bandwidth. Allowing unlimited uploads for free
+   without ads is a recipe for disaster because everyone would just choose
+   that option. No current video host offers this option because they would go
+   bankrupt.
+   - Javier: it is absolutetly not a disaster because in this system
+     moderators are REALLY motivated to find advertisers. *AND*, as I told
+     you, a node can ALWAYS choose their moderators, so they can choose a
+     moderator that inserts ads.
    
 *** Disadvantages
 
@@ -68,10 +116,70 @@ I don't see any, but Kyle insists that moderators are irrevocably going to sell
 their coins immediately after they have paid, making the system to crash. I
 need to see serious proof of this.
 
-Response from Kyle:
-In option 2, the value of the currency is not directly tied to the number of users who require bandwidth on the network. The problem with this is that the network will falter greatly when the price of mediacoins crashes due to speculation. For example, when the price of bitcoin crashes (which it has on many occasions), miners stop mining because it is no longer profitable for them to do so. This lowers the pace at which new bitcoins enter the market. This helps bring the price back up over time. The same is true of the Bitcloud network, but the problem is that the integrity of the network relies on nodes staying online. Since the price of mediacoins is not directly tied to the number of users on Bitcloud, speculators could crash the price (like what happens with Bitcoin), and then more nodes would go offline because it is no longer profitable for them to share bandwidth on the Bitcloud network. This means that there is much less bandwidth on the network as a whole, and users will notice a lot of lag on the network. If the price of mediacoins is not directly tied to the number of users on the network (like in option 1), then it is only a matter of time before this problem takes place. We can't have nodes going offline because of a price crash because then the users will not trust Bitcloud to have content available at all times.
+**** Response from Kyle:
+In option 2, the value of the currency is not directly tied to the number of
+users who require bandwidth on the network. The problem with this is that the
+network will falter greatly when the price of mediacoins crashes due to
+speculation. For example, when the price of bitcoin crashes (which it has on
+many occasions), miners stop mining because it is no longer profitable for
+them to do so. This lowers the pace at which new bitcoins enter the
+market. This helps bring the price back up over time. The same is true of the
+Bitcloud network, but the problem is that the integrity of the network relies
+on nodes staying online. Since the price of mediacoins is not directly tied to
+the number of users on Bitcloud, speculators could crash the price (like what
+happens with Bitcoin), and then more nodes would go offline because it is no
+longer profitable for them to share bandwidth on the Bitcloud network. This
+means that there is much less bandwidth on the network as a whole, and users
+will notice a lot of lag on the network. If the price of mediacoins is not
+directly tied to the number of users on the network (like in option 1), then
+it is only a matter of time before this problem takes place. We can't have
+nodes going offline because of a price crash because then the users will not
+trust Bitcloud to have content available at all times.
 
-The real disadvantage of option 2 is that the network simply doesn't work with this setup. There are a few extremely minor downsides of switching over the option 1, but it's much better than having a network that is unstable.
+
+The real disadvantage of option 2 is that the network simply doesn't work with
+this setup. There are a few extremely minor downsides of switching over the
+option 1, but it's much better than having a network that is unstable.
+
+***** Javier:
+I think you are confusing terms. I'll try to do my best to
+explain it clearly, point by point:
+1. It is false that in option 2 the value of the currency is not directly tied
+   to the number of users. You should explain why is that, as I haven't heard
+   a good analysis on why is that.
+   The value of the currency is absolutely determined by the amount of users
+   in the network, because of the following:
+   Each generated block has a fixed amount of coins. For example, 100 coins
+   per block. That means that if more users enter into the system, then more
+   nodes must be run and more bandwidth must be shared. The more nodes there
+   are, the less they can earn, so prices must go up for our currency.
+   No node is going to sell below the price of real bandwidth.
+2. You can never avoid speculation. Never, never, never. Your system doesn't
+   avoid speculation at all.People are free to buy and sell. What we can is
+   control the speculation to make the system grow. How? By the intrinsic
+   value of our network, and the services that provide our workers (mostly
+   moderators).  We have *more* intrinsic value than Bitcoin, because we
+   provide a *real* service beyond just being a currency.
+3. Our system is going to be a mix between a currency and an stock market and
+   there are good reasons to hold *both*. For example, when people hold Apple
+   stocks is because they believe that Apple is doing well. Apple is not
+   crashing because they are backed up by the products they sell. We are going
+   to be backed up by the services we provide.
+   In addition to that, we are a currency too, a medium for people to
+   interchange goods and services, and we can maintain even a better
+   equilibrium than Bitcoin just because we are also backed up by the services
+   we provide.
+4. You assume that moderators are going to sell. Why? You're unable to give
+   good answer except your biased opinion.
+5. *Even if all moderators sell everything in the moment they are paid (a very
+   improbable thing), our system still can run STABLE*. Why? Because before a
+   moderator can sell, he must first have received a payment. And who is the
+   one who pays? The advertiser. And who is the one who sell our coins to
+   advertisers? The nodes.
+   *SO IT COMPENSATES*
+   Note that there is a buy and a sell. Advertisers buy, moderators sell, so
+   there is an equilibrium. And meanwhile the prices increases because more users
+   and nodes come to the system.
 
 * Decision to make about mixing moderators and nodes
 
