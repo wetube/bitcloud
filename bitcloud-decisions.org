@@ -1,10 +1,10 @@
 #+STARTUP: align fold hidestars indent
 
-* Decision to make about advertising
+* Decision on the economic and business setup of Bitcloud.
 
 We have two choices:
 
-1. Advertisers pay the system and the money is destroyed, no moderator nor a
+1. Advertisers pay into the system and the money is destroyed, no moderator nor a
    node recieves anything.
 2. Advertisers pay moderators and money is not destroyed.
 
@@ -12,8 +12,7 @@ We have two choices:
 
 *** Advantages
 
-Supposedly moderators lose their incentives to sell their money because they
-don't receive any in the first place.
+There aren't really any huge advantages to this system. The problem is that the mediacoins currency and network integrity is harmed with the other setup. - Kyle
 
 *** Disadvantages
 
@@ -31,6 +30,18 @@ don't receive any in the first place.
    the earn by bandwidth sharing.
 8. People will switch to alternative p2p protocols with real moderation or
    free of ads.
+   
+   Responses from Kyle:
+1. This is not necesarily a huge problem. An interface can be placed into the Bitcloud software so advertisers can bid on ad space in different channels/categories. I would also personally tell other people that they can advertise on WeTube/Bitcloud. I'm sure I wouldn't be the only one as everyone who owns mediacoins would benefit from advertisers bidding higher prices for ad space. This isn't really a problem that causes any systemic risk to the Bitcloud network.
+2. This is true. Unless I am able to think of an alternative, all advertising decisions will be made by all of the Bitcloud nodes put together rather than individual moderators.
+3. As mentioned in part one, of this response, advertisers would be able to bid on ad space for particular channels, so the ads would still be related to the content.
+4. I've thought of this issue as well and will need to find a solution.
+5. 
+6. Since nodes are moderating themselves, moderation still takes place. I'm not sure I understand this argument.
+7. One solution to this could be default channels/categories in the protocol instead of nodes creating their own categories. I'd have to think about others if that solution was not preferred.
+8. An alternative protocol built in the form of Option 2 could still pop up, but obviously I think it would fail due to the same problems related to the value of the currency and network stability. It should also be noted that videos could be uploaded for free in option 1, but ads would need to be placed on the video once they received a certain number of views.
+
+While a few of these disadvantages are legitimate, they still don't compare to the disadvantage in option 2 where the entire network is unstable becaue the value of mediacoins is not tied to the number of users on the network.
 
 ** Option 2: Advertisers pay moderators
 
@@ -45,11 +56,22 @@ don't receive any in the first place.
    select paid only moderators, and choose if they want dedicate some of their
    space to free content or not.
    
+   Responses from Kyle
+1. As mentioned in my response to this as a disadvantage in option 1, this is not a serious issue. Advertisers can still bid up prices for ad space in the "Advertise on WeTube" tab on the WeTube software client.
+2. This applies to both options.
+3. I'm not sure how this is an advantage. I look at it as a disadvantage because a certain percentage of moderators will sell their mediacoins for some other currency. It hurts the growth of mediacoins as a currency because money will be going into the system and then back out of it instead of just staying in the system. It is similar to someone buying bitcoins in one country to send to a friend in another country. That friend sells the bitcoins when he receives them. Money went in, but then it went back out, so there is no increased value for bitcoins, the currency.
+4. Free content is still possible in option 1. Content can be uploaded by users for free, but ads will be added once a certain video or other files starts to require a lot of bandwidth. Allowing unlimited uploads for free without ads is a recipe for disaster because everyone would just choose that option. No current video host offers this option because they would go bankrupt.
+   
 *** Disadvantages
 
 I don't see any, but Kyle insists that moderators are irrevocably going to sell
 their coins immediately after they have paid, making the system to crash. I
 need to see serious proof of this.
+
+Response from Kyle:
+In option 2, the value of the currency is not directly tied to the number of users who require bandwidth on the network. The problem with this is that the network will falter greatly when the price of mediacoins crashes due to speculation. For example, when the price of bitcoin crashes (which it has on many occasions), miners stop mining because it is no longer profitable for them to do so. This lowers the pace at which new bitcoins enter the market. This helps bring the price back up over time. The same is true of the Bitcloud network, but the problem is that the integrity of the network relies on nodes staying online. Since the price of mediacoins is not directly tied to the number of users on Bitcloud, speculators could crash the price (like what happens with Bitcoin), and then more nodes would go offline because it is no longer profitable for them to share bandwidth on the Bitcloud network. This means that there is much less bandwidth on the network as a whole, and users will notice a lot of lag on the network. If the price of mediacoins is not directly tied to the number of users on the network (like in option 1), then it is only a matter of time before this problem takes place. We can't have nodes going offline because of a price crash because then the users will not trust Bitcloud to have content available at all times.
+
+The real disadvantage of option 2 is that the network simply doesn't work with this setup. There are a few extremely minor downsides of switching over the option 1, but it's much better than having a network that is unstable.
 
 * Decision to make about mixing moderators and nodes
 
@@ -66,6 +88,9 @@ If we mix moderators and nodes, it will have the following problems:
 5. Because of 4, if primary node goes down, all the copiers go down.
 6. Because of (4) if a node deletes everything all the copiers must follow.
 
+Response from Kyle:
+I will response to this section in the future.
+
 ** Ethical reasons
 
 There is really not a good reason to mix moderators and nodes. Moderators are
@@ -75,6 +100,9 @@ can attach to a moderator, and the human behind the moderation service knows
 that nodes are going to follow him if he provides good content. In fact, he
 will desire that nodes follow him.
 
+Response from Kyle:
+I will response to this section in the future.
+
 ** Economic reasons
 
 The same cannot be said when a node and a moderator are not the same. Because
@@ -83,4 +111,7 @@ for the node to create a kind of apartheid for nodes trying to copy him.
 
 Why he would do so? *Because by banning copiers he can absorb most of the
 bandwidth for the content he is hosting*.
+
+Response from Kyle:
+I will response to this section in the future.
 
