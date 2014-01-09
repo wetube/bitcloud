@@ -491,7 +491,6 @@ time backwards. This process removes all transaction data except the amount
 of money owned by every account when due-date arrives.
 
 * TO-THINK Routing
-
 ** HTTP as a base
 
 Most communications are done using the well understood and easy to use HTTP
@@ -513,17 +512,38 @@ fast access with the less possible lag. It also happens that many ISP actually
 censor Bittorrent protocol. In addition, using simple HTTP will simplify the
 protocol very much.
 
-** Nodes designed to run in a full server
+** GET/POST format
+
+** Serving static pages
+
+We are also supporting the serving of static web pages stored in the nodes
+outside of the Bitcloud. The purpose of this is to allow nodes to become entry
+points for users:
+
+- To allow the users to download a full feature client.
+- To allow the users to connect "hot" using a JavaScript client.
+- To allow nodes to provide informational static content only relevant to that
+  node.
+- To publish the statistics of the node in real time to the WWW.
+
+*NOTE*: those shares are considered to be out of the Bitcloud, so they don't
+apply to the law of Bitcloud, nor to its benefits.
+
+In addiction to this, nodes can install their own HTTP server (like Apache)
+and serve dynamic pages using local routing facilities like /nginx/.
+
+
+** Nodes are designed to run on full-featured servers
 
 The reason for this is that Bitcloud must provide fast access and high
 bandwidth availability to the users. For example, streaming a single HD video
 requires an upload capacity of 1Mb/s or more, which means that some home
 connections would not be able to serve even a single video, not to speak to
-serve several files at a time. Also, home connections are unreliable in
-comparison with good properly located servers.
+serve several files at a time. Also, home connections are unreliable and
+change IP too often, in comparison to good properly located servers[fn:2].
 
 We also intentionally forbid nodes without a proper DNS pointing to them, so
-we enforce more stability.
+we enforce more reliability  when connecting to nodes.
 
 * TO-THINK Nodepool
 
@@ -580,4 +600,6 @@ we are using lambda expressions. These are simple expressions enclosed into
 parenthesis with the action in the first position. It is actually very easy to
 translate from jason-format to lambda expressions. We choose lambda
 expressions because they need less space and are faster to parse and write.
+
+[fn:2] Renting a server or VPS is very cheap today.
 
