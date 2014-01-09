@@ -514,20 +514,23 @@ protocol very much.
 
 ** GET/POST format
 
-** Serving static pages
+** Serving static pages (Entry points)
 
 We are also supporting the serving of static web pages stored in the nodes
-outside of the Bitcloud. The purpose of this is to allow nodes to become entry
-points for users:
+outside of the Bitcloud, in the official Bitcloud client. These pages are
+considered a wrapper for Bitcloud. The purpose of this is to allow nodes to
+become entry points for users:
 
-- To allow the users to download a full feature client.
+- To allow the users to download a full featured client.
 - To allow the users to connect "hot" using a JavaScript client.
 - To allow nodes to provide informational static content only relevant to that
-  node.
+  node. For example, a TV channel, a book editor, a corporate web. They can
+  embed content from Bitcloud in those static pages.
 - To publish the statistics of the node in real time to the WWW.
 
-*NOTE*: those shares are considered to be out of the Bitcloud, so they don't
-apply to the law of Bitcloud, nor to its benefits.
+*NOTE*: those static pages are considered to be out of the Bitcloud, except
+if the content is embed (and only for the content), so they don't apply to the
+law of Bitcloud, nor to its benefits.
 
 In addiction to this, nodes can install their own HTTP server (like Apache)
 and serve dynamic pages using local routing facilities like /nginx/.
@@ -579,6 +582,7 @@ constantly calculated in real time.
 
 ** Regeneration
 
+* TO-THINK Sync process
 * TO-THINK Node Interface
 
   This is the interface for the node (not the users) so the
