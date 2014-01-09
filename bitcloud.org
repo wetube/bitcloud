@@ -545,6 +545,33 @@ change IP too often, in comparison to good properly located servers[fn:2].
 We also intentionally forbid nodes without a proper DNS pointing to them, so
 we enforce more reliability  when connecting to nodes.
 
+** Registering a new node and connecting to the network
+
+Every new node must register into the network and provide the necessary
+details specified in the /Node class/.
+
+
+** Protected nodes
+
+When a node marks itself as *protected*, the Bitcloud net protects both its IP
+and domain name when serving the content. There is still a way for auditors to
+know that a certain computer is acting as a node, but will not be able to know
+what moderators and content is serving.
+
+We use a routing process similar to Tor Onion hidden services, optimized to
+our purposes, with the following characteristics:
+
+#+BEGIN_SRC plantuml :file "img/protected-routing.png"
+:User:  <-> (Exit node)
+(Exit node) <-> (Middle nodes)
+(Middle nodes) <-> (Protected node)
+#+END_SRC
+
+#+RESULTS:
+[[file:img/protected-routing.png]]
+
+
+
 * TO-THINK Nodepool
 
 The *Nodepool* contains all the information relevant to the nodes, and it is

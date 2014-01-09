@@ -7,7 +7,13 @@ We have two choices:
 1. Advertisers pay into the system and the money is destroyed, no moderator nor a
    node recieves anything.
 2. Advertisers pay moderators and money is not destroyed.
+3. Don't impose a limit per block, so for example 1 Tb generates always 1
+   Mediacoin
 
+*NOTE*: Option 1 and 2 impose a limit per block. For example 100 coins per
+block even if there are millions of nodes connected. So the more nodes are
+connected, the more difficult is to earn money.
+   
 ** Option 1: destruction of money by ads
 
 *** Advantages
@@ -71,7 +77,6 @@ There aren't really any huge advantages to this system. The problem is that the 
 8. An alternative protocol built in the form of Option 2 could still pop up, but obviously I think it would fail due to the same problems related to the value of the currency and network stability. It should also be noted that videos could be uploaded for free in option 1, but ads would need to be placed on the video once they received a certain number of views.
 
 While a few of these disadvantages are legitimate, they still don't compare to the disadvantage in option 2 where the entire network is unstable becaue the value of mediacoins is not tied to the number of users on the network.
-
 ** Option 2: Advertisers pay moderators
 
 *** Advantages
@@ -220,7 +225,32 @@ explain it clearly, point by point:
    and nodes come to the system.
    - Kyle:
      Same answer as above. The price does not increase because nodes don't control 
-     the price after a certain point in time.
+     the price after a certain point in time
+** Option 3: No limit per block
+
+In this option, there is not a limit in the amount of what can be earned per
+block. For example, 1 Tb of bandwidth equals to 1 mediacoin.
+
+For original developers we can implement a kickstart reward, so they are
+compensated with a good amount of coins for the work of developing.
+
+For early adopters we can do something like:
+- For the first month, 1 Tb = 1000 coins.
+- From there on, 1 TB = 1 coin
+That way we propagate the system easily and ensure a good start.
+
+*** Advantages
+
+- It is always going to reflect the real price of bandwidth.
+- Speculation is reduced to minimum because nodes are not going to sell below
+  the real price of bandwidth.
+- Nodes will have a constant incentive to be online.
+- Moderators can be paid properly.
+
+*** Disadvantages
+
+- Highly inflationary system, which is not good for investors.
+- We have to calculate very carefully the amount given to developers and early adopters.
 
 * Decision to make about mixing moderators and nodes
 
