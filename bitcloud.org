@@ -2,6 +2,7 @@
 #+TITLE: Bitcloud: A Peer to Peer System for Sharing Bandwidth
 #+LANGUAGE: en
 #+STARTUP: align fold hidestars
+#+OPTIONS: H:7 num:nil toc:nil \n:nil stat:nil timestamp:nil html-postamble:nil inline-images:t
 
 * TO-IMPROVE Introduction
 
@@ -66,12 +67,13 @@ public-key. Then we derive the specifics workers from this class.
 #+BEGIN_SRC plantuml :file "img/worker-class.png"
 User:
 class Worker {
-     alias
-     private-key
-     public-key
-     banned?
-     banned-time
-     protected?
+ alias
+ private-key
+ public-key
+ banned?
+ banned-time
+ protected?
+ IP
 }
 Worker --|>  Node
 Worker --|> Moderator
@@ -83,33 +85,37 @@ Worker --|> User
 
 **** TO-THINK alias
 
-     Is usually the name or nick chosen by the worker. _TODO We have
-     to think if we want to implement our own ID system or use an
-     existing one like Keyhotee or Namecoin_.
+Is usually the name or nick chosen by the worker. _TODO We have
+to think if we want to implement our own ID system or use an
+existing one like Keyhotee or Namecoin_.
 
 **** private-key
 
-     The private key of the worker used to sign actions. Normally this
-     variable is only available in the computer of the worker and
-     nowhere else.
+The private key of the worker used to sign actions. Normally this
+variable is only available in the computer of the worker and
+nowhere else.
 
 **** public-key
 
-     Is generated from the private key and is used for all wallet
-     operations plus to verify signatures in the judges and
-     enforcement (see below).
+Is generated from the private key and is used for all wallet
+operations plus to verify signatures in the judges and
+enforcement (see below).
 
 **** banned?
 
-     Is *t* when the enforcement rutine determines so. A banned worker
-     cannot use the Bitcloud for a specific period of time defined in
-     *banned-time*.
+Is *t* when the enforcement rutine determines so. A banned worker
+cannot use the Bitcloud for a specific period of time defined in
+*banned-time*.
 
 **** protected?
 
-     Is *t* if the worker enters into a special mode in which all the
-     content it uploads, moderates or stores is encrypted and enrouted
-     protected (the IP cannot be determined). More below.
+Is *t* if the worker enters into a special mode in which all the
+content it uploads, moderates or stores is encrypted and enrouted
+protected (the IP cannot be determined). More below.
+
+**** IP
+
+The actual IP of the node. NULL if protected.
 
 ** EARLY-DRAFT Nodes
 
@@ -145,19 +151,20 @@ rest.
 
 #+BEGIN_SRC plantuml :file "img/node-class.png"
 class Node {
-     max-download-speed
-      max-upload-speed
-      max-space
-      signature
-      accepted-coins
-      moderators
-      preferential-moderators
-      cloud-moderators
-      content-waiting-for-approval
-      protected?
-      shutdown-date
+ dns-name    
+ max-download-speed
+ max-upload-speed
+ max-space
+ signature
+ accepted-coins
+ moderators
+ preferential-moderators
+ cloud-moderators
+ content-waiting-for-approval
+ protected?
+ shutdown-date
 }
-Worker --|> Node
+Worker -right-|> Node
 #+END_SRC
 
 #+RESULTS:
@@ -259,7 +266,7 @@ class Moderator {
      ads-share-to-users
      tags
 }
-Worker --|> Moderator
+Worker -right-|> Moderator
 #+END_SRC
 
 #+RESULTS:
@@ -273,8 +280,14 @@ this moderator approves.
 
 *** trusted-users
 
-
 ** TO-THINK Users
+
+Users are the ones that obtain the benefits from the services of nodes and
+moderators, because they are who send and receive the content.
+
+The use of the system must be transparent to the user. S/he should be able to
+connect using his/her client or browser without having to do anything special
+and without requiring any technological expertise.
 
 #+BEGIN_SRC plantuml :file "img/user-class.png"
 class User {
@@ -285,7 +298,7 @@ class User {
       history
       updloads
 }
-Worker --|> User
+Worker -right-|> User
 #+END_SRC
 
 #+RESULTS:
@@ -318,49 +331,49 @@ Worker --|> User
 
 ** TO-IMPROVE Law appliance
 
-   Basically, the law is applied by judging (checking) that every node
-   and client is doing the work as it should, so, when asked, it
-   should answer with the truth of what is asked. If it is found that
-   the node or client is lying, it is penalized or banned, and its
-   transactions rejected are not included in the blockchain.
+Basically, the law is applied by judging (checking) that every node
+and client is doing the work as it should, so, when asked, it
+should answer with the truth of what is asked. If it is found that
+the node or client is lying, it is penalized or banned, and its
+transactions rejected are not included in the blockchain.
 
-   Laws are written in the source code in the form of *generics* and the
-   corresponding *methods*. A *method* is a specific application of a
-   *generic*. For example, for the *generic* of the Law of Bandwidth there
-   are going to be several *methods* for judging nodes, users and
-   moderators.
+Laws are written in the source code in the form of *generics* and the
+corresponding *methods*. A *method* is a specific application of a
+*generic*. For example, for the *generic* of the Law of Bandwidth there
+are going to be several *methods* for judging nodes, users and
+moderators.
 
-   #+BEGIN_SRC lisp
-   (defgeneric judge-bandwidth (worker))
-   (defmethod judge-bandwidth ((node NODE)))
-   (defmethod judge-bandwidth ((moderator MODERATOR)))
-   (defmethod judge-bandwidth ((user USER)))
-   #+END_SRC
+This is a subprocess of the general *sync* process, as described in the
+Nodepool section.
 
-   The return of those functions is always a verdict, in the form of
-   lambda expression, so it is easy to parse from scripts:
+#+BEGIN_SRC plantuml :file "img/appliance1.png"
+(*) -right-> [sync process] select workers to judge
+-right-> judge workers
+-right-> enforce verdicts
+-right-> [freeze pool process] (*)
+#+END_SRC
 
-   #+BEGIN_SRC lisp
+#+RESULTS:
+[[file:img/appliance1.png]]
+
+
+The return of those functions is always a verdict, in the form of
+lambda expression, so it is easy to parse from scripts[fn:1]:
+
+#+BEGIN_SRC lisp
    (verdict t :reward 0.2345)
    (verdict nil :penalization 1.3 :ban 6)
-   #+END_SRC
+#+END_SRC
 
-   The first var is *t* or *nil* indicating if the verdict is favorable or
-   not. The rest indicates the properties of the verdict, to be
-   applied by the **enforce** *generic*:
+The first var is *t* or *nil* indicating if the verdict is favorable or
+not. The rest indicates the properties of the verdict, to be
+applied by the *enforce* *generic*.
 
-   #+BEGIN_SRC lisp
-   (defgeneric enforce (worker verdict))
-   (defmethod enforce ((node NODE) verdict))
-   ...
-   #+END_SRC
-
-   The purpose of it is to certificate (sign) the verdict and write it
-   in the Blockchain and/or in the Node Pool State when
-   appropriate. When there is general consensus (for example, 80% or
-   more of the workers agree with the verdict), the current Block is
-   frozen and added to the Blockchain, and the Node Pool State is
-   regenerated using relevant parts of the old data for the new start.
+The purpose of it is to certificate (sign) the verdict and write it in the
+Node Pool State when appropriate. When there is general consensus (for
+example, 80% or more of the workers agree with the verdict), the current Block
+is frozen and added to the Blockchain, and the Node Pool State is regenerated
+using relevant parts of the old data for the new start.
 
 ** EARLY-DRAFT The laws
 *** Time Law
@@ -432,24 +445,93 @@ Worker --|> User
  : (defgeneric judge-bandwidth (worker))
 
 **** TO-THINK Bandwidth check
-**** TO-THINK Short Circuit check
 **** TO-THINK Abuse Bandwidth check
 *** TO-THINK Service Law
-
-    Workers must answer to queries.
-
+Workers must answer to queries.
+**** DNS check
+**** Query answer check
+**** Availability check
 *** TO-THINK Dispersion Law
-
-    Ensure randomness when selecting nodes.
+Ensure randomness when selecting nodes.
+**** Random connection check
+**** Short Circuit check
 
 *** TO-THINK Storage Law
 *** TO-THINK Advertising Law
 *** TO-THINK Enforcement Law
 *** TO-THINK Money Law
-* TO-THINK Blockchain format
+* TO-THINK Storage and language format
+** Format
+*** Lambda expressions
+
+Libraries for many languages (for example PHP, Ruby, Python and Javascript)
+should be trivial to implement. Conversion to json objects should be easy and
+fast.
+
+*** Compression
+
+Compression is very easy to implement for lambda expressions and happens in
+real time when storing the blockchain in a file. We just need to assign a
+constant binary number for every tag and store that number instead of full
+names. Numbers can be stored in a fixed size 64 bit floating point format.
+
+In addition, there should be a second compression pass using the standard LZO
+libraries, available for all the languages.
+
 * TO-THINK Query language
+** Format
 ** Search engine
-* TO-THINK Nodepool format
+* TO-THINK Blockchain
+** The cycle
+** Simplification
+
+In order to avoid some scalability issues, there is a process of
+simplification that happens for data stored in the blockchain from certain
+time backwards. This process removes all transaction data except the amount
+of money owned by every account when due-date arrives.
+
+* TO-THINK Routing
+
+** HTTP as a base
+
+Most communications are done using the well understood and easy to use HTTP
+network protocol as a base. We choose to use HTTP because it is enough for our
+requirements and because it is widely available.
+
+We choose the default 80 port for all communications, with the option for
+nodes to select any other alternatives. The reason to use this port is that
+people behind a firewall can still access the complete net without the typical
+restrictions. Most ISPs prioritize this port over the rest, making it the fastest
+and more reliable port. Also, censorship becomes much more difficult.
+
+Nodes wanting to use the 80 port for other purposes (like for example a
+classical web server) can use any of the Unix tools available to route
+domains, like for example /nginx/.
+
+We don't use any p2p low level protocol like Bittorrent because we need very
+fast access with the less possible lag. It also happens that many ISP actually
+censor Bittorrent protocol. In addition, using simple HTTP will simplify the
+protocol very much.
+
+** Nodes designed to run in a full server
+
+The reason for this is that Bitcloud must provide fast access and high
+bandwidth availability to the users. For example, streaming a single HD video
+requires an upload capacity of 1Mb/s or more, which means that some home
+connections would not be able to serve even a single video, not to speak to
+serve several files at a time. Also, home connections are unreliable in
+comparison with good properly located servers.
+
+We also intentionally forbid nodes without a proper DNS pointing to them, so
+we enforce more stability.
+
+* TO-THINK Nodepool
+
+The *Nodepool* contains all the information relevant to the nodes, and it is
+constantly calculated in real time.
+
+** Regeneration
+
 * TO-THINK Node Interface
 
   This is the interface for the node (not the users) so the
@@ -477,16 +559,25 @@ Worker --|> User
   - Lets do the things right for once! We have the opportunity to
     avoid using a crappy language like C++ before it is too late. :)
 
-* TO-THINK LOGs examples
+* TO-THINK LOG examples
 
-  - This moderators offer you X mediacoins by inserting an ad into
-    your content.
+- This moderator offer you X mediacoins by inserting an ad into your
+  content.
 
-  - You have been accused of denying storage for the moderator
-    X. Verdict is: banned for 1 period and penalized with 1 MAC.
+- You have been accused of denying storage for the moderator X. Verdict is:
+  banned for 1 period and penalized with 1 MAC.
 
 * TO-THINK Future as a Social Distributed application
 
-  With not so much modifications, this DA could also provide social
-  content with characteristics competing to those of centralized
-  privated sites like Facebook and Twitter.
+  With not so much modifications, this DA could also provide social content
+  with characteristics competing to those of centralized private sites like
+  Facebook and Twitter.
+
+* Footnotes
+
+[fn:1] In order to make things easy for system administrators and programmers,
+we are using lambda expressions. These are simple expressions enclosed into
+parenthesis with the action in the first position. It is actually very easy to
+translate from jason-format to lambda expressions. We choose lambda
+expressions because they need less space and are faster to parse and write.
+
