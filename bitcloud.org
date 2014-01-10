@@ -634,62 +634,100 @@ The process (using the graph above as an example):
 When a content is marked as *protected*, the Bitcloud net protects both the IP
 and domain name of the node serving the content. The user requesting the
 connection is also protected. There is still a way for auditors to know that a
-certain computer is acting as a node, but will not be able to know what is the
-protected content that is serving. Even more, external auditors cannot
-distinguish between protected and unprotected routing while analyzing the
+certain computer is acting as a protected node, but will not be able to know
+what is the protected content that is serving. Even more, external auditors
+cannot distinguish between the content routed or served while analyzing the
 traffic to an specific node.
+
+All nodes are enforced to accept protected content routed, even if they are
+not protected themselves. Nodes cannot know what is the content being routed
+because it is multi-layered encrypted.
 
 We use a routing process similar to Tor Onion hidden services, optimized to
 our purposes.
 
 #+BEGIN_SRC plantuml :file "img/protected-route.png"
-cloud "Middle Nodes" as MN {
+cloud "Cloud of Nodes" as MN {
+node "<color:red>PROTECTED NODE B</color>" as pnode
+node "MiddleNodeA" as mnodeA
+node "MiddleNodeB" as mnodeB
+node "MiddleNodeC" as mnodeC
+node "MiddleNodeD" as mnodeD
+node "MiddleNodeE" as mnodeE
+node "MiddleNodeF" as mnodeF
 }
 
-node "Protected Node" as pnode
 node Node1 {
-(Node Router) as RF1
+node "<color:red>PROTECTED NODE A</color>" as pnode2
+(Node Router) as NR1
+NR1 <--> pnode2
 }
 node Node2 {
-(Node Router) as RF2
+(Node Router) as NR2
 }
 node Node3 {
-(Node Router) as RF3
+(Node Router) as NR3
 }
 node Node4 {
-(Node Router) as RF4
+(Node Router) as NR4
 }
-RF1 <.down.> MN
-RF2 <.down.> MN
-RF3 <.down.> MN
-RF4 <.down.> MN  : "<b>protected routes</b>"
+NR1 <.down.> mnodeA
+NR2 <.down.> mnodeB
+NR3 <.down.> mnodeC
+NR4 <.down.> mnodeD  : "<b>multi-layer encrypted data</b>"
 (User Router) as RS
-RS     <-down-> RF1
-RS     <-down-> RF2
-RS     <-down-> RF3
-RS     <-down-> RF4
+RS     <-down-> NR1
+RS     <-down-> NR2
+RS     <-down-> NR3
+RS     <-down-> NR4
 :User:     <-down-> RS : Request protected content
-MN <.down.> pnode
+mnodeA <--> mnodeF
+mnodeF <--> pnode
+mnodeB <----> pnode
+mnodeC <-> mnodeD
+mnodeD <--> mnodeE
+mnodeE <--> pnode
 #+END_SRC
 
 #+RESULTS:
 [[file:img/protected-route.png]]
 
-1. The user chooses a collection of 4 random nodes. /Dispersion Law/.
-2. Using the User Router (coded in the interface), the User ask all the nodes to find a
-   route to the Protected Node. /Service Law/
-3. Each node tries to find a competitive route to the Protected Node and answer
-   fast to the User. /Service Law/
-4. The User Router chooses the fastest one.
-5. The User download/stream/upload the content throughout the fastest
-   route. /Bandwidth Law/
-6. Meanwhile, the User informs the rest of the nodes about the quality of the
-   connection. /Bandwidth Law/.
-7. If the quality is low, the User Router tries to change to other route
-   Node while informing the issue. /Bandwidth Law/
-8. The selected node also enforces the Bandwidth Law for the Middle Node it is
-   connected to.
-9. Each Middle Node also enforces the Bandwidth Law for their connections. 
+- The user chooses a collection of 4 random nodes. /Dispersion Law/.
+- The User Router (coded in the interface) asks the 4 nodes to find a route
+  to the Protected Node, encrypting the request with the public key
+  associated to the Protected Content, and adding its public key inside the
+  encrypted request (so only the real Prrotected Node can know what is sent
+  back).  /Service Law/
+- Each node tries to find a competitive route to the Protected Node and answer
+  fast to the User. The way to do this is by sending the encrypted request to
+  all the nodes it is connected to and wait for an answer. /Service Law/
+- The Private Node is found when it is able to decrypt the request. Otherwise
+  it is re-dispatched to all connected nodes.
+- To protect itself, the Protected Node adds a random time (lag) of response
+  to the request, equivalent to several searches. We recommend a random number
+  between 1s and 5s. Once answered, the node must stick to that approximate
+  lag, but can change it when requesting a different content for another
+  moderator or when certain time has passed.
+- There is the lucky possibility that a connected Node is also the protected
+  one having the content (like Node1 in the graph). In that case the protected
+  node adds the convenient lag time to protect itself.
+- Meanwhile all nodes are attending other requests for other contents, so
+  nobody knows if the other requests are actually part of the original request
+  or not.
+- The Protected Node always send back the content encrypted with the public
+  key inside the request, so only the user can know what is the content.
+- The User Router chooses the fastest route.
+- *Only* the User Router's connected nodes generate any money, to avoid short
+  circuit cheats. /Bandwidth Law/
+- The User download/stream/upload the content throughout the fastest
+  route. /Bandwidth Law/
+- Meanwhile, the User informs the rest of the nodes about the quality of the
+  connection. /Bandwidth Law/.
+- If the quality is low, the User Router tries to change to other route
+  Node while informing the issue. /Bandwidth Law/
+- The selected node also enforces the /Bandwidth Law/ and /Service Law/ for
+  the Middle Node it is connected to.
+- Each Middle Node also enforces the /Bandwidth Law/ for their connections.
 
 ** EARLY-DRAFT The User Router
 
