@@ -557,7 +557,79 @@ details specified in the /Node class/.
 Every user is connected to a randomly selected collection of 4 nodes. It must
 be really random
 
-** EARLY-DRAFT Protected nodes
+** EARLY-DRAFT Unprotected routing
+
+Every single user is connected to 4 nodes using the User Router coded in the
+interface. These connections are meant to both transfer the content and to
+apply the BCL (Bitcloud Cryptographic Law).
+
+Example graph:
+#+BEGIN_SRC plantuml :file "img/unprotected-route.png"
+:User:     <-down-> (User Router) : Request Content
+node Node1 {
+(Node Router) as NR1
+}
+NR1 <-up-> (User Router)
+node Node2 {
+(Node Router) as NR2
+}
+NR2 <-up-> (User Router)
+node Node3 {
+(Node Router) as NR3
+node Final3 as "Final Node C"
+}
+NR3 <-up-> (User Router)
+node Node4 {
+(Node Router) as NR4
+}
+NR4 <-up-> (User Router)
+node Final1 as "Final Node A"
+node Final2 as "Final Node B"
+NR1 <--> Final1
+NR2 <--> Final1
+NR2 <--> Final2
+NR2 <--> Final3
+NR3 <--> Final3
+NR4 <--> Final3
+#+END_SRC
+
+#+RESULTS:
+[[file:img/unprotected-route.png]]
+
+The process (using the graph above as an example):
+
+- The User Router finds 4 random nodes. This router is coded in the user
+  interface. /Dispersion Law/
+- The User Router asks the 4 nodes to find a route to the content. /Service Law/
+- Nodes answer with route data. /Service Law/
+- The User Router select the fastest. The fastest is calculated in function
+  of the data retrieved in the last point, and usually is a combination of
+  bandwidth available and shortest distance. In the example, Node3 is the
+  fastest because it happens to be also a Final Node for the requested
+  content. The second fastest should be Node2 because it has more connections
+  to nodes having the content. If the requested content is cached in any of
+  the Nodes, it should be considered as fast as actually being a Final Node.
+- Money is generated *only* in the User Router's connected nodes, never in
+  the Final Nodes to avoid short circuits. Only exception is when the Final
+  Node is also one of the connected nodes. /Bandwidth Law/
+- If a Final Node denies service, /Service Law/ is applied.
+- Optionally, connected nodes can cache the content so they don't need to
+  retrieve the content from the Final Nodes if the content is requested
+  often.
+- While the User is downloading/uploading the content, it must inform all the
+  connected nodes about the quality of the connection. If quality is low, he
+  can select another route from another node and denounce about the issue to
+  the other nodes, so they can apply the law. See "User Router"
+  section for a better explanation. /Bandwidth Law/
+- If quality is low, an Investigation Process to find the culprit is
+  executed. Culprit can be the Final Node, the connected Node, both, or
+  none. /Bandwidth Law/ - /Check low quality culprit/ section.
+- User is banned if he tries to abuse bandwidth or the law. /Bandwidth Law/ -
+  /Abuse check/ section.
+- Law is applied when at least 3 of the 4 nodes agrees.
+
+
+** EARLY-DRAFT Protected routing
 
 When a content is marked as *protected*, the Bitcloud net protects both the IP
 and domain name of the node serving the content. The user requesting the
@@ -579,13 +651,13 @@ node Node1 {
 (Node Router) as RF1
 }
 node Node2 {
-(Route Finder) as RF2
+(Node Router) as RF2
 }
 node Node3 {
-(Route Finder) as RF3
+(Node Router) as RF3
 }
 node Node4 {
-(Route Finder) as RF4
+(Node Router) as RF4
 }
 RF1 <.down.> MN
 RF2 <.down.> MN
@@ -608,12 +680,12 @@ MN <.down.> pnode
    route to the Protected Node. /Service Law/
 3. Each node tries to find a competitive route to the Protected Node and answer
    fast to the User. /Service Law/
-4. The Route Selector chooses the fastest one.
+4. The User Router chooses the fastest one.
 5. The User download/stream/upload the content throughout the fastest
-   rute. /Bandwidth Law/
+   route. /Bandwidth Law/
 6. Meanwhile, the User informs the rest of the nodes about the quality of the
-   conexion. /Bandwidth Law/.
-7. If the quality is low, the Route Selector tries to change to other route
+   connection. /Bandwidth Law/.
+7. If the quality is low, the User Router tries to change to other route
    Node while informing the issue. /Bandwidth Law/
 8. The selected node also enforces the Bandwidth Law for the Middle Node it is
    connected to.
