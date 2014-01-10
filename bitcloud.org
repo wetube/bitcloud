@@ -1,4 +1,4 @@
-#+SEQ_TODO: TO-THINK EARLY-DRAFT TO-IMPROVE TO-VOTE FINISHED
+#+SEQ_TODO: TO-THINK EARLY-DRAFT LATE-DRAFT TO-IMPROVE TO-VOTE FINISHED
 #+TITLE: Bitcloud: A Peer to Peer System for Sharing Bandwidth
 #+LANGUAGE: en
 #+STARTUP: align fold hidestars
@@ -514,12 +514,12 @@ protocol very much.
 
 ** GET/POST format
 
-** Serving static pages (Entry points)
+** LATE-DRAFT Serving static pages (Entry points)
 
 We are also supporting the serving of static web pages stored in the nodes
-outside of the Bitcloud, in the official Bitcloud client. These pages are
-considered a wrapper for Bitcloud. The purpose of this is to allow nodes to
-become entry points for users:
+outside of the Bitcloud, in the official Bitcloud server program. These pages
+are considered a wrapper for Bitcloud. The purpose of this is to allow nodes
+to become entry points for users:
 
 - To allow the users to download a full featured client.
 - To allow the users to connect "hot" using a JavaScript client.
@@ -535,8 +535,7 @@ law of Bitcloud, nor to its benefits.
 In addiction to this, nodes can install their own HTTP server (like Apache)
 and serve dynamic pages using local routing facilities like /nginx/.
 
-
-** Nodes are designed to run on full-featured servers
+** LATE-DRAFT Nodes are designed to run on full-featured servers
 
 The reason for this is that Bitcloud must provide fast access and high
 bandwidth availability to the users. For example, streaming a single HD video
@@ -548,32 +547,121 @@ change IP too often, in comparison to good properly located servers[fn:2].
 We also intentionally forbid nodes without a proper DNS pointing to them, so
 we enforce more reliability  when connecting to nodes.
 
-** Registering a new node and connecting to the network
+** TO-THINK Registering a new node and connecting to the network
 
 Every new node must register into the network and provide the necessary
 details specified in the /Node class/.
 
+** TO-THINK Dynamically find routes
 
-** Protected nodes
+Every user is connected to a randomly selected collection of 4 nodes. It must
+be really random
 
-When a node marks itself as *protected*, the Bitcloud net protects both its IP
-and domain name when serving the content. There is still a way for auditors to
-know that a certain computer is acting as a node, but will not be able to know
-what moderators and content is serving.
+** EARLY-DRAFT Protected nodes
+
+When a content is marked as *protected*, the Bitcloud net protects both the IP
+and domain name of the node serving the content. The user requesting the
+connection is also protected. There is still a way for auditors to know that a
+certain computer is acting as a node, but will not be able to know what is the
+protected content that is serving. Even more, external auditors cannot
+distinguish between protected and unprotected routing while analyzing the
+traffic to an specific node.
 
 We use a routing process similar to Tor Onion hidden services, optimized to
-our purposes, with the following characteristics:
+our purposes.
 
-#+BEGIN_SRC plantuml :file "img/protected-routing.png"
-:User:  <-> (Exit node)
-(Exit node) <-> (Middle nodes)
-(Middle nodes) <-> (Protected node)
+#+BEGIN_SRC plantuml :file "img/protected-route.png"
+cloud "Middle Nodes" as MN {
+}
+
+node "Protected Node" as pnode
+node Node1 {
+(Node Router) as RF1
+}
+node Node2 {
+(Route Finder) as RF2
+}
+node Node3 {
+(Route Finder) as RF3
+}
+node Node4 {
+(Route Finder) as RF4
+}
+RF1 <.down.> MN
+RF2 <.down.> MN
+RF3 <.down.> MN
+RF4 <.down.> MN  : "<b>protected routes</b>"
+(User Router) as RS
+RS     <-down-> RF1
+RS     <-down-> RF2
+RS     <-down-> RF3
+RS     <-down-> RF4
+:User:     <-down-> RS : Request protected content
+MN <.down.> pnode
 #+END_SRC
 
 #+RESULTS:
-[[file:img/protected-routing.png]]
+[[file:img/protected-route.png]]
 
+1. The user chooses a collection of 4 random nodes. /Dispersion Law/.
+2. Using the User Router (coded in the interface), the User ask all the nodes to find a
+   route to the Protected Node. /Service Law/
+3. Each node tries to find a competitive route to the Protected Node and answer
+   fast to the User. /Service Law/
+4. The Route Selector chooses the fastest one.
+5. The User download/stream/upload the content throughout the fastest
+   rute. /Bandwidth Law/
+6. Meanwhile, the User informs the rest of the nodes about the quality of the
+   conexion. /Bandwidth Law/.
+7. If the quality is low, the Route Selector tries to change to other route
+   Node while informing the issue. /Bandwidth Law/
+8. The selected node also enforces the Bandwidth Law for the Middle Node it is
+   connected to.
+9. Each Middle Node also enforces the Bandwidth Law for their connections. 
 
+** EARLY-DRAFT The User Router
+
+The mission of the User Router is to find the fastest route to a solicited
+content, whether it is protected or not.
+
+It must be coded in the user interface and must respect the BCL in order for
+the user to not be banned.
+
+Its principles are simple, and should be easy to code in any language, even
+JavaScript for the browser.
+
+#+BEGIN_SRC plantuml :file "img/protected-route-selector.png"
+(*) -down-> "Ask Entry Point for random nodes"
+--> ===AN===
+-down-> "Ask Node1"
+-down-> ===Sync===
+===AN=== --> "Ask Node2"
+-down-> ===Sync===
+===AN=== --> "Ask Node3"
+-down-> ===Sync===
+===AN=== --> "Ask Node4"
+-down-> ===Sync===
+-down-> "Select Fastest"
+-down-> "Download/Upload/Stream"
+if "is quality ok?" then
+ --> [low quality] "Inform low quality to other nodes"
+else
+ ----> [high quality] "Inform high quality to other nodes"
+ -down-> (*)
+endif
+"Inform low quality to other nodes" --> "ask to the next fastest"
+ -> "Download/Upload/Stream"
+"Inform low quality to other nodes" ..> [no more nodes] "<color:red>ERROR</color>"
+#+END_SRC
+
+#+RESULTS:
+[[file:img/protected-route-selector.png]]
+
+*** The Route Finder
+
+#+BEGIN_SRC plantuml :file "img/protected-route-finder.png"
+
+#+END_SRC
 
 * TO-THINK Nodepool
 
