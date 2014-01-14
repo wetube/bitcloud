@@ -303,6 +303,104 @@ Worker -right-|> User
 
 #+RESULTS:
 [[file:img/user-class.png]]
+* TO-THINK Storage and language format
+** Commands
+
+Any lambda expression is formed visually by encapsulating a command with their
+variables between parenthesis, this way:
+
+: (command value1 :param2 value2 :param3 value3)
+
+All parameter names are prefixed with a :.
+
+The first /value/ doesn't need a parameter name because it is the fundamental
+parameter for the command.
+
+The rest of the parameters are named, and in fact their positions doesn't
+matter at all.
+
+Values can be of type:
+
+- /strings/, surrounded by "":
+  
+  : (search "wetube")
+  
+- /numbers/ inserted directly
+
+  : (search "wetube" :show-results 50)
+  
+- /single strings/ or /symbols/, they are the same as strings but used for
+  just one word:
+
+  : (search 'wetube)
+
+- /literal lists/ prefixed by a ' and followed by parenthesis and values
+  separated by spaces:
+
+  : (search 'wetube :moderators '(modA modB))
+  
+- /booleans/ which are just t or nil:
+
+  : (verdict t :reward 1.23)
+
+- /output from other commands/ surrounded by parenthesis without the ':
+
+  : (search 'wetube :moderators (search-moderators 'mod :protected t))
+  
+** Object Format
+
+In addition to format commands, we also use lambda expressions to form the
+format of objects, mainly used for return values from commands, blockchain
+transactions and Node Pool states.
+
+: (object value1 value2 :slot1 slot-value1 :slot2 slot-value1)
+
+In contrast to commands, an object may have any number of unnamed values. It
+can be the case that some objects just don't have any predefined slots.
+
+Named slots are always at the end of the lambda list to avoid confusion.
+
+It is better seen as examples:
+
+: (verdict t :reward 1.23)
+: (results )
+
+** Library
+
+We provide many utility functions and constructs so workers can do very
+advanced queries to nodes.
+
+*** Fundamentals
+**** if/else
+**** log
+**** error
+**** map
+**** reduce
+**** list
+**** push
+**** pop
+*** Content
+**** search
+*** Moderators
+**** search-moderators
+*** Money
+**** pay
+**** exchange
+*** Encryption
+**** verify-signature
+*** Law enforcement
+**** judge
+**** enforce
+
+** Compression
+
+Compression is very easy to implement for lambda expressions and happens in
+real time when storing the blockchain in a file. We just need to assign a
+constant binary number for every tag and store that number instead of full
+names. Numbers can be stored in a fixed size 64 bit floating point format.
+
+In addition, there should be a second compression pass using the standard LZO
+libraries, available for all the languages.
 
 * EARLY-DRAFT The Bitcloud Cryptography Law (BCL)
 
@@ -460,88 +558,7 @@ Ensure randomness when selecting nodes.
 *** TO-THINK Advertising Law
 *** TO-THINK Enforcement Law
 *** TO-THINK Money Law
-* TO-THINK Storage and language format
-** Format
 
-*** Definition
-
-Any lambda expression is formed visually by encapsulating a command with their
-variables between parenthesis, this way:
-
-: (command value1 :param2 value2 :param3 value3)
-
-All parameter names are prefixed with a :.
-
-The first /value/ doesn't need a parameter name because it is the fundamental
-parameter for the command.
-
-The rest of the parameters are named, and in fact their positions doesn't
-matter at all.
-
-Values can be of type:
-
-- /strings/, surrounded by "":
-  
-  : (search "wetube")
-  
-- /numbers/ inserted directly
-
-  : (search "wetube" :show-results 50)
-  
-- /single strings/ or /symbols/, they are the same as strings but used for
-  just one word:
-
-  : (search 'wetube)
-
-- /literal lists/ prefixed by a ' and followed by parenthesis and values
-  separated by spaces:
-
-  : (search 'wetube :moderators '(modA modB))
-  
-- /booleans/ which are just t or nil:
-
-  : (verdict t :reward 1.23)
-
-- /output from other commands/ surrounded by parenthesis without the ':
-
-  : (search 'wetube :moderators (search-moderators 'mod :protected t))
-
-*** Advantages
-
-There are many advantages to use lambda expressions as our query language:
-
-- It has almost no syntax, so it is easy to parse. The first word in the
-  lambda is always the command to execute. Example:
-
-  : (search "wetube" :category "software" :moderators '(modA liberman))
-  
-- It allows recursive insert of commands:
-
-  : (search "wetube" :moderators (search-moderators "mod" :protected t))
-  
-- They are easy to write in a command line.
-
-- They are easy to send and receive for nodes and clients.
-
-- Libraries for many languages (for example PHP, Ruby, Python and Javascript)
-  should be trivial to implement.
-  
-- Conversion to and from JSON objects should be easy and fast.
-
-
-*** Compression
-
-Compression is very easy to implement for lambda expressions and happens in
-real time when storing the blockchain in a file. We just need to assign a
-constant binary number for every tag and store that number instead of full
-names. Numbers can be stored in a fixed size 64 bit floating point format.
-
-In addition, there should be a second compression pass using the standard LZO
-libraries, available for all the languages.
-
-* TO-THINK Query language
-** Format
-** Search engine
 * TO-THINK Blockchain
 
 We use a Blockchain in order to store all money transactions, including the
