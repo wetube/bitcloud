@@ -311,7 +311,7 @@ variables between parenthesis, this way:
 
 : (command value1 :param2 value2 :param3 value3)
 
-All parameter names are prefixed with a :.
+All parameter names are prefixed with a /:/.
 
 The first /value/ doesn't need a parameter name because it is the fundamental
 parameter for the command.
@@ -321,7 +321,7 @@ matter at all.
 
 Values can be of type:
 
-- /strings/, surrounded by "":
+- /strings/, surrounded by /""/:
   
   : (search "wetube")
   
@@ -334,16 +334,16 @@ Values can be of type:
 
   : (search 'wetube)
 
-- /literal lists/ prefixed by a ' and followed by parenthesis and values
+- /literal lists/ prefixed by a /'/ and followed by parenthesis and values
   separated by spaces:
 
   : (search 'wetube :moderators '(modA modB))
   
-- /booleans/ which are just t or nil:
+- /booleans/ which are just /t/ or /nil/:
 
   : (verdict t :reward 1.23)
 
-- /output from other commands/ surrounded by parenthesis without the ':
+- /output from other commands/ surrounded by parenthesis without the /'/:
 
   : (search 'wetube :moderators (search-moderators 'mod :protected t))
   
@@ -365,30 +365,58 @@ It is better seen as examples:
 : (verdict t :reward 1.23)
 : (results )
 
+** Why lambda expressions?
+
+Mostly because they are easy to parse, extensible, and easy to construct lists
+in. We are using a lot of lists.  Another advantage is that we can also use
+the same language for the the object and command formats.
+
+Other alternative would be: a combination of SQL constucts and JSON objects,
+but that would be harder to think and parse, and would require bigger programs
+for small clients like JavaScript embedded scripts.
+
 ** Library
 
 We provide many utility functions and constructs so workers can do very
 advanced queries to nodes.
 
-*** Fundamentals
+*** Specials forms
 **** if/else
-**** log
-**** error
-**** map
+**** not
+**** and or
+**** let
+*** Comparison
+**** < <= >= > =
+*** Lists
+**** length
+**** member
 **** reduce
 **** list
 **** push
 **** pop
+**** map
+*** Fundamentals
+**** log
+**** error
 *** Content
 **** search
+**** stream
+**** download
+**** upload
+*** Users
+**** register
+**** profile
 *** Moderators
 **** search-moderators
+**** categorize
+**** delete
+*** Nodes
 *** Money
 **** pay
 **** exchange
 *** Encryption
 **** verify-signature
-*** Law enforcement
+*** Law
 **** judge
 **** enforce
 
