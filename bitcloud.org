@@ -462,11 +462,72 @@ Ensure randomness when selecting nodes.
 *** TO-THINK Money Law
 * TO-THINK Storage and language format
 ** Format
-*** Lambda expressions
 
-Libraries for many languages (for example PHP, Ruby, Python and Javascript)
-should be trivial to implement. Conversion to json objects should be easy and
-fast.
+*** Definition
+
+Any lambda expression is formed visually by encapsulating a command with their
+variables between parenthesis, this way:
+
+: (command value1 :param2 value2 :param3 value3)
+
+All parameter names are prefixed with a :.
+
+The first /value/ doesn't need a parameter name because it is the fundamental
+parameter for the command.
+
+The rest of the parameters are named, and in fact their positions doesn't
+matter at all.
+
+Values can be of type:
+
+- /strings/, surrounded by "":
+  
+  : (search "wetube")
+  
+- /numbers/ inserted directly
+
+  : (search "wetube" :show-results 50)
+  
+- /single strings/ or /symbols/, they are the same as strings but used for
+  just one word:
+
+  : (search 'wetube)
+
+- /literal lists/ prefixed by a ' and followed by parenthesis and values
+  separated by spaces:
+
+  : (search 'wetube :moderators '(modA modB))
+  
+- /booleans/ which are just t or nil:
+
+  : (verdict t :reward 1.23)
+
+- /output from other commands/ surrounded by parenthesis without the ':
+
+  : (search 'wetube :moderators (search-moderators 'mod :protected t))
+
+*** Advantages
+
+There are many advantages to use lambda expressions as our query language:
+
+- It has almost no syntax, so it is easy to parse. The first word in the
+  lambda is always the command to execute. Example:
+
+  : (search "wetube" :category "software" :moderators '(modA liberman))
+  
+- It allows recursive insert of commands:
+
+  : (search "wetube" :moderators (search-moderators "mod" :protected t))
+  
+- They are easy to write in a command line.
+
+- They are easy to send and receive for nodes and clients.
+
+- Libraries for many languages (for example PHP, Ruby, Python and Javascript)
+  should be trivial to implement.
+  
+- Conversion to and from JSON objects should be easy and fast.
+
 
 *** Compression
 
@@ -482,8 +543,41 @@ libraries, available for all the languages.
 ** Format
 ** Search engine
 * TO-THINK Blockchain
-** The cycle
-** Simplification
+
+We use a Blockchain in order to store all money transactions, including the
+ones comming from the nodes for Bandwidth sharing.
+
+We are *not* using the Blockchain to store any information related to the
+content at all. If we do so, very soon the Blockchain would become very
+big. For such things, we use the Node Pool.
+
+We can't use an existing Blockchain from another coin like Bitcoin for the
+simple reason that we must generate the money from bandwidth sharing. But we
+are providing exchange facilities that could be inserted in a user interface
+like Wetube.
+
+** TO-THINK Structure
+
+#+BEGIN_SRC plantuml :file "img/blockchain-general.png"
+Block1 : Born
+Block1 -> Block2
+Block2 -> Block3
+Block3 -> BlockN
+BlockN -> LastBlock
+LastBlock -> [*] : Block being made
+#+END_SRC
+
+#+RESULTS:
+[[file:img/blockchain-general.png]]
+
+** TO-THINK The cycle
+
+A new block is generated once every 10 minutes after the Node Pool is synced
+and signed.
+
+** TO-THINK Format
+
+** TO-THINK Simplification
 
 In order to avoid some scalability issues, there is a process of
 simplification that happens for data stored in the blockchain from certain
@@ -626,7 +720,8 @@ The process (using the graph above as an example):
   none. /Bandwidth Law/ - /Check low quality culprit/ section.
 - User is banned if he tries to abuse bandwidth or the law. /Bandwidth Law/ -
   /Abuse check/ section.
-- Law is applied when at least 3 of the 4 nodes agrees.
+- Law is enforced when at least 3 of the 5 workers agrees (the 5 workers are 1
+  user + 4 nodes).
 
 ** EARLY-DRAFT Protected routing
 
