@@ -2,7 +2,7 @@
 #+TITLE: Bitcloud: A Peer to Peer System for Sharing Bandwidth
 #+LANGUAGE: en
 #+STARTUP: align fold hidestars
-#+OPTIONS: H:7 num:nil toc:nil \n:nil stat:nil timestamp:nil html-postamble:nil inline-images:t
+#+OPTIONS: H:7 num:nil toc:t \n:nil stat:nil timestamp:nil html-postamble:nil inline-images:t
 
 * TO-IMPROVE Introduction
 
@@ -491,7 +491,7 @@ time backwards. This process removes all transaction data except the amount
 of money owned by every account when due-date arrives.
 
 * TO-THINK Routing
-** HTTP as a base
+** LATE-DRAFT HTTP as a base
 
 Most communications are done using the well understood and easy to use HTTP
 network protocol as a base. We choose to use HTTP because it is enough for our
@@ -512,7 +512,7 @@ fast access with the less possible lag. It also happens that many ISP actually
 censor Bittorrent protocol. In addition, using simple HTTP will simplify the
 protocol very much.
 
-** GET/POST format
+** TO-THINK GET/POST format
 
 ** LATE-DRAFT Serving static pages (Entry points)
 
@@ -627,7 +627,6 @@ The process (using the graph above as an example):
 - User is banned if he tries to abuse bandwidth or the law. /Bandwidth Law/ -
   /Abuse check/ section.
 - Law is applied when at least 3 of the 4 nodes agrees.
-
 
 ** EARLY-DRAFT Protected routing
 

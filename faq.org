@@ -1,0 +1,67 @@
+#+SEQ_TODO: TO-THINK TO-IMPROVE FINISHED
+#+TITLE: Bitcloud FAQ
+#+OPTIONS: H:7 num:nil toc:t \n:nil stat:nil timestamp:nil html-postamble:nil inline-images:t
+#+STARTUP: align fold hidestars
+#+LANGUAGE: en
+
+# COMMENT FROM JAVIER: I recommend you to put this in your ~/.emacs:
+# (electric-indent-mode +1)
+# you can also run it in the current session by
+# typing "M-x electric-indent-mode"
+# that will facilitate the use of TABs and indentation
+# you can also customize org-mode behavior by typing:
+# M-x customize-group ENTER org
+#
+# also, as you see I have put many options for this file which will facilitate
+# your work.
+# Please remove this comment.
+
+* FINISHED Q: Why do we need Bitcloud?
+
+A: There are many different cloud-based services out there these days,
+but they are all developed in a centralized manner. You have to go to
+YouTube to watch your videos, Soundcloud to listen to your music, and
+Dropbox or another proprietary cloud storage company to store your
+files. Bitcloud allows anyone to create their own cloud based
+applications in ways that improve privacy and prevent censorship. The
+increased decentralization of Bitcloud also allows for more
+competition in the cloud services market. For example, artists can get
+a bigger cut of advertising revenue when they post their videos on
+WeTube (a future Bitcloud service) rather than YouTube because there
+are no overhead expenses.
+
+* TO-IMPROVE Q: What are cloudcoins?
+
+A: Cloudcoins are the currency of Bitcloud. They are mined by nodes
+who host all of the data stored in the Bitcloud network. [X NUMBER OF
+COINS] new cloudcoins are mined every [X NUMBER OF MINUTES], and they
+are distributed evenly based on the amount of bandwidth shared by each
+node during that period of time. Cloudcoins are also used to pay for
+the various applications on top of Bitcloud. Whether you want to
+purchase advertising space on WeTube or you need to buy some extra
+cloud storage, you will have to pay for everything with cloudcoins.
+
+* TO-IMPROVE Q: What is WeTube? 
+
+A: WeTube will likely be the first application built on top of
+Bitcloud. It will be used as a user interface for an online video
+streaming services, similar to YouTube. Artists will be able to upload
+videos to various Bitcloud nodes, and they can receive mediacoins from
+advertisements placed on their videos or other forms of media. It is
+likely that they will be able to earn a larger piece of the pie when
+uploading to WeTube rather than other options.
+
+* TO-THINK Q: Is Bitcloud Anonymous?
+A: 
+
+* TO-THINK Q: Who are moderators?
+A: 
+
+* TO-THINK Q: How can artists benefit from Bitcloud?
+A: 
+
+* TO-THINK Q: How can early adopters benefit from Bitcloud?
+A: 
+
+* TO-THINK Q: When will Bitcloud be released?
+A: 
