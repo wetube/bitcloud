@@ -103,4 +103,4 @@ There are definitely many other applications for Bitcloud that we haven't though
 Freenode IRC: #bitcloud  
 Reddit: /r/bitcloud  
 Javier Sobrino, Original Creator, Programming Inquiries: liberman@riseup.net  
-Kyle Torpey, Marketing/Media Inquiries: kyletorpey@riseup.net
+Kyle Torpey, Marketing/Nontechnical Inquiries: kyletorpey@riseup.net
