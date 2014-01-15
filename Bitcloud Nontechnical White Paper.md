@@ -100,7 +100,9 @@ There are definitely many other applications for Bitcloud that we haven't though
 
 ## Contact Information
 
+Website (coming soon): [www.bitcloudproject.org](http://www.bitcloudproject.org)  
+Twitter: [@bitcloudproject](http://www.twitter.com/bitcloudproject)  
 Freenode IRC: #bitcloud  
 Reddit: [/r/bitcloud](http://www.reddit.com/r/bitcloud)  
 Javier Sobrino, Original Creator, Programming Inquiries: liberman@riseup.net  
-Kyle Torpey, Marketing/Nontechnical Inquiries: kyletorpey@riseup.net
+Kyle Torpey, Marketing/PR/Nontechnical Inquiries: kyletorpey@riseup.net
