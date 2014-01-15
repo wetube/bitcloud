@@ -21,7 +21,7 @@ Centralized streaming services are another cloud platform that are subject to ce
 
 #### Comcast/Verizon/AT&T and the Internet
 
-We have the technology to create local mesh networks as replacements for the Internet and Internet service providers. The only problem is that there is little incentive for a new node to join a brand new network. We need to add the incentive of profit if we want to bootstrap and entirely new mesh network.
+We have the technology to create local mesh networks as replacements for the Internet and Internet service providers. The only problem is that there is little incentive for a new node to join a brand new network. We need to add the incentive of profit if we want to bootstrap an entirely new mesh network.
 
 #### Proprietary Cloud Services All Have Similar Problems
 
