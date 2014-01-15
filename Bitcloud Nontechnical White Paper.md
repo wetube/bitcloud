@@ -67,7 +67,7 @@ There are still many key decisions that need to be made in the Bitcloud protocol
 
 ### Bitcloud is a Distributed Autonomous Corporation
 
-If you're unfamiliar with decentralized applications or distributed autonomous corporations, then you may want to look into the explanations offered by the [Mastercoin Foundation](https://github.com/DavidJohnstonCEO/DecentralizedApplications/blob/master/README.md), [Invictus Innovations](http://letstalkbitcoin.com/bitcoin-and-the-three-laws-of-robotics/#.UjjO0mTFT7v), and [Kyle Torpey](http://newswax.com/2014/01/implications-crypto-assets-part-3-distributed-autonomous-corporations/).
+If you're unfamiliar with decentralized applications or distributed autonomous corporations, then you may want to look read this simple, nontechnical article by [Kyle Torpey](http://newswax.com/2014/01/implications-crypto-assets-part-3-distributed-autonomous-corporations/). For more in-depth analysis, you can read explanations from the [Mastercoin Foundation](https://github.com/DavidJohnstonCEO/DecentralizedApplications/blob/master/README.md) and [Invictus Innovations](http://letstalkbitcoin.com/bitcoin-and-the-three-laws-of-robotics/#.UjjO0mTFT7v).
 
 #### Providing a Service and Getting Paid
 
