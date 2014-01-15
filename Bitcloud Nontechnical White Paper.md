@@ -45,7 +45,7 @@ One last factor to consider when it comes to decentralizing the cloud services o
 
 ## How it Works
 
-This will be a rather brief explanation of the inner workings of the Bitcloud protocol. For more technical details, you can take a look at the [Bitcloud Protocol Wiki](https://github.com/wetube/bitcloud/wiki/Protocol).
+This will be a rather brief explanation of the inner workings of the Bitcloud protocol. For more technical details, you can take a look at the [Bitcloud Protocol White Paper](https://github.com/wetube/bitcloud/blob/master/bitcloud.org). Please keep in mind that this paper and the more technical paper are both in very early stages of development.
 
 ### The Bitcloud Protocol
 
