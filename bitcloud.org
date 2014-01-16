@@ -4,6 +4,23 @@
 #+STARTUP: align fold hidestars
 #+OPTIONS: H:7 num:nil toc:t \n:nil stat:nil timestamp:nil html-postamble:nil inline-images:t
 
+* Warning, please read first
+
+This protocol is FAR from finished.
+The reason why we have published this before it is finished is because we want
+to be really open in all regards.
+
+We want to fully decentralize everything, including development and
+thinking. We want this project to be made for the people and from the people.
+
+We also want to attract *thinkers* to discuss all the flaws we may encounter
+in the hard road to make this incredible and big project to success.
+
+We believe that this will become a major benefit for humanity.
+
+Please contact us at #bitcloud (freenode) and developers@bitcloudproject.org
+and be part of the our team.
+
 * TO-IMPROVE Introduction
 
   Bitcloud is a new protocol proposal based on some of the ideas of
@@ -304,10 +321,20 @@ Worker -right-|> User
 #+RESULTS:
 [[file:img/user-class.png]]
 * TO-THINK Storage and language format
+
+There is absolutely no doubt that we need a query language. Bitcloud is a very
+complex distributed database and certainly cannot be satisfactory operated
+without a proper language.
+
+We choose a similar query language to SQL, but using s-exprs or lambda
+expressions so it is easier to parse, use and expand. We provide many
+convenient forms and functions so user interface designers can extensively
+take advantage from them.
+
 ** Commands
 
-Any lambda expression is formed visually by encapsulating a command with their
-variables between parenthesis, this way:
+Any command is visually constructed by first specifying the name and then
+their parameters, all between parenthesis, this way:
 
 : (command value1 :param2 value2 :param3 value3)
 
@@ -349,9 +376,9 @@ Values can be of type:
   
 ** Object Format
 
-In addition to format commands, we also use lambda expressions to form the
-format of objects, mainly used for return values from commands, blockchain
-transactions and Node Pool states.
+In addition to commands, we also use lambda expressions to form the format of
+objects, mainly used for return values from commands, blockchain transactions
+and Node Pool states.
 
 : (object value1 value2 :slot1 slot-value1 :slot2 slot-value1)
 
@@ -368,8 +395,9 @@ It is better seen as examples:
 ** Why lambda expressions?
 
 Mostly because they are easy to parse, extensible, and easy to construct lists
-in. We are using a lot of lists.  Another advantage is that we can also use
-the same language for the the object and command formats.
+in. We are using a lot of lists and we must provide a way to effectively manage
+them.  Another advantage is that we can also use the same language for the the
+object and command formats.
 
 Other alternative would be: a combination of SQL constucts and JSON objects,
 but that would be harder to think and parse, and would require bigger programs
@@ -566,19 +594,48 @@ using relevant parts of the old data for the new start.
 
       : (verdict nil :ban X)
 
-*** TO-THINK Bandwidth Law
+*** TO-THINK Bandwidth Law (Proof of Bandwidth)
 
- : (defgeneric judge-bandwidth (worker))
+DRAFT:
+- Every user is connected to 4 random nodes using the Dispersion Law.
+- The user request a content to all nodes. Data is returned from the 4 nodes
+  applying the Service Law, stating:
+  - The quality of the bandwidth available.
+  - The approximate lag.
+- The user select the fastest and apply the Service Law.
+- While the user is downloading the content, he informs the other 3 nodes
+  about the quality. If quality is good, reward happens, otherwise,
+  penalization happnes.
+- Verdicts are written in the Node Pool.
+- When a sync happens, all nodes judge and sign the verdicts of all the
+  transactions they have made since the last block generation, enforcing
+  rewards and penalizations.
 
-**** TO-THINK Bandwidth check
+  
+  
+
+**** TO-THINK Quality bandwidth check
 **** TO-THINK Abuse Bandwidth check
 *** TO-THINK Service Law
-Workers must answer to queries.
+DRAFT:
+Workers must answer to queries exactly as they are supposed to answer. The
+worker informs to all other connected workers about how things are going on in
+its relation to the connected worker.
+Verdicts are written in the Node Pool as always.
+If it is found that a node denies service to another worker, penalization
+happens.
+No reward for appliance.
+
 **** DNS check
 **** Query answer check
 **** Availability check
 *** TO-THINK Dispersion Law
+
 Ensure randomness when selecting nodes.
+We must provide a way to assign random nodes to concrete user IPs, and they
+can't change for the time that a block is generated, to avoid users requesting
+many random nodes in a short period of time.
+
 **** Random connection check
 **** Short Circuit check
 
@@ -696,7 +753,7 @@ details specified in the /Node class/.
 Every user is connected to a randomly selected collection of 4 nodes. It must
 be really random
 
-** EARLY-DRAFT Unprotected routing
+** EARLY-DRAFT Unprotected routing - Proof of Bandwidth
 
 Every single user is connected to 4 nodes using the User Router coded in the
 interface. These connections are meant to both transfer the content and to
@@ -768,7 +825,7 @@ The process (using the graph above as an example):
 - Law is enforced when at least 3 of the 5 workers agrees (the 5 workers are 1
   user + 4 nodes).
 
-** EARLY-DRAFT Protected routing
+** EARLY-DRAFT Protected routing - Proof of Bandwidth
 
 When a content is marked as *protected*, the Bitcloud net protects both the IP
 and domain name of the node serving the content. The user requesting the
