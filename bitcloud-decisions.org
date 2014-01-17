@@ -4,8 +4,13 @@
 
 We have three choices:
 
-1. Block is "mined" by nodes every 10 minutes. 100 cloudcoins per block. There is no limit on the number of cloudcoins, so mining goes on forever. Block rewards are dispersed proportionally to all nodes who provided bandwidth to the network during the last 10 minute window. Nodes can do three things with their newly minted cloudcoins: sell them, hold them, or use them to purchase services on Bitcloud. If they decide to purchase something on Bitcloud, for example cloud storage, the transaction is sent into the blockchain and those cloudcoins are destroyed.
-2. Block is "mined" by nodes every 10 minutes. 100 cloudcoins per block. There is no limit on the number of cloudcoins, so mining goes on forever. Block rewards are dispersed proportionally to all nodes who provided bandwidth to the network during the last 10 minute window. Nodes can do three things with their newly minted cloudcoins: sell them, hold them, or use them to purchase services on Bitcloud. If the node decides to purchase something on Bitcloud, for example cloud storage, those cloudcoins would be sent to a moderator. The moderator would then be holding the coins and decide what he wants to do with them.
+1. Block is "mined" by nodes every 10 minutes. 100 cloudcoins per block. There is no limit on the number of cloudcoins, so mining goes on forever. Block rewards are dispersed proportionally to all nodes who provided bandwidth to the network during the last 10 minute window. Nodes can do three things with their newly minted cloudcoins: sell them, hold them, or use them to purchase services on Bitcloud.
+    
+    1. If they decide to purchase something on Bitcloud, for example cloud storage, the transaction is sent into the blockchain and those cloudcoins are destroyed.
+    
+    2. If the node decides to purchase something on Bitcloud, for example cloud storage, those cloudcoins would be sent to a moderator. The moderator would then be holding the coins and decide what he wants to do with them.
+        
+        1. Proposed amendment to 1.ii: Ensure adequate incentive to early adopters (increasing cloudcoin value) by tapering off the number of coins in the block reward over time, and by giving a way for moderators to pay a fee to nodes that carry their content.  These are similar to Bitcoins halving block reward every 4 years and transaction fee, respectively.
 3. Don't impose a limit per block, so for example 1 Tb generates always 1
    Mediacoin
 
