@@ -273,6 +273,17 @@ main tasks are:
   moderator. Moderators are paid for this, and they put the
   price. A part of this price goes to the publisher.
 
+
+As a vital an important imposed limitation: moderators cannot choose which
+nodes to adhere, but nodes can choose any moderators they want. This is a way
+to avoid censorship because any node can store any content that the owner
+wants. This is also a good way for nodes to make money without having to be
+approved by anyone. An advantage for moderators: they don't have to have the
+technical skills to maintain a node, and do everything from the user
+interface, as the maintainer of the node can be another person, or even a
+rented pre-configured node from an ISP.
+
+
 #+BEGIN_SRC plantuml :file "img/moderator-class.png"
 class Moderator {
      contents
@@ -638,7 +649,12 @@ many random nodes in a short period of time.
 
 This law also must forbid the connection of users to nodes using correlative
 IPs to avoid the "bulk IP attack". Example: /123.123.123.X/ being /X/ the
-correlative IPs (/mask 255.255.255.0/).
+correlative IPs.
+
+At the same time we can optimize by connecting to geographically closer nodes
+by prioritizing the assignment of certain nodes, for example those matching
+the mask /255.0.0.0/. Only applicable if there are sufficient nodes inside the
+mask to assure certain randomness.
 
 
 **** Random connection check
