@@ -14,7 +14,7 @@ Nodes will be able to subscribe to moderators who can decide the type of content
 
 #### Unmoderated
 
-In addition to the option to have moderators pick what can be stored on their servers, nodes will also be able to choose to host unmoderated content. There are both advantages and disadvantages to this option. The data will be routed through many different nodes before it gets to the end-user, so cloud storage will more expensive. On the other hand, the unmoderated network will allow people to host and share content that will not be traced back to the uploader or the node. The data will be sent through a variety of different nodes in a manner similar to Tor.
+In addition to the option to have moderators pick what can be stored on their servers, nodes will also be able to choose to host unmoderated content. There are both advantages and disadvantages to this option. The data will be routed through many different nodes before it gets to the end-user, so cloud storage will be more expensive. On the other hand, the unmoderated network will allow people to host and share content that will not be traced back to the uploader or the node. The data will be sent through a variety of different nodes in a manner similar to Tor.
 
 ### Decisions to Be Made
 
