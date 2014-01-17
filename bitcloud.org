@@ -331,6 +331,31 @@ Worker -right-|> User
 
 #+RESULTS:
 [[file:img/user-class.png]]
+* TO-THINK Alias and Keys
+
+All the workers need an alias.
+
+There are 2 kind of aliases:
+
+1. Anonymous, it is the same as its public key, generated from a private key
+   that only the worker knows. Length must be checked to ensure randomness.
+2. Registered. The worker pays a quantity for a name, and that name is attached
+   to his public key in the Blockchain for ever.
+
+** TO-THINK Key Management
+
+Every worker owns a private key. A public key is generated from the private key.
+
+The private key is never sent in any way. The worker is responsible for all
+the security matters of managing this key.
+
+The public key of nodes working for the current period is published in the
+Node Pool.
+
+Money transactions affecting the public keys of any worker are published in
+the Blockchain.
+
+
 * TO-THINK Storage and language format
 
 There is absolutely no doubt that we need a query language. Bitcloud is a very
