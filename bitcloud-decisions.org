@@ -129,8 +129,7 @@ users who require bandwidth on the network. The problem with this is that the
 network will falter greatly when the price of mediacoins crashes due to
 speculation. For example, when the price of bitcoin crashes (which it has on
 many occasions), miners stop mining because it is no longer profitable for
-them to do so. This lowers the pace at which new bitcoins enter the
-market. This helps bring the price back up over time. The same is true of the
+them to do so. The same is true of the
 Bitcloud network, but the problem is that the integrity of the network relies
 on nodes staying online. Since the price of mediacoins is not directly tied to
 the number of users on Bitcloud, speculators could crash the price (like what
