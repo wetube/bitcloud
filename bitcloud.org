@@ -584,7 +584,7 @@ using relevant parts of the old data for the new start.
 *** EARLY-DRAFT Lag Law
 
     - All workers must answer in less than X seconds to any query or
-      **sync** function.
+      **sync** function. Recommended constant for now: 600ms.
 
     - No rewards for appliance.
 
@@ -635,6 +635,11 @@ Ensure randomness when selecting nodes.
 We must provide a way to assign random nodes to concrete user IPs, and they
 can't change for the time that a block is generated, to avoid users requesting
 many random nodes in a short period of time.
+
+This law also must forbid the connection of users to nodes using correlative
+IPs to avoid the "bulk IP attack". Example: /123.123.123.X/ being /X/ the
+correlative IPs (/mask 255.255.255.0/).
+
 
 **** Random connection check
 **** Short Circuit check
@@ -709,7 +714,6 @@ censor Bittorrent protocol. In addition, using simple HTTP will simplify the
 protocol very much.
 
 ** TO-THINK GET/POST format
-
 ** LATE-DRAFT Serving static pages (Entry points)
 
 We are also supporting the serving of static web pages stored in the nodes
@@ -731,17 +735,14 @@ law of Bitcloud, nor to its benefits.
 In addiction to this, nodes can install their own HTTP server (like Apache)
 and serve dynamic pages using local routing facilities like /nginx/.
 
-** LATE-DRAFT Nodes are designed to run on full-featured servers
+** DNS
 
-The reason for this is that Bitcloud must provide fast access and high
-bandwidth availability to the users. For example, streaming a single HD video
-requires an upload capacity of 1Mb/s or more, which means that some home
-connections would not be able to serve even a single video, not to speak to
-serve several files at a time. Also, home connections are unreliable and
-change IP too often, in comparison to good properly located servers[fn:2].
+We don't need to resolve node names because content is provided to the users
+by simply requesting it to the nodes s/he connects to.
 
-We also intentionally forbid nodes without a proper DNS pointing to them, so
-we enforce more reliability  when connecting to nodes.
+Each content is signed by a user and a moderator. The workers only have to
+request the content matching the hash of the content, and the routing routines
+are in charge of finding the nodes having it.
 
 ** TO-THINK Registering a new node and connecting to the network
 
@@ -750,8 +751,21 @@ details specified in the /Node class/.
 
 ** TO-THINK Dynamically find routes
 
-Every user is connected to a randomly selected collection of 4 nodes. It must
-be really random
+Every user is connected to a randomly selected collection of 4
+nodes. /Dispersion Law/.
+
+The user running a full featured user client can find those 4 nodes
+directly. Typically the client will have a collection of trusted nodes already
+coded in, and they can obtain the rest of the available nodes from any of
+them.
+
+The users running a thin client in JavaScript in the browser do obtain the
+script from an Entry Point.
+
+Both clients act as full workers and are governed by the laws. If a user do use a
+corrupted client that tries to cheat the system, it is penalized and/or banned
+by applying all the laws affecting users. /Service Law/.
+
 
 ** EARLY-DRAFT Unprotected routing - Proof of Bandwidth
 
