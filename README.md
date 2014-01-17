@@ -8,7 +8,7 @@ We are calling it Bitcloud, to separate it from Wetube, which is the interface. 
     We don't initially own 100% of the coins like in Mastercoin or Next
 
 
-**YOU HAVE THE OPPORTUNITY TO WORK WITH US IN THIS VERY EARLY PROCESS AND BECOME PART OF THE  TEAM DOING THE MAIN DECISSIONS.**
+**YOU HAVE THE OPPORTUNITY TO WORK WITH US IN THIS VERY EARLY PROCESS AND BECOME PART OF THE  TEAM DOING THE MAIN DECISIONS.**
 
 In contrast to what Invictus and Mastercoin is doing (centralizing development and investment), I want, as an experiment, to make this process REALLY open, allowing anyone who wants to participate to share his or her opinion.
 
