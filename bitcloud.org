@@ -211,7 +211,7 @@ LTC)`. If a node accept BTC, it must run the *bitcoind* daemon.
 **** moderators
 
 Is a list of normal moderators for which the content is accepted
-to be cached. The content cached can vary, so a node can
+to be cached. The content cache can vary, so a node can
 automatically select the content to be cached in function of the
 number of requests. If this variable is NIL, the node becomes
 unmoderated and caches everything that goes through.
