@@ -156,7 +156,7 @@ bandwidth sharing. In order to preserve space, it does not contain
 all the details of the nodes states nor any content at all.
 
 The blockchain is the chained collection of all blocks generated
-since the born of Bitcloud. It's contents are perpetual and
+since the birth of Bitcloud. Its contents are perpetual and
 immutable.
 
 In addition, there will be a *Node Pool*. This pool is regenerated
