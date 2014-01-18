@@ -388,7 +388,6 @@ Node Pool.
 Money transactions affecting the public keys of any worker are published in
 the Blockchain.
 
-
 * TO-THINK Storage and language format
 
 There is absolutely no doubt that we need a query language. Bitcloud is a very
@@ -719,6 +718,9 @@ mask to assure certain randomness.
 **** Short Circuit check
 
 *** TO-THINK Storage Law
+Being discussed here:
+http://talk.bitcloudproject.org/index.php?topic=10.0
+
 *** TO-THINK Advertising Law
 *** TO-THINK Enforcement Law
 *** TO-THINK Money Law
