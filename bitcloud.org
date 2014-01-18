@@ -18,8 +18,41 @@ in the hard road to make this incredible and big project to success.
 
 We believe that this will become a major benefit for humanity.
 
-Please contact us at #bitcloud (freenode) and developers@bitcloudproject.org
-and be part of the our team.
+Please contact us at http://talk.bitcloudproject.org and don't forget to read
+the rules: http://talk.bitcloudproject.org/index.php?topic=5.0
+
+* How to understand this
+
+This paper is already big, and it is going to be much bigger.
+The key factor to understand all of this without entering into the details
+are:
+
+1. The Bitcloud Cryptographic Law (BCL) is a serie of "laws", and there are
+   "judges" in such a way that workers in the net judge other workers and
+   emmit "verdicts". Consensus in the verdicts enforce the appliance of the
+   law in the form of rewards and penalizations, and store them in the
+   Blockchain.
+   https://github.com/wetube/bitcloud/blob/master/bitcloud.org#the-bitcloud-cryptography-law-bcl
+   
+2. The Bandwidth Law is the law ensuring that nodes route traffic from users
+   to the Bitcloud net to get/post content. Nodes are PAID for doing so, by
+   generating money. Nodes connected to users are rewarded by the ammount of
+   bandwidth they provide.
+   https://github.com/wetube/bitcloud/blob/master/bitcloud.org#the-bitcloud-cryptography-law-bcl
+   https://github.com/wetube/bitcloud/blob/master/bitcloud.org#bandwidth-law-proof-of-bandwidth
+   
+3. The Dispersion Law ensures that no one tries to cheat the system by
+   dispersing the connections from user to nodes and other nodes.
+   
+   https://github.com/wetube/bitcloud/blob/master/bitcloud.org#dispersion-law
+
+Now, the difficult part is to think the details and find any flaws by going
+into the details. Major reestructuring could be feasible too, maintaining the
+basic principles.
+
+Are you ready to help us with your thinkins/knowledge? :)
+
+
 
 * TO-IMPROVE Introduction
 
