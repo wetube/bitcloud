@@ -6,60 +6,52 @@
 
 * Warning, please read first
 
-This protocol is FAR from finished.
-The reason why we have published this before it is finished is because we want
-to be really open in all regards.
+This protocol is a work in progress
 
-We want to fully decentralize everything, including development and
-thinking. We want this project to be made for the people and from the people.
+BitCloud is an effort to decentralize everything, including development and
+thinking. This initiative is a progress toward to setting man free from men.
 
-We also want to attract *thinkers* to discuss all the flaws we may encounter
-in the hard road to make this incredible and big project to success.
-
-We believe that this will become a major benefit for humanity.
+We welcome input and development from anyone who sees value in the protocol.
 
 Please contact us at http://talk.bitcloudproject.org and don't forget to read
 the rules: http://talk.bitcloudproject.org/index.php?topic=5.0
 
 * How to understand this
 
-This paper is already big, and it is going to be much bigger.
-The key factor to understand all of this without entering into the details
-are:
+This repository is already long, and it is going to get much longer.
+Some Key highlights of BitCloud:
 
-1. The Bitcloud Cryptographic Law (BCL) is a serie of "laws", and there are
-   "judges" in such a way that workers in the net judge other workers and
+1. The Bitcloud Cryptographic Law (BCL) is a series or set of "laws" for which there are
+   "judges" comprised of net worker consonance serving to validate other workers and
    emmit "verdicts". Consensus in the verdicts enforce the appliance of the
    law in the form of rewards and penalizations, and store them in the
    Blockchain.
    https://github.com/wetube/bitcloud/blob/master/bitcloud.org#the-bitcloud-cryptography-law-bcl
    
-2. The Bandwidth Law is the law ensuring that nodes route traffic from users
-   to the Bitcloud net to get/post content. Nodes are PAID for doing so, by
-   generating money. Nodes connected to users are rewarded by the ammount of
+2. The Bandwidth Law ensures that nodes route traffic from users
+   to the Bitcloud net in order to get/post content. Nodes are compensated for doing so, by
+   generating credit. Nodes connected to users are rewarded by the ammount of
    bandwidth they provide.
    https://github.com/wetube/bitcloud/blob/master/bitcloud.org#the-bitcloud-cryptography-law-bcl
    https://github.com/wetube/bitcloud/blob/master/bitcloud.org#bandwidth-law-proof-of-bandwidth
    
-3. The Dispersion Law ensures that no one tries to cheat the system by
-   dispersing the connections from user to nodes and other nodes.
+3. The Dispersion Law ensures that no one tries to subvert the system by
+   dispersing the connections from user to nodes and other nodes or similar schemes.
    
    https://github.com/wetube/bitcloud/blob/master/bitcloud.org#dispersion-law
 
-Now, the difficult part is to think the details and find any flaws by going
+The priority is to determine the specifications and find any flaws by going
 into the details. Major reestructuring could be feasible too, maintaining the
 basic principles.
 
-Are you ready to help us with your thinkins/knowledge? :)
+Are you ready to help us with your skills & knowledge? :)
 
 
 
 * TO-IMPROVE Introduction
 
-  Bitcloud is a new protocol proposal based on some of the ideas of
-  BitTorrent and Bitcoin related technologies such as Mastercoin and
-  Datacoin, and it is meant to change the way of exchanging digital
-  information as opposed by the current centralized trends.
+  Bitcloud is based on some of the ideas behind BitTorrent and Bitcoin technologies such as Mastercoin and
+  Datacoin; it is meant to change the way we exchange digital information - as opposed to the current centralized trends.
 
   Users adhering to this protocol will be able to:
 
