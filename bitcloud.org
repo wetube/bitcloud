@@ -199,6 +199,20 @@ under the section *Proof of Stake* to it, to ensure that every
 node meets the rules and no one tries to take advantages over the
 rest.
 
+The nodes store the content in the form of a cache pointing to moderators, as
+defined in the variables.
+
+- Moderators do have a list of contents and/or users to which they are
+  attached.
+- Nodes select a list of moderators they want to be adhered to.
+- Nodes store the content for the moderators
+
+Moderators can't ever select Nodes. See *Moderator Class* for more details.
+
+*Note:* anyway we can implement a kind of query that a moderator can send to
+a node asking for storage in exchange of money, and the node is free to accept
+or deny.
+
 #+BEGIN_SRC plantuml :file "img/node-class.png"
 class Node {
  dns-name    
