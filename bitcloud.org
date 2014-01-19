@@ -10,86 +10,46 @@ This protocol is FAR from finished.
 The reason why we have published this before it is finished is because we want
 to be really open in all regards.
 
-We want to fully decentralize everything, including development and
-thinking. We want this project to be made for the people and from the people.
-
-We also want to attract *thinkers* to discuss all the flaws we may encounter
+We want to attract *thinkers* to discuss all the flaws we may encounter
 in the hard road to make this incredible and big project to success.
-
-We believe that this will become a major benefit for humanity.
 
 Please contact us at http://talk.bitcloudproject.org and don't forget to read
 the rules: http://talk.bitcloudproject.org/index.php?topic=5.0
-
-* How to understand this
-
-This paper is already big, and it is going to be much bigger.
-The key factor to understand all of this without entering into the details
-are:
-
-1. The Bitcloud Cryptographic Law (BCL) is a serie of "laws", and there are
-   "judges" in such a way that workers in the net judge other workers and
-   emmit "verdicts". Consensus in the verdicts enforce the appliance of the
-   law in the form of rewards and penalizations, and store them in the
-   Blockchain.
-   https://github.com/wetube/bitcloud/blob/master/bitcloud.org#the-bitcloud-cryptography-law-bcl
-   
-2. The Bandwidth Law is the law ensuring that nodes route traffic from users
-   to the Bitcloud net to get/post content. Nodes are PAID for doing so, by
-   generating money. Nodes connected to users are rewarded by the ammount of
-   bandwidth they provide.
-   https://github.com/wetube/bitcloud/blob/master/bitcloud.org#the-bitcloud-cryptography-law-bcl
-   https://github.com/wetube/bitcloud/blob/master/bitcloud.org#bandwidth-law-proof-of-bandwidth
-   
-3. The Dispersion Law ensures that no one tries to cheat the system by
-   dispersing the connections from user to nodes and other nodes.
-   
-   https://github.com/wetube/bitcloud/blob/master/bitcloud.org#dispersion-law
-
-Now, the difficult part is to think the details and find any flaws by going
-into the details. Major reestructuring could be feasible too, maintaining the
-basic principles.
-
-Are you ready to help us with your thinkins/knowledge? :)
 
 
 
 * TO-IMPROVE Introduction
 
-  Bitcloud is a new protocol proposal based on some of the ideas of
-  BitTorrent and Bitcoin related technologies such as Mastercoin and
-  Datacoin, and it is meant to change the way of exchanging digital
-  information as opposed by the current centralized trends.
+Bitcloud is a new protocol based on the ideas of Bitcoin, Mediaglobin, and
+Tor.
 
-  Users adhering to this protocol will be able to:
+Users adhering to this protocol will be able to:
 
   - Upload any file to the Bitcloud net and make it available to anyone.
   - Download and stream the content to anyone.
   - Select which moderator you want to use, from anyone.
   - Earn money from advertising or disable advertising completely.
 
-  Nodes adhering to this protocol will be able to:
+Nodes adhering to this protocol will be able to:
 
-  - Generate and earn profitable income in relation to the bandwidth
+- Generate and earn profitable income in relation to the bandwidth
     they share.
-  - Select what content they cache and serve by selecting moderators.
+- Select what content they cache and serve by selecting moderators.
 
-  Moderators adhering to this protocol will be able to:
+Moderators adhering to this protocol will be able to:
 
-  - Approve and categorize user content.
-  - Approve or ban nodes.
-  - Earn profitable income throughout advertising.
+- Approve and categorize user content.
+- Approve or ban nodes.
+- Earn profitable income throughout advertising.
 
-  Any person can become a *user*, a *node* and/or a *moderator* at any
-  time. In addition to this, there will be client applications which
-  serve as an interface to the general protocol named Bitcloud. We are
-  presenting Wetube as the primary interface for our first version,
-  but programmers can make any kind of interface, providing that they
-  follow the rules described in this protocol.
+Any person can become a *user*, a *node* and/or a *moderator* at any time. In
+addition to this, there will be client applications which serve as an
+interface to the general protocol named Bitcloud. We are presenting Wetube as
+the primary interface for our first version, but programmers can make any kind
+of interface, providing that they follow the rules described in this protocol.
 
-  The Bitcloud blockchain can be independently accessed for money
-  transactions, so external wallets without using the main interface
-  are perfectly feasible.
+The Bitcloud blockchain can be independently accessed for money transactions,
+so external wallets without using the main interface are perfectly feasible.
 
   Bitcloud works by following a special set of premises refered as
   /laws/. The laws in the software ensure that the system is running
@@ -105,6 +65,68 @@ Are you ready to help us with your thinkins/knowledge? :)
   the entire running system. We are looking forward an incredible level of
   flexibility in where all users can review and enhance the living (running)
   network.
+  
+** We plan to go mainstream
+
+Our original idea is to make Bitcloud available for general use without
+requiring special tools or software. The first interface for Bitcloud will be
+Wetube, which is a collection of scripts running in the browser.
+
+In addition, bandwidth is free for users.
+
+This will allow a whole new possibilities for mainstream adoption not possible
+with actual p2p protocols. Just to cite some:
+
+- Embedable in webpages by the insertion of a JS script acting as a very thin
+  layer between users and nodes.
+- Accessible from external languages, and  easy integration with any kind of
+  program.
+- Mobile applications that work out of the box without wasting bandwidth and
+  resources.
+- Rapid access without having to earn rights like in kademlia and
+  bittorrent.
+
+** Content and participant protection
+
+Bitcloud separates the layer of selecting material from the storage itself,
+and allows nodes to select which moderators to adhere.
+
+Because nodes are totally free to choose moderators, determining who is
+storing the content in the long term becomes a very fuzzy thing.
+
+In addition, a node can also include protected content (the source and
+destination cannot be determined) which they can serve at the same time than
+unprotected content, so only direct access to the node can conclude into
+liability. But because source and destination cannot be determined, finding
+such a node becomes extremely difficult. This improves protection compared to
+Tor.
+
+* Keys for fast understanding
+
+1. The Bitcloud Cryptographic Law (BCL) is a serie of "laws", and there are
+   "judges" in such a way that workers in the net judge other workers and
+   emmit "verdicts". Consensus in the verdicts enforce the appliance of the
+   law in the form of rewards and penalizations, and store them in the
+   Blockchain and Node Pool.
+   
+2. The Bandwidth Law is the law ensuring that nodes route traffic from users
+   to the Bitcloud net to get/post content. Nodes are paid for doing so, by
+   generating money. /See Unprotected Routing section/
+   
+3. The Dispersion Law ensures that no one tries to cheat the system. It does
+   so by dispersing the connections from user to nodes and nodes to other
+   nodes.
+   
+4. Storage Law ensures that nodes store guarantied content.
+
+5. Service law ensures that nodes don't deny service.
+
+6. We use our own language for control commands and objects.
+
+7. Money transactions are stored in the blockchain.
+
+8. Node states and verdicts are stored in the Node Pool.
+   
 
 * EARLY-DRAFT Workers
 ** TO-IMPROVE General
@@ -248,7 +270,7 @@ the least requested files are deleted.
 **** signature
 
 Refers to the public key of the node, used to sign transactions
-in the *Proof of Stake (POS)* routines.
+in the BCL routines.
 
 **** accepted-coins
 
