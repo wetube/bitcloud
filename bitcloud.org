@@ -257,8 +257,8 @@ wants to share, expressed in Mb/s.
 
 **** max-space
 
-Is in Mb and it is the maximum size to allocate for the files
-cache. When the space occupied by the cache pass this variable,
+Measured in Mb and it is the maximum size to allocate for the files
+cache. When the space occupied by the cache passes this variable,
 the least requested files are deleted.
 
 **** signature
