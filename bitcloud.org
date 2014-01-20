@@ -984,21 +984,8 @@ using relevant parts of the old data for the new start.
 
 *** TO-THINK Bandwidth Law (Proof of Bandwidth)
 
-DRAFT:
-- Every user is connected to 4 random nodes using the Dispersion Law.
-- The user request a content to all nodes. Data is returned from the 4 nodes
-  applying the Service Law, stating:
-  - The quality of the bandwidth available.
-  - The approximate lag.
-- The user select the fastest and apply the Service Law.
-- While the user is downloading the content, he informs the other 3 nodes
-  about the quality. If quality is good, reward happens, otherwise,
-  penalization happnes.
-- Verdicts are written in the Node Pool.
-- When a sync happens, all nodes judge and sign the verdicts of all the
-  transactions they have made since the last block generation, enforcing
-  rewards and penalizations.
 
+https://github.com/wetube/bitcloud/blob/master/proof-of-bandwidth.org
   
   
 
