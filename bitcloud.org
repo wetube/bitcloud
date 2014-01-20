@@ -46,7 +46,7 @@ of interface, providing that they follow the rules described in this protocol.
 The Bitcloud blockchain can be independently accessed for money transactions,
 so external wallets without using the main interface are perfectly feasible.
 
-  Bitcloud works by following a special set of premises refered as
+  Bitcloud works by following a special set of premises referred as
   /laws/. The laws in the software ensure that the system is running
   smooth without spammers and selfish serving, so everybody can trust
   the system. These laws are initially imposed by the programmers and
@@ -54,7 +54,7 @@ so external wallets without using the main interface are perfectly feasible.
 
   The entire system can be fully scriptable in real time using simple to use
   and parse lambda expressions, so advanced users and programmers can tweak
-  and modify the way in which they are connected to the Bicloud net, embed
+  and modify the way in which they are connected to the Bitcloud net, embed
   actions into web pages, use in their internal programs (in any language),
   etc. Nodes can be accessed in real time by their owners with full control to
   the entire running system. We are looking forward an incredible level of
@@ -72,7 +72,7 @@ In addition, bandwidth is free for users.
 This will allow a whole new possibilities for mainstream adoption not possible
 with actual p2p protocols. Just to cite some:
 
-- Embedable in webpages by the insertion of a JS script acting as a very thin
+- Embeddable in webpages by the insertion of a JS script acting as a very thin
   layer between users and nodes.
 - Accessible from external languages, and  easy integration with any kind of
   program.
@@ -98,7 +98,7 @@ Tor.
 
 * Keys for fast understanding
 
-1. The Bitcloud Cryptographic Law (BCL) is a serie of "laws", and there are
+1. The Bitcloud Cryptographic Law (BCL) is a series of "laws", and there are
    "judges" in such a way that workers in the net judge other workers and
    emmit "verdicts". Consensus in the verdicts enforce the appliance of the
    law in the form of rewards and penalizations, and store them in the
@@ -169,7 +169,7 @@ enforcement (see below).
 
 **** banned?
 
-Is *t* when the enforcement rutine determines so. A banned worker
+Is *t* when the enforcement routine determines so. A banned worker
 cannot use the Bitcloud for a specific period of time defined in
 *banned-time*.
 
@@ -631,7 +631,7 @@ mnodeE <--> pnode
 - The User Router (coded in the interface) asks the 4 nodes to find a route
   to the Protected Node, encrypting the request with the public key
   associated to the Protected Content, and adding its public key inside the
-  encrypted request (so only the real Prrotected Node can know what is sent
+  encrypted request (so only the real Protected Node can know what is sent
   back).  /Service Law/
 - Each node tries to find a competitive route to the Protected Node and answer
   fast to the User. The way to do this is by sending the encrypted request to
@@ -786,7 +786,7 @@ in. We are using a lot of lists and we must provide a way to effectively manage
 them.  Another advantage is that we can also use the same language for the the
 object and command formats.
 
-Other alternative would be: a combination of SQL constucts and JSON objects,
+Other alternative would be: a combination of SQL constructs and JSON objects,
 but that would be harder to think and parse, and would require bigger programs
 for small clients like JavaScript embedded scripts.
 
@@ -1034,7 +1034,7 @@ http://talk.bitcloudproject.org/index.php?topic=10.0
 * TO-THINK Blockchain
 
 We use a Blockchain in order to store all money transactions, including the
-ones comming from the nodes for Bandwidth sharing.
+ones coming from the nodes for Bandwidth sharing.
 
 We are *not* using the Blockchain to store any information related to the
 content at all. If we do so, very soon the Blockchain would become very
@@ -1096,7 +1096,7 @@ constantly calculated in real time.
 [fn:1] In order to make things easy for system administrators and programmers,
 we are using lambda expressions. These are simple expressions enclosed into
 parenthesis with the action in the first position. It is actually very easy to
-translate from jason-format to lambda expressions. We choose lambda
+translate from json-format to lambda expressions. We choose lambda
 expressions because they need less space and are faster to parse and write.
 
 [fn:2] Renting a server or VPS is very cheap today.
