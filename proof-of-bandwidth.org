@@ -31,13 +31,15 @@ persisting low quality nodes for a period of time are also feasible.
 
 * Routing
 ** Normal content
-TODO
+See unprotected routing in the main paper for now:
 
-file:img/unprotected-route.png
+https://github.com/wetube/bitcloud/blob/master/bitcloud.org#unprotected-routing---proof-of-bandwidth
 
 ** Anonymous content
-TODO
 
+See protected routing in the main paper for now:
+
+https://github.com/wetube/bitcloud/blob/master/bitcloud.org#protected-routing---proof-of-bandwidth
 
 * Dispersion Law
 
