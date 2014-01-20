@@ -64,30 +64,28 @@ We could discriminate by IP, but that present many problems:
 ** ID discrimination
 
 The classical Sybil attacks consist in the creation of millions of IDs in
-order to DDS a system to obtain benefits or spam.
+order to DDOS a system to obtain benefits or spam.
 
-But what would happen if creating and ID becomes *expensive*? For example,
+But what would happen if creating an ID becomes *expensive*? For example,
 it could take 1 day or 1 week to create a single name.  Sybil attacks
 would not be a realistic thing because you can't generate so many IDs to make
 viable such a thing.
 
-So we introduce *Mined Names*, similar to Keyhotee and Namecoin.  That means
-that, in order to obtain a name, the worker must put its computer a very long
-time at full CPU utilization.
+So we introduce *Mined Names*, similar to Keyhotee and Namecoin.
 
 Nodes and users willing to register a name are required to mine an ID before
 they can enter the system. This means we can discriminate by ID without having
 to worry about sybil attacks.
 
-In addition to permit the registered entrance of the worker in the system,
+In addition to allow the registered entrance of the workers in the system,
 mined names are CA (certificate authorities) by themselves, capable of
-deriving other IDs. Anyway, derived IDs are not allowed for nodes or
+deriving (signing) other IDs. Anyway, derived IDs are not allowed for nodes or
 registered users in order to use the system. Only unregistered users can use
 them.
 
 ** Unregistered users
 
-Anonymous unregistered users also require a pair of keys, do they require to
+Anonymous unregistered users also require a pair of keys; do they require to
 be mining for 1 week before they can enter into the system? That would kill
 the whole idea of embeding content in webpages for universal access.
 
@@ -100,18 +98,29 @@ identify the originating node.
 Sybil attacks could be mitigated by putting a limit on the size of delegated
 IDs, where the increase in influence over the network gained by adding a new
 delegated ID would decrease after a certain number of delegated IDs were
-added--that is, systems 1 through N would each gain 1 vote towards enforcement
-of network activities, testing the network, etc. After N, the weight would
-decrease in a logarithmic fashion such that 10N machines would collectively
-have about the same influence as N+10 machines, or some other similar system.
+added. That is, systems 1 through N would each gain 1 vote towards enforcement
+of network activities and money generation, testing the network, etc. After N,
+the weight would decrease in a logarithmic fashion such that 10N machines
+would collectively have less mining capabilities (difficulty increase) until
+eventually it reaches 0.
+
 
 What this means in practice is that nodes trying to create more unregistered
-users (assigning delegated IDs to them) than the rest of the net will
-considerably lower their profits for mining bandwidth, by increasingly
-augmenting the difficulty.
+users (assigning delegated IDs to them) than the average of the net will
+considerably lower their profits for mining bandwidth.
 
 This, combined with a way of detecting cross root CA intents of constant
 abusing results in a reliable way to mitigate Sybil attacks.
+
+*** Sybil attack for delegated IDs
+
+Now, one important flaw with this is that any malicious user could request many delegated IDs, potentially harming innocent nodes.
+
+A possible solution may be the inclusion of captchas in the user interface of
+the unregistered users. So when an unregistered user is trying to download or
+view something, the answer to the captcha must be effectively provided in
+order to start the stream. Cookies could be used in some way, so users are
+not disturbed with captchas all the time.
 
 ** Assignment algorithm
 
