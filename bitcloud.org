@@ -205,7 +205,7 @@ bandwidth sharing. In order to preserve space, it does not contain
 all the details of the nodes states nor any content at all.
 
 The blockchain is the chained collection of all blocks generated
-since the born of Bitcloud. It's contents are perpetual and
+since the birth of Bitcloud. It's contents are perpetual and
 immutable.
 
 In addition, there will be a *Node Pool*. This pool is regenerated
@@ -304,8 +304,8 @@ the approval of the moderators adhered to this node.
 
 **** approval-timeout
 
-How much time this node is going to wait for the approval on any
-moderator adhered to this node. Passed that time the awaiting
+How much time this node is going to wait for the approval of any
+moderator adhered to this node. Once that time has passed, the awaiting
 content is deleted from the cache. Minimum time allowed is 12
 hours. Defaults to 48.
 
@@ -318,7 +318,7 @@ throughout many nodes, adding costs in bandwidth and latency.
 
 **** shutdown-date
 
-When is the node going to be shut down automatically. Useful for protected
+When the node will be shut down automatically. Useful for protected
 nodes that serve delicate content.
 
 ** TO-THINK Moderators
@@ -326,18 +326,18 @@ nodes that serve delicate content.
 Moderators are crucial to the well-working of the Bitcloud. Their
 main tasks are:
 
-+ Approve user content. The user select a list of moderators to which s/he
++ Approve user content. The user selects a list of moderators to which s/he
   wants to adhere, the moderator receives the request and decides if the
   user meets his/her requirements.
 + Categorize. A moderator properly corrects tagging of the content
   s/he receives from the user.
 + Advertising. Advertisers select which moderators they want to
-  adhere, and ads are only shown in the content approved by that
-  moderator. Moderators are paid for this, and they put the
-  price. A part of this price goes to the publisher.
+  adhere to, and ads are only shown in the content approved by that
+  moderator. Moderators are paid for this, and they set the
+  price. Part of this revenue goes to the publisher.
 
 
-As a vital an important imposed limitation: moderators cannot choose which
+A vital and important imposed limitation: moderators cannot choose which
 nodes to adhere, but nodes can choose any moderators they want. This is a way
 to avoid censorship because any node can store any content that the owner
 wants. This is also a good way for nodes to make money without having to be
@@ -376,7 +376,7 @@ this moderator approves.
 Users are the ones that obtain the benefits from the services of nodes and
 moderators, because they are who send and receive the content.
 
-The use of the system must be transparent to the user. S/he should be able to
+Usage of the system must be transparent to the user. S/he should be able to
 connect using his/her client or browser without having to do anything special
 and without requiring any technological expertise.
 
@@ -398,12 +398,12 @@ Worker -right-|> User
 
 All the workers need an alias.
 
-There are 2 kind of aliases:
+There are 2 kinds of aliases:
 
 1. Anonymous, it is the same as its public key, generated from a private key
    that only the worker knows. Length must be checked to ensure randomness.
 2. Registered. The worker pays a quantity for a name, and that name is attached
-   to his public key in the Blockchain for ever.
+   to his public key in the Blockchain forever.
 
 ** TO-THINK Key Management
 
@@ -435,7 +435,7 @@ classical web server) can use any of the Unix tools available to route
 domains, like for example /nginx/.
 
 We don't use any p2p low level protocol like Bittorrent because we need very
-fast access with the less possible lag. It also happens that many ISP actually
+fast access with the least possible lag. It also happens that many ISP actually
 censor Bittorrent protocol. In addition, using simple HTTP will simplify the
 protocol very much.
 
@@ -458,7 +458,7 @@ to become entry points for users:
 if the content is embed (and only for the content), so they don't apply to the
 law of Bitcloud, nor to its benefits.
 
-In addiction to this, nodes can install their own HTTP server (like Apache)
+In addition to this, nodes can install their own HTTP server (like Apache)
 and serve dynamic pages using local routing facilities like /nginx/.
 
 *** DNS
@@ -488,8 +488,8 @@ them.
 The users running a thin client in JavaScript in the browser do obtain the
 script from an Entry Point.
 
-Both clients act as full workers and are governed by the laws. If a user do use a
-corrupted client that tries to cheat the system, it is penalized and/or banned
+Both clients act as full workers and are governed by the laws. If a user does use a
+corrupted client that tries to cheat the system, he is penalized and/or banned
 by applying all the laws affecting users. /Service Law/.
 
 *** EARLY-DRAFT Unprotected routing - Proof of Bandwidth
@@ -551,7 +551,7 @@ The process (using the graph above as an example):
 - Optionally, connected nodes can cache the content so they don't need to
   retrieve the content from the Final Nodes if the content is requested
   often.
-- While the User is downloading/uploading the content, it must inform all the
+- While the User is downloading/uploading the content, he must inform all the
   connected nodes about the quality of the connection. If quality is low, he
   can select another route from another node and denounce about the issue to
   the other nodes, so they can apply the law. See "User Router"
@@ -561,7 +561,7 @@ The process (using the graph above as an example):
   none. /Bandwidth Law/ - /Check low quality culprit/ section.
 - User is banned if he tries to abuse bandwidth or the law. /Bandwidth Law/ -
   /Abuse check/ section.
-- Law is enforced when at least 3 of the 5 workers agrees (the 5 workers are 1
+- Law is enforced when at least 3 of the 5 workers agree (the 5 workers are 1
   user + 4 nodes).
 
 *** EARLY-DRAFT Protected routing - Proof of Bandwidth
@@ -575,7 +575,7 @@ cannot distinguish between the content routed or served while analyzing the
 traffic to an specific node.
 
 All nodes are enforced to accept protected content routed, even if they are
-not protected themselves. Nodes cannot know what is the content being routed
+not protected themselves. Nodes cannot know what the content being routed is
 because it is multi-layered encrypted.
 
 We use a routing process similar to Tor Onion hidden services, optimized to
@@ -649,8 +649,8 @@ mnodeE <--> pnode
 - Meanwhile all nodes are attending other requests for other contents, so
   nobody knows if the other requests are actually part of the original request
   or not.
-- The Protected Node always send back the content encrypted with the public
-  key inside the request, so only the user can know what is the content.
+- The Protected Node always sends back the content encrypted with the public
+  key inside the request, so only the user can know what the content is.
 - The User Router chooses the fastest route.
 - *Only* the User Router's connected nodes generate any money, to avoid short
   circuit cheats. /Bandwidth Law/
@@ -658,7 +658,7 @@ mnodeE <--> pnode
   route. /Bandwidth Law/
 - Meanwhile, the User informs the rest of the nodes about the quality of the
   connection. /Bandwidth Law/.
-- If the quality is low, the User Router tries to change to other route
+- If the quality is low, the User Router tries to change to another route
   Node while informing the issue. /Bandwidth Law/
 - The selected node also enforces the /Bandwidth Law/ and /Service Law/ for
   the Middle Node it is connected to.
@@ -855,8 +855,8 @@ libraries, available for all the languages.
   real time.
 
   Each rule must be applied for every node or client in the
-  net. Appliance to every rule is rewarded in the way described in the
-  rule. Non-compliance results in penalization.
+  net. Compliance to every rule is rewarded in the way described by the
+  rules. Non-compliance results in penalization.
 
   This fine equilibrium ensures that every node does the work
   correctly and there are no abuses.
@@ -934,7 +934,7 @@ using relevant parts of the old data for the new start.
 
        Function returns `(get-universal-time)` of the other node.
 
-     - No reward for appliance.
+     - No reward for compliance.
 
        : (verdict t)
 
