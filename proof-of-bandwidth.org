@@ -1,4 +1,3 @@
-
 * Bandwidth Law
 
 file:img/unprotected-route.png
@@ -30,9 +29,9 @@ ID becomes EXPENSIVE? For example, imagine that it takes 1 day or 1 week to
 create a single name.  Sybil attacks would not be a realistic thing because
 you can't generate so many IDs to make viable such a thing.
 
-So we introduce a new revolutionay concept: *Mined Names*.  That means that,
-in order to obtain a name, you must put your computer a very long time at full
-CPU utilization before you get it.
+So we introduce a concept: *Mined Names*.  Like Keyhotee and Namecoin, in order
+to obtain a name, you must put your computer a very long time at full
+CPU utilization before you get it usable to generate money.
 
 With this new idea, nodes and users willing to register a name are required to
 mine an ID before they can enter the system, and, here we got! Discrimination
@@ -48,9 +47,3 @@ So another great idea: *Delegated IDs*
 A node is free to generate any number of anonymous IDs from its own mined
 ID. Everytime an anonymous user use any of these keys, the net can undoubly
 identificate the originating node.
-
-The interesting idea behind that is that the key assigned to the anonymous user
-cannot be used to actually download the content from the originating node. The
-law of dispersion forbids so, and if the user tries to do so, the connected
-nodes (see routing section) ban the user and penalize the node owner of the
-certificate.
