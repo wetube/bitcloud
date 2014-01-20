@@ -1,12 +1,55 @@
-* Bandwidth Law
+
+* Laws of Bitcloud
+
+Bitcloud is a reputation-based system with rewards/penalizations applied to
+all the users.
+That's the only way to go if we want to ensure a certain quality of service,
+and be paid for that.
+
+In the case of Bitcloud, bandwidth is free for the users, but nodes generate
+money from it. When money is involved in an automated system, you must ensure
+that all parts are commited to their work.
+
+The laws of Bitcloud are there to ensure an easy ramp to profitability, an
+incentive to keep availability and a short cutoff for reputation so workers
+stay relevant.
+
+For example, the law of service could take in count the floating average of
+daily uptime, averaged across the past week, to enforce rewards by lowering
+the difficulty of mining bandwidth, or penalize with more difficulty and/or
+even with direct penalization for low quality service.
+
+The laws are applied by judging QOS while routing and syncing. All nodes
+implied in any query or transaction are forced to judge the rest of the nodes
+while the service is being executed. Verdicts of actions are recorded in the
+Node Pool. When a new block is generated, consensus of the majority of the
+nodes enforce the verdicts found in the nodepool and sign rewards and
+penalizations directly in the blockchain. Other actions like banning
+persisting low quality nodes for a period of time are also feasible.
+
+
+
+* Routing
+** Normal content
+TODO
 
 file:img/unprotected-route.png
+
+** Anonymous content
+TODO
+
 
 * Dispersion Law
 
 If we don't provide the rules to ensure that somebody tries to cheat the
 system by connecting to itself, soon the system will be full of people serving
 themselves and gaining money out of thin air.
+
+So we really need a random way of interconnecting workers. Even further,
+connection must be *assigned*, never chosen. Workers trying to connect to a
+non-assigned node must be penalized and even banned.
+
+** IP discrimination problems
 
 We could discriminate by IP, but that present many problems:
 
@@ -18,32 +61,69 @@ We could discriminate by IP, but that present many problems:
 - Botnets using millions of infected home computer can easilly success in
   attacking the system.
   
+** ID discrimination
 
-So instead of discriminating by IP, lets do better, *discriminate by ID*!
+The classical Sybil attacks consist in the creation of millions of IDs in
+order to DDS a system to obtain benefits or spam.
 
-Oh, wait a minute!  Doesn't that mean that an attacker could create millions
-of IDs and cheat the system very easily?
+But what would happen if creating and ID becomes *expensive*? For example,
+it could take 1 day or 1 week to create a single name.  Sybil attacks
+would not be a realistic thing because you can't generate so many IDs to make
+viable such a thing.
 
-Yes, normally that would be the case.  But what would happen if creating and
-ID becomes EXPENSIVE? For example, imagine that it takes 1 day or 1 week to
-create a single name.  Sybil attacks would not be a realistic thing because
-you can't generate so many IDs to make viable such a thing.
+So we introduce *Mined Names*, similar to Keyhotee and Namecoin.  That means
+that, in order to obtain a name, the worker must put its computer a very long
+time at full CPU utilization.
 
-So we introduce a concept: *Mined Names*.  Like Keyhotee and Namecoin, in order
-to obtain a name, you must put your computer a very long time at full
-CPU utilization before you get it usable to generate money.
+Nodes and users willing to register a name are required to mine an ID before
+they can enter the system. This means we can discriminate by ID without having
+to worry about sybil attacks.
 
-With this new idea, nodes and users willing to register a name are required to
-mine an ID before they can enter the system, and, here we got! Discrimination
-by ID without having to worry about sybil attacks.
+In addition to permit the registered entrance of the worker in the system,
+mined names are CA (certificate authorities) by themselves, capable of
+deriving other IDs. Anyway, derived IDs are not allowed for nodes or
+registered users in order to use the system. Only unregistered users can use
+them.
 
-Now, that is nice, but, what about anonymous users, they also require a pair
-of keys, do they require to be mining for 1 week before they can enter into
-the system? That would kill the whole idea of embeding content in webpages for
-universal access.
+** Unregistered users
 
-So another great idea: *Delegated IDs*
+Anonymous unregistered users also require a pair of keys, do they require to
+be mining for 1 week before they can enter into the system? That would kill
+the whole idea of embeding content in webpages for universal access.
 
-A node is free to generate any number of anonymous IDs from its own mined
-ID. Everytime an anonymous user use any of these keys, the net can undoubly
-identificate the originating node.
+So we introduce *Delegated IDs*.
+
+A node is free to generate any number of unregistered IDs from its own mined
+ID. Everytime an unregistered user use any of these keys, the net can
+identify the originating node.
+
+Sybil attacks could be mitigated by putting a limit on the size of delegated
+IDs, where the increase in influence over the network gained by adding a new
+delegated ID would decrease after a certain number of delegated IDs were
+added--that is, systems 1 through N would each gain 1 vote towards enforcement
+of network activities, testing the network, etc. After N, the weight would
+decrease in a logarithmic fashion such that 10N machines would collectively
+have about the same influence as N+10 machines, or some other similar system.
+
+What this means in practice is that nodes trying to create more unregistered
+users (assigning delegated IDs to them) than the rest of the net will
+considerably lower their profits for mining bandwidth, by increasingly
+augmenting the difficulty.
+
+This, combined with a way of detecting cross root CA intents of constant
+abusing results in a reliable way to mitigate Sybil attacks.
+
+** Assignment algorithm
+
+The assignment must be provided by an algorithm executed in all the participant
+nodes, following this principles:
+- Assignment is fixed for a defined period of time. For example, for the next
+  10 minutes of a certain connection, the worker cannot solicite a change for
+  their assigned node.
+- Connections cannot be made for workers sharing the same root CA (Certificate
+  Authority). That is, workers cannot connect to themselves.
+- Encourage the connection between non-related CA workers by logarithmically
+  decrease the amount of profit when generating money determined by historical
+  bandwidth statistics between them. Statistics are stored in the nodepool.
+  
+
