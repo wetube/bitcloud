@@ -96,21 +96,21 @@ ID. Everytime an unregistered user use any of these keys, the net can
 identify the originating node.
 
 Sybil attacks could be mitigated by putting a limit on the size of delegated
-IDs, where the increase in influence over the network gained by adding a new
+IDs, where the increase in mining power of the node gained by adding a new
 delegated ID would decrease after a certain number of delegated IDs were
-added. That is, systems 1 through N would each gain 1 vote towards enforcement
-of network activities and money generation, testing the network, etc. After N,
-the weight would decrease in a logarithmic fashion such that 10N machines
-would collectively have less mining capabilities (difficulty increase) until
-eventually it reaches 0.
+added. Considering N the average number of delegated IDs per node in the
+entire cloud, 1 through N would each gain 1 vote towards enforcement of
+network activities and mining, testing the network, etc. After N, the weight
+would decrease in a logarithmic fashion and would eventually reach 0, losing
+mining power and confronting penalization in the form of ban for the node and
+all its derived IDs.
 
-
-What this means in practice is that nodes trying to create more unregistered
-users (assigning delegated IDs to them) than the average of the net will
-considerably lower their profits for mining bandwidth.
+In other words, nodes trying to create more unregistered users (assigning
+delegated IDs to them) than the average of the net will considerably lower
+their profits for mining bandwidth.
 
 This, combined with a way of detecting cross root CA intents of constant
-abusing results in a reliable way to mitigate Sybil attacks.
+abuse results in a reliable way of mitigating Sybil attacks.
 
 *** Sybil attack for delegated IDs
 
@@ -119,20 +119,23 @@ Now, one important flaw with this is that any malicious user could request many 
 A possible solution may be the inclusion of captchas in the user interface of
 the unregistered users. So when an unregistered user is trying to download or
 view something, the answer to the captcha must be effectively provided in
-order to start the stream. Cookies could be used in some way, so users are
-not disturbed with captchas all the time.
+order to obtain a delegated ID. Cookies could be used in some way, so users
+are not disturbed with captchas all the time.
 
 ** Assignment algorithm
 
-The assignment must be provided by an algorithm executed in all the participant
-nodes, following this principles:
+The assignment must be provided by an algorithm executed in all the
+participant nodes, and enforced by mutually judging actions and emitting
+verdicts in the nodepool, following these principles:
+
 - Assignment is fixed for a defined period of time. For example, for the next
   10 minutes of a certain connection, the worker cannot solicite a change for
   their assigned node.
 - Connections cannot be made for workers sharing the same root CA (Certificate
-  Authority). That is, workers cannot connect to themselves.
-- Encourage the connection between non-related CA workers by logarithmically
-  decrease the amount of profit when generating money determined by historical
+  Authority). That is, workers and delegated IDs cannot connect to themselves,
+  except when there is no reward for so.
+- Encourage the connection between non-related CA workers by a logarithm
+  decrease of the amount of profit while mining, determined by historical
   bandwidth statistics between them. Statistics are stored in the nodepool.
   
 
