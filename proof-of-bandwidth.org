@@ -1,0 +1,56 @@
+
+* Bandwidth Law
+
+file:img/unprotected-route.png
+
+* Dispersion Law
+
+If we don't provide the rules to ensure that somebody tries to cheat the
+system by connecting to itself, soon the system will be full of people serving
+themselves and gaining money out of thin air.
+
+We could discriminate by IP, but that present many problems:
+
+- Many users are behind proxies, with thousands of users behind them.
+- If you ban an IP proxy, you ban thousands of potential users.
+- You must forbid connections for correlative IPs in order to avoid the "bulk
+  IP attack", a form of sybil attack.
+- Users can change IP easily.
+- Botnets using millions of infected home computer can easilly success in
+  attacking the system.
+  
+
+So instead of discriminating by IP, lets do better, *discriminate by ID*!
+
+Oh, wait a minute!  Doesn't that mean that an attacker could create millions
+of IDs and cheat the system very easily?
+
+Yes, normally that would be the case.  But what would happen if creating and
+ID becomes EXPENSIVE? For example, imagine that it takes 1 day or 1 week to
+create a single name.  Sybil attacks would not be a realistic thing because
+you can't generate so many IDs to make viable such a thing.
+
+So we introduce a new revolutionay concept: *Mined Names*.  That means that,
+in order to obtain a name, you must put your computer a very long time at full
+CPU utilization before you get it.
+
+With this new idea, nodes and users willing to register a name are required to
+mine an ID before they can enter the system, and, here we got! Discrimination
+by ID without having to worry about sybil attacks.
+
+Now, that is nice, but, what about anonymous users, they also require a pair
+of keys, do they require to be mining for 1 week before they can enter into
+the system? That would kill the whole idea of embeding content in webpages for
+universal access.
+
+So another great idea: *Delegated IDs*
+
+A node is free to generate any number of anonymous IDs from its own mined
+ID. Everytime an anonymous user use any of these keys, the net can undoubly
+identificate the originating node.
+
+The interesting idea behind that is that the key assigned to the anonymous user
+cannot be used to actually download the content from the originating node. The
+law of dispersion forbids so, and if the user tries to do so, the connected
+nodes (see routing section) ban the user and penalize the node owner of the
+certificate.
