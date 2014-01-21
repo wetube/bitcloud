@@ -100,7 +100,7 @@ Tor.
 
 1. The Bitcloud Cryptographic Law (BCL) is a series of "laws", and there are
    "judges" in such a way that workers in the net judge other workers and
-   emmit "verdicts". Consensus in the verdicts enforce the appliance of the
+   emit "verdicts". Consensus in the verdicts enforce the appliance of the
    law in the form of rewards and penalizations, and store them in the
    Blockchain and Node Pool.
    
@@ -153,13 +153,12 @@ Worker --|> User
 
 Is usually the name or nick chosen by the worker. _TODO We have
 to think if we want to implement our own ID system or use an
-existing one like Keyhotee or Namecoin_.
+existing one like Keyhotee or Namecoin.
 
 **** private-key
 
-The private key of the worker used to sign actions. Normally this
-variable is only available in the computer of the worker and
-nowhere else.
+The private key of the worker used to sign actions. By design the
+worker never divulges its private key.
 
 **** public-key
 
@@ -181,7 +180,7 @@ protected (the IP cannot be determined). More below.
 
 **** IP
 
-The actual IP of the node. NULL if protected.
+The actual IP of the node or nothing if protected.
 
 ** EARLY-DRAFT Nodes
 
@@ -205,7 +204,7 @@ bandwidth sharing. In order to preserve space, it does not contain
 all the details of the nodes states nor any content at all.
 
 The blockchain is the chained collection of all blocks generated
-since the born of Bitcloud. It's contents are perpetual and
+by the Bitcloud network. Its contents are perpetual and
 immutable.
 
 In addition, there will be a *Node Pool*. This pool is regenerated
@@ -218,8 +217,7 @@ rest.
 The nodes store the content in the form of a cache pointing to moderators, as
 defined in the variables.
 
-- Moderators do have a list of contents and/or users to which they are
-  attached.
+- Moderators have a list of contents and/or users to which they are attached.
 - Nodes select a list of moderators they want to be adhered to.
 - Nodes store the content for the moderators
 
@@ -403,7 +401,7 @@ There are 2 kind of aliases:
 1. Anonymous, it is the same as its public key, generated from a private key
    that only the worker knows. Length must be checked to ensure randomness.
 2. Registered. The worker pays a quantity for a name, and that name is attached
-   to his public key in the Blockchain for ever.
+   to his public key in the Blockchain forever.
 
 ** TO-THINK Key Management
 
@@ -458,7 +456,7 @@ to become entry points for users:
 if the content is embed (and only for the content), so they don't apply to the
 law of Bitcloud, nor to its benefits.
 
-In addiction to this, nodes can install their own HTTP server (like Apache)
+In addition to this, nodes can install their own HTTP server (like Apache)
 and serve dynamic pages using local routing facilities like /nginx/.
 
 *** DNS
@@ -537,7 +535,7 @@ The process (using the graph above as an example):
   interface. /Dispersion Law/
 - The User Router asks the 4 nodes to find a route to the content. /Service Law/
 - Nodes answer with route data. /Service Law/
-- The User Router select the fastest. The fastest is calculated in function
+- The User Router selects the fastest. The fastest is calculated in function
   of the data retrieved in the last point, and usually is a combination of
   bandwidth available and shortest distance. In the example, Node3 is the
   fastest because it happens to be also a Final Node for the requested
@@ -572,11 +570,11 @@ connection is also protected. There is still a way for auditors to know that a
 certain computer is acting as a protected node, but will not be able to know
 what is the protected content that is serving. Even more, external auditors
 cannot distinguish between the content routed or served while analyzing the
-traffic to an specific node.
+traffic to a specific node.
 
 All nodes are enforced to accept protected content routed, even if they are
 not protected themselves. Nodes cannot know what is the content being routed
-because it is multi-layered encrypted.
+because of multi-layer encryption.
 
 We use a routing process similar to Tor Onion hidden services, optimized to
 our purposes.
@@ -673,7 +671,7 @@ It must be coded in the user interface and must respect the BCL in order for
 the user to not be banned.
 
 Its principles are simple, and should be easy to code in any language, even
-JavaScript for the browser.
+in JavaScript for the browser.
 
 #+BEGIN_SRC plantuml :file "img/protected-route-selector.png"
 (*) -down-> "Ask Entry Point for random nodes"
