@@ -17,8 +17,8 @@ Major group participants:
 Services:
 
 - Free bandwidth.
-- Free non-guarantied storage.
-- Paid guarantied storage.
+- Free non-guaranteed storage.
+- Paid guaranteed storage.
 - Paid content (user pays to download).
 - Free content.
 - Advertising.
@@ -34,7 +34,7 @@ services.
 Lets compare Bitcloud with the industry of book selling.
 
 - Users are the customers.
-- Publishers are the moderators.
+- Moderators are the publishers.
 - Node storage system represent the bookstore.
 - Node miners represent the bankers.
 - Node law enforces represent the government.
@@ -42,7 +42,7 @@ Lets compare Bitcloud with the industry of book selling.
 So when a customer enters into a bookstore, the first we observe is that
 entering into the store is FREE. If a bookstore charges money for entrance,
 customers will be reluctant to enter. Equivalence: we always offer free
-bandwidth so we can effetely broadcast the real business here: the rest of the
+bandwidth so we can effectively broadcast the real business here: the rest of the
 services. Note that the bookstore actually has to pay for the building,
 electricity, workers, etc. They compensate the expenses by earning a
 commission in the goods they sell. We compensate free bandwidth by the other
@@ -55,7 +55,7 @@ commission and in exchange they boost the reputation of the books they
 promote. Equivalence: we have moderators, they select, categorize, and provide
 a face and an opportunity for the content to be broadcasted in accordance with
 their ideals and quality requirements, and they receive a commission for
-so. Our moderators *will* provide *quality* to the content being searched by
+so. Our moderators *will* provide *quality* content being searched by
 the user.
 
 Note: if you look at actual p2p systems, specially Kademlia (eMule), the
@@ -77,7 +77,7 @@ accepts him, he can setup a new node.
 
 Now, talking about the bookstores, they *store* books. For so they need the
 space and resources. They earn a commission on sells because they had the
-space there available for the books, so users can psychically retrieve
+space there available for the books, so users can physically retrieve
 them. Equivalence: node storage system. Users can retrieve content stored in
 the nodes. Nodes receive a commission on sells they store.
 
@@ -118,7 +118,7 @@ content providing. We can easily attract film industries, music industries,
 game industries, ISPs, advertisers, news agencies, non-profit organizations,
 individual artists and much more. Possibilities are so huge that are almost
 unimaginable at this point. We are going to change the entire copyright
-industry for ever.  Most importantly, I think we are going to find a solution
+industry forever.  Most importantly, I think we are going to find a solution
 that can mitigate the actual friction between companies and actual humans.
 
 We are also constructing a *virtual market*. A place in which information can
