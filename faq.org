@@ -57,8 +57,14 @@ A:
 * TO-THINK Q: Who are moderators?
 A: 
 
-* TO-THINK Q: How can artists benefit from Bitcloud?
-A: 
+* TO-IMPROVE Q: How can content creators benefit from Bitcloud?
+A: Content creators will benefit from BitCloud by being able to take larger 
+cuts from ad revenue on Bitcloud based websites because the added expenses
+of the corporate system have been removed. Because Bitcloud is a 
+decentralized network, no one power will have complete control over your work.
+In the case of a large company, such as YouTube, they have complete control over
+the content they host and can remove anything they wish to. This, however, is 
+not the case with Bitcloud.
 
 * TO-THINK Q: How can early adopters benefit from Bitcloud?
 A: 
