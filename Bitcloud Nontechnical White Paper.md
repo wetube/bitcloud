@@ -1,12 +1,13 @@
 # Bitcloud: A Decentralized Application for Cloud Services Based on Proof of Bandwidth
 
-This will be a rather brief explanation of the inner workings of the Bitcloud protocol. For more technical details, you can take a look at the [Bitcloud Protocol White Paper](https://github.com/wetube/bitcloud/blob/master/bitcloud.org). Please keep in mind that this paper and the more technical paper are both in very early stages of development.
+This is a rather brief explanation of the inner workings of the Bitcloud protocol. For more technical detailsplease see: [Bitcloud Protocol White Paper](https://github.com/wetube/bitcloud/blob/master/bitcloud.org). Please keep in mind that  both this paper and the technical paper are in very early stages of development.
 
 ## The Bitcloud Protocol
 
 ### Proof of Bandwidth
 
-Bitcloud works on a variation of [proof of stake](https://bitcoin.it/wiki/Proof_of_Stake) known as proof of bandwidth. The nodes in this system are similar to the miners in the Bitcoin protocol in that they mine cloudcoins by providing bandwidth to the network. Instead of using a proof of work system where miners are looking for the solution to a complex mathematical equation, the nodes in Bitcloud are rewarded based on their share of the total amount of bandwidth used in the Bitcloud network. Each [block reward](https://en.bitcoin.it/wiki/Mining) is distributed among the nodes based on their share of the overall amount of bandwidth needed by the Bitcloud users.
+Bitcloud functions using a variation of [proof of stake](https://bitcoin.it/wiki/Proof_of_Stake) also known as "proof of bandwidth." The nodes in this system are similar to the miners in the Bitcoin protocol in the sense that they both generate crypto-currencys. The nodes in our system will mine Cloudcoins in a way similar to that of the way miners mine Bitcoins, however, the nodes will mine Cloudcoins by providing bandwidth to the network. Instead of using a proof of work system where miners are looking for the solution to a complex mathematical equation, the nodes in Bitcloud are rewarded based on their share of the total amount of bandwidth used in the Bitcloud network. Each [block reward](https://en.bitcoin.it/wiki/Mining) is distributed among the nodes based on their share of the overall amount of bandwidth needed by the Bitcloud users. 
+(Bandwidth Contribution/Total Bitcloud Bandwidth) = (Number of Cloudcoins Earned/Total Number of Cloudcoins Generated)
 
 ### Moderators
 
