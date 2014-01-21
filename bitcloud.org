@@ -957,7 +957,7 @@ using relevant parts of the old data for the new start.
        pool. All dates must be correctly dated within the period of
        the block being analyzed.
 
-     - No rewards for appliance.
+     - No rewards for compliance.
 
        : (verdict t)
 
@@ -971,7 +971,7 @@ using relevant parts of the old data for the new start.
     - All workers must answer in less than X seconds to any query or
       **sync** function. Recommended constant for now: 600ms.
 
-    - No rewards for appliance.
+    - No rewards for compliance.
 
       : (verdict t)
 
@@ -996,7 +996,7 @@ its relation to the connected worker.
 Verdicts are written in the Node Pool as always.
 If it is found that a node denies service to another worker, penalization
 happens.
-No reward for appliance.
+No reward for compliance.
 
 **** DNS check
 **** Query answer check
