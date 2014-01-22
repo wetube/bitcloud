@@ -255,6 +255,53 @@ That way we propagate the system easily and ensure a good start.
 - Highly inflationary system, which is not good for investors.
 - We have to calculate very carefully the amount given to developers and early adopters.
 
+** Option 4: No blockchain
+
+In this option, there is no blockchain!
+And we base our entire economy in a system of coupons or contracts. This
+transforms the BCL in an advanced escrow automatic system.
+
+The following services can be sold:
+
+- Paid guaranteed storage.
+- Paid guaranteed bandwidth.
+- Paid content (user pays to download).
+- Advertising.
+- Name registration and resolution.
+- Paid moderation.
+- Rent nodes.
+
+*There are also free versions of all the above, that is something traded
+between publishers and nodes.* A publisher can physically setup nodes or rent
+them at will.
+
+The system automatically judge, emit verdict and apply the escrow policies
+stated in the contract for reward or penalization, so we still need the laws
+of bandwidth, storage, service, etc.
+
+That means that our economy is subsidiary of other blockchains. We can accept
+a variety of blockchains, for example Bitcoin, Litecoin, Primecoin and any
+other major cryptocurrencies.
+
+In Wetube, we add the necessary interface to facilitate the easy process of
+selling contracts. We should accept two forms of selling: bids and fixed
+price. Any publisher is free to put a price and special conditions.
+
+**** Advantages
+
+- Each publisher put the prices.
+- Each publisher is completely independent of the economic of a particular currency.
+- No speculation affecting the entire Bitcloud.
+- The system cannot crash economically, only individual publishers can.
+- No need for exchange.
+- Nodes and publishers have the *incentive* to search for customers.
+- Instant access for the information-related industries.
+
+**** Disadvantages
+
+- No direct reward for developers is possible. Funding must be external.
+- No reward for early adopters (because we are not a currency anymore).
+  
 * Decision to make about mixing moderators and nodes
 
 If we mix moderators and nodes, it will have the following problems:
