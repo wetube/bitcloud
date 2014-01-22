@@ -9,7 +9,7 @@ My proposal is to construct an entire micro-economy based on virtual services.
 Major group participants:
 
 - Node miners. They "print" the money.
-- Moderators. They categorize and moderate the content. Equivalent to
+- Publishers. They categorize and moderate the content. Equivalent to
   publishers.
 - Users. They download and/or pay for the content.
 - Authors. They are the users that upload free/paid content.
@@ -34,7 +34,7 @@ services.
 Lets compare Bitcloud with the industry of book selling.
 
 - Users are the customers.
-- Moderators are the publishers.
+- Publishers are the publishers.
 - Node storage system represent the bookstore.
 - Node miners represent the bankers.
 - Node law enforces represent the government.
@@ -52,26 +52,26 @@ Now, in the business chain, one step up, we find publishers. Publishers ensure
 a good quality selection of books. They are aligned with certain ideas and
 reject low quality books and/or non-aligned to those ideals. They receive a
 commission and in exchange they boost the reputation of the books they
-promote. Equivalence: we have moderators, they select, categorize, and provide
+promote. Equivalence: we have publishers, they select, categorize, and provide
 a face and an opportunity for the content to be broadcasted in accordance with
 their ideals and quality requirements, and they receive a commission for
-so. Our moderators *will* provide *quality* content being searched by
+so. Our publishers *will* provide *quality* content being searched by
 the user.
 
 Note: if you look at actual p2p systems, specially Kademlia (eMule), the
 result of searches are a total mess. Repeated content, corrupted content, fake
 content, incorrectly categorized content, illegal content, etc. We want to
-avoid that. Moderators will avoid that because they are actually humans
+avoid that. Publishers will avoid that because they are actually humans
 looking for quality.
 
-An important thing to take in count: moderators do *not* need to moderate all
+An important thing to take in count: publishers do *not* need to moderate all
 the content that arrives to the system. They just go and search for content in
-other moderators or in the unmoderated area, and accept content from
-users. Author users must look for good moderators before they try to upload
-anything, and request acceptance to the moderators, just like a book author
+other publishers or in the unmoderated area, and accept content from
+users. Author users must look for good publishers before they try to upload
+anything, and request acceptance to the publishers, just like a book author
 request acceptance from a publisher.
 
-In case that an user cannot find a moderator, he is always free to become one
+In case that an user cannot find a publisher, he is always free to become one
 by himself and ask nodes for acceptance. In the ultimate case that no node
 accepts him, he can setup a new node.
 
@@ -96,7 +96,7 @@ full their store with random books. They are forced to do a good selections of
 publishers, otherwise his business can crack. Customers are not going to buy
 anything they don't want. Most customers would not buy illegal things
 either. Equivalence: in our system, nodes are completely free to choose what
-moderators to be attached to.
+publishers to be attached to.
 
 In the real world, there are banks and gold miners. Banks generate the
 necessary money for the economy to be a viable thing in function of what
@@ -127,36 +127,36 @@ be freely traded without restriction or censorship.
 * Free service
 
 In addition to paid services, we are of course offering free
-services. Moderators have the liberty to choose what content is free.
+services. Publishers have the liberty to choose what content is free.
 
-For some free content, moderators can also choose to hardcode ads inside the
-content itself. Advertisers pay to moderators and nodes are enforced to insert
+For some free content, publishers can also choose to hardcode ads inside the
+content itself. Advertisers pay to publishers and nodes are enforced to insert
 the ads into the content.
 
 The advertising market of bitcloud is going to be auto-regulated. Actual humans
--advertisers- contact with other humans -moderators- and trade. They put the
+-advertisers- contact with other humans -publishers- and trade. They put the
 price and the conditions. No enforcement is made by the system itself.
 This is the *only* way to provide quality advertisement.
 
 All nodes that store the content with ads are also rewarded with a commission
 for it. This way, we ensure that transactions are done within cloudcoins and
 that the node is motivated to actually do the work of inserting the ads. Also
-will mean that nodes are going to be in the search for good quality moderators
+will mean that nodes are going to be in the search for good quality publishers
 with good conditions and a good rate of commission/quality. In that case, the
 disavantage to use an external coin for trades between advertisers and
-moderators is that moderator cannot ensure a proper redistribution of its
+publishers is that publisher cannot ensure a proper redistribution of its
 content, which could ultimately mean low quality of service - if there are
-many viewers of a certain content and the moderator hasn't got enough nodes
+many viewers of a certain content and the publisher hasn't got enough nodes
 attached that could mean that those nodes could become saturated. That is not
-in the interest of any moderator.
+in the interest of any publisher.
 
-Moderators trying to abuse by advertising too much, will not be chosen by
+Publishers trying to abuse by advertising too much, will not be chosen by
 users. Ads will be always relevant to the content shown, because advertisers
-will not choose moderators that provide content that they are not interested
+will not choose publishers that provide content that they are not interested
 in.
 
 Most individual users will prefer free content without ads, but chances are
-that it is going to be difficult to find a reputable moderator that accepts
+that it is going to be difficult to find a reputable publisher that accepts
 their content without condition. In the ultimate case, users not wanting ads
 in their content can perfectly choose to setup a node themselves. That will be
 the case of many non-profit organizations.
