@@ -22,22 +22,22 @@ Users adhering to this protocol will be able to:
 
   - Upload any file to the Bitcloud net and make it available to anyone.
   - Download and stream the content to anyone.
-  - Select which moderator you want to use, from anyone.
+  - Select which publisher you want to use, from anyone.
   - Earn money from advertising or disable advertising completely.
 
 Nodes adhering to this protocol will be able to:
 
 - Generate and earn profitable income in relation to the bandwidth
     they share.
-- Select what content they cache and serve by selecting moderators.
+- Select what content they cache and serve by selecting publishers.
 
-Moderators adhering to this protocol will be able to:
+Publishers adhering to this protocol will be able to:
 
 - Approve and categorize user content.
 - Approve or ban nodes.
 - Earn profitable income throughout advertising.
 
-Any person can become a *user*, a *node* and/or a *moderator* at any time. In
+Any person can become a *user*, a *node* and/or a *publisher* at any time. In
 addition to this, there will be client applications which serve as an
 interface to the general protocol named Bitcloud. We are presenting Wetube as
 the primary interface for our first version, but programmers can make any kind
@@ -84,9 +84,9 @@ with actual p2p protocols. Just to cite some:
 ** Content and participant protection
 
 Bitcloud separates the layer of selecting material from the storage itself,
-and allows nodes to select which moderators to adhere.
+and allows nodes to select which publishers to adhere.
 
-Because nodes are totally free to choose moderators, determining who is
+Because nodes are totally free to choose publishers, determining who is
 storing the content in the long term becomes a very fuzzy thing.
 
 In addition, a node can also include protected content (the source and
@@ -106,11 +106,11 @@ Tor.
    
 2. The Bandwidth Law is the law ensuring that nodes route traffic from users
    to the Bitcloud net to get/post content. Nodes are paid for doing so, by
-   generating money. /See Unprotected Routing section/
+   generating money.
    
 3. The Dispersion Law ensures that no one tries to cheat the system. It does
    so by dispersing the connections from user to nodes and nodes to other
-   nodes.
+   nodes. See [[https://github.com/wetube/bitcloud/blob/master/proof-of-bandwidth.org][Proof of Bandwidth separate paper.]]
    
 4. Storage Law ensures that nodes store guarantied content.
 
@@ -125,7 +125,7 @@ Tor.
 * EARLY-DRAFT Workers
 ** TO-IMPROVE General
 
-A worker is basically any entity that is a *user*, a *moderator* or a
+A worker is basically any entity that is a *user*, a *publisher* or a
 *node*. We encapsulate this into a general class because all workers
 have some variables in common, like the alias or the
 public-key. Then we derive the specifics workers from this class.
@@ -142,7 +142,7 @@ class Worker {
  IP
 }
 Worker --|>  Node
-Worker --|> Moderator
+Worker --|> Publisher
 Worker --|> User
 #+END_SRC
 
@@ -213,16 +213,16 @@ under the section *Proof of Stake* to it, to ensure that every
 node meets the rules and no one tries to take advantages over the
 rest.
 
-The nodes store the content in the form of a cache pointing to moderators, as
+The nodes store the content in the form of a cache pointing to publishers, as
 defined in the variables.
 
-- Moderators have a list of contents and/or users to which they are attached.
-- Nodes select a list of moderators they want to be adhered to.
-- Nodes store the content for the moderators
+- Publishers have a list of contents and/or users to which they are attached.
+- Nodes select a list of publishers they want to be adhered to.
+- Nodes store the content for the publishers
 
-Moderators can't ever select Nodes. See *Moderator Class* for more details.
+Publishers can't ever select Nodes. See *Publisher Class* for more details.
 
-*Note:* anyway we can implement a kind of query that a moderator can send to
+*Note:* anyway we can implement a kind of query that a publisher can send to
 a node asking for storage in exchange of money, and the node is free to accept
 or deny.
 
@@ -234,9 +234,9 @@ class Node {
  max-space
  signature
  accepted-coins
- moderators
- preferential-moderators
- cloud-moderators
+ publishers
+ preferential-publishers
+ cloud-publishers
  content-waiting-for-approval
  protected?
  shutdown-date
@@ -268,41 +268,41 @@ in the BCL routines.
 Is a list of accepted coins for exchange. For example `'(BTC
 LTC)`. If a node accept BTC, it must run the *bitcoind* daemon.
 
-**** moderators
+**** publishers
 
-Is a list of normal moderators for which the content is accepted
+Is a list of normal publishers for which the content is accepted
 to be cached. The content cache can vary, so a node can
 automatically select the content to be cached in function of the
 number of requests. If this variable is NIL, the node becomes
 unmoderated and caches everything that goes through.
 
-**** preferential-moderators
+**** preferential-publishers
 
-Is a list of moderators whose content is always going to be
-cached entirely. This is useful for moderators that also own
+Is a list of publishers whose content is always going to be
+cached entirely. This is useful for publishers that also own
 nodes.
 
-**** cloud-moderators
+**** cloud-publishers
 
-A list of moderators for cloud personal storage. These moderators
+A list of publishers for cloud personal storage. These publishers
 put a price for content storage. This content is guaranteed to be
 stored until 1 year has passed since the user paid, or until the
-user deletes it or the moderator stops supporting the user.
+user deletes it or the publisher stops supporting the user.
 
-*Note*: the sum of the space required by the moderators in
-**cloud-moderators** and **preferential-moderators** should be
+*Note*: the sum of the space required by the publishers in
+**cloud-publishers** and **preferential-publishers** should be
 less than **max-space**. *bitcloud* daemon should log a warning if
 that happens, and POS policies could ban the node.
 
 **** content-waiting-for-approval
 
 A list of contents uploaded from the users that are waiting for
-the approval of the moderators adhered to this node.
+the approval of the publishers adhered to this node.
 
 **** approval-timeout
 
 How much time this node is going to wait for the approval of any
-moderator adhered to this node. Once that time has passed, the awaiting
+publisher adhered to this node. Once that time has passed, the awaiting
 content is deleted from the cache. Minimum time allowed is 12
 hours. Defaults to 48.
 
@@ -318,60 +318,60 @@ throughout many nodes, adding costs in bandwidth and latency.
 When the node will be shut down automatically. Useful for protected
 nodes that serve delicate content.
 
-** TO-THINK Moderators
+** TO-THINK Publishers
 
-Moderators are crucial to the well-working of the Bitcloud. Their
+Publishers are crucial to the well-working of the Bitcloud. Their
 main tasks are:
 
-+ Approve user content. The user selects a list of moderators to which s/he
-  wants to adhere, the moderator receives the request and decides if the
++ Approve user content. The user selects a list of publishers to which s/he
+  wants to adhere, the publisher receives the request and decides if the
   user meets his/her requirements.
-+ Categorize. A moderator properly corrects tagging of the content
++ Categorize. A publisher properly corrects tagging of the content
   s/he receives from the user.
-+ Advertising. Advertisers select which moderators they want to
++ Advertising. Advertisers select which publishers they want to
   adhere to, and ads are only shown in the content approved by that
-  moderator. Moderators are paid for this, and they set the
+  publisher. Publishers are paid for this, and they set the
   price. Part of this revenue goes to the publisher.
 
 
-A vital and important imposed limitation: moderators cannot choose which
-nodes to adhere, but nodes can choose any moderators they want. This is a way
+A vital and important imposed limitation: publishers cannot choose which
+nodes to adhere, but nodes can choose any publishers they want. This is a way
 to avoid censorship because any node can store any content that the owner
 wants. This is also a good way for nodes to make money without having to be
-approved by anyone. An advantage for moderators: they don't have to have the
+approved by anyone. An advantage for publishers: they don't have to have the
 technical skills to maintain a node, and do everything from the user
 interface, as the maintainer of the node can be another person, or even a
 rented pre-configured node from an ISP.
 
 
-#+BEGIN_SRC plantuml :file "img/moderator-class.png"
-class Moderator {
+#+BEGIN_SRC plantuml :file "img/publisher-class.png"
+class Publisher {
      contents
      trusted-users
-     supermoderators
+     superpublishers
      advertisers
      ads-price
      ads-share-to-users
      tags
 }
-Worker -right-|> Moderator
+Worker -right-|> Publisher
 #+END_SRC
 
 #+RESULTS:
-[[file:img/moderator-class.png]]
+[[file:img/publisher-class.png]]
 
 *** contents
 
-This is a list of contents that the moderator has been approved. Nodes who have
-selected this moderator have the obligation to maintain a cache with the files
-this moderator approves.
+This is a list of contents that the publisher has been approved. Nodes who have
+selected this publisher have the obligation to maintain a cache with the files
+this publisher approves.
 
 *** trusted-users
 
 ** TO-THINK Users
 
 Users are the ones that obtain the benefits from the services of nodes and
-moderators, because they are who send and receive the content.
+publishers, because they are who send and receive the content.
 
 Usage of the system must be transparent to the user. S/he should be able to
 connect using his/her client or browser without having to do anything special
@@ -382,7 +382,7 @@ class User {
      votes
       wallet
       favorites
-      moderators
+      publishers
       history
       updloads
 }
@@ -463,7 +463,7 @@ and serve dynamic pages using local routing facilities like /nginx/.
 We don't need to resolve node names because content is provided to the users
 by simply requesting it to the nodes s/he connects to.
 
-Each content is signed by a user and a moderator. The workers only have to
+Each content is signed by a user and a publisher. The workers only have to
 request the content matching the hash of the content, and the routing routines
 are in charge of finding the nodes having it.
 
@@ -639,7 +639,7 @@ mnodeE <--> pnode
   to the request, equivalent to several searches. We recommend a random number
   between 1s and 5s. Once answered, the node must stick to that approximate
   lag, but can change it when requesting a different content for another
-  moderator or when certain time has passed.
+  publisher or when certain time has passed.
 - There is the lucky possibility that a connected Node is also the protected
   one having the content (like Node1 in the graph). In that case the protected
   node adds the convenient lag time to protect itself.
@@ -748,7 +748,7 @@ Values can be of type:
 - /literal lists/ prefixed by a /'/ and followed by parenthesis and values
   separated by spaces:
 
-  : (search 'wetube :moderators '(modA modB))
+  : (search 'wetube :publishers '(modA modB))
   
 - /booleans/ which are just /t/ or /nil/:
 
@@ -756,7 +756,7 @@ Values can be of type:
 
 - /output from other commands/ surrounded by parenthesis without the /'/:
 
-  : (search 'wetube :moderators (search-moderators 'mod :protected t))
+  : (search 'wetube :publishers (search-publishers 'mod :protected t))
   
 ** Object Format
 
@@ -819,8 +819,8 @@ advanced queries to nodes.
 **** Users
 ***** register
 ***** profile
-**** Moderators
-***** search-moderators
+**** Publishers
+***** search-publishers
 ***** categorize
 ***** delete
 **** Nodes
@@ -880,7 +880,7 @@ Laws are written in the source code in the form of *generics* and the
 corresponding *methods*. A *method* is a specific application of a
 *generic*. For example, for the *generic* of the Law of Bandwidth there
 are going to be several *methods* for judging nodes, users and
-moderators.
+publishers.
 
 This is a subprocess of the general *sync* process, as described in the
 Nodepool section.

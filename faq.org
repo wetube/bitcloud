@@ -54,7 +54,7 @@ uploading to WeTube rather than other options.
 * TO-THINK Q: Is Bitcloud Anonymous?
 A: 
 
-* TO-THINK Q: Who are moderators?
+* TO-THINK Q: Who are publishers?
 A: 
 
 * TO-IMPROVE Q: How can content creators benefit from Bitcloud?

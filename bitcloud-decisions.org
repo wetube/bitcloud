@@ -8,9 +8,9 @@ We have three choices:
     
     1. If they decide to purchase something on Bitcloud, for example cloud storage, the transaction is sent into the blockchain and those cloudcoins are destroyed.
     
-    2. If the node decides to purchase something on Bitcloud, for example cloud storage, those cloudcoins would be sent to a moderator. The moderator would then be holding the coins and decide what he wants to do with them.
+    2. If the node decides to purchase something on Bitcloud, for example cloud storage, those cloudcoins would be sent to a publisher. The publisher would then be holding the coins and decide what he wants to do with them.
         
-        1. Proposed amendment to 1.ii: Ensure adequate incentive to early adopters (increasing cloudcoin value) by tapering off the number of coins in the block reward over time, and by giving a way for moderators to pay a fee to nodes that carry their content.  These are similar to Bitcoins halving block reward every 4 years and transaction fee, respectively.
+        1. Proposed amendment to 1.ii: Ensure adequate incentive to early adopters (increasing cloudcoin value) by tapering off the number of coins in the block reward over time, and by giving a way for publishers to pay a fee to nodes that carry their content.  These are similar to Bitcoins halving block reward every 4 years and transaction fee, respectively.
 3. Don't impose a limit per block, so for example 1 Tb generates always 1
    Mediacoin
 
@@ -26,9 +26,9 @@ There aren't really any huge advantages to this system. The problem is that the 
 
 *** Disadvantages
 
-1. Moderators will not search for advertisers.
+1. Publishers will not search for advertisers.
 2. Because of (1) you must enforce a system that inserts ads even if
-   moderators don't want to or are not able to find advertisers.
+   publishers don't want to or are not able to find advertisers.
 3. Because of (2) users become molested by ads not in relation to the content.
 4. Bad advertisers and spammers will insert ads which might be even illegal or
    annoying.
@@ -81,24 +81,24 @@ There aren't really any huge advantages to this system. The problem is that the 
 8. An alternative protocol built in the form of Option 2 could still pop up, but obviously I think it would fail due to the same problems related to the value of the currency and network stability. It should also be noted that videos could be uploaded for free in option 1, but ads would need to be placed on the video once they received a certain number of views.
 
 While a few of these disadvantages are legitimate, they still don't compare to the disadvantage in option 2 where the entire network is unstable becaue the value of mediacoins is not tied to the number of users on the network.
-** Option 2: Advertisers pay moderators
+** Option 2: Advertisers pay publishers
 
 *** Advantages
 
-1. Moderators will search for advertisers to earn money.
+1. Publishers will search for advertisers to earn money.
 2. Ads will be relevant to the content.
-3. Moderators earn money that they can hold or exchange.
-4. Free content is possible because paid content pays moderators for the
-   rest. And anyway, nodes can select moderators, which means that they can
-   select themselves if they are also moderators. This means that nodes can
-   select paid only moderators, and choose if they want dedicate some of their
+3. Publishers earn money that they can hold or exchange.
+4. Free content is possible because paid content pays publishers for the
+   rest. And anyway, nodes can select publishers, which means that they can
+   select themselves if they are also publishers. This means that nodes can
+   select paid only publishers, and choose if they want dedicate some of their
    space to free content or not.
    
 ****   Responses from Kyle
 1. As mentioned in my response to this as a disadvantage in option 1, this is not a serious issue. Advertisers can still bid up prices for ad space in the "Advertise on WeTube" tab on the WeTube software client.
 2. This applies to both options.
 3. I'm not sure how this is an advantage. I look at it as a disadvantage
-   because a certain percentage of moderators will sell their mediacoins for
+   because a certain percentage of publishers will sell their mediacoins for
    some other currency. It hurts the growth of mediacoins as a currency
    because money will be going into the system and then back out of it instead
    of just staying in the system. It is similar to someone buying bitcoins in
@@ -107,10 +107,10 @@ While a few of these disadvantages are legitimate, they still don't compare to t
    so there is no increased value for bitcoins, the currency.
    - Javier: and what is the problem of that in bitcoin? Bitcoin is a way to
      pay, our system will to. *NOTE*: an advertiser has to *buy* money from
-     nodes before they can pay to the moderators. When a buy happens, our coin
-     raise in value. Yes, then the moderator may or may not sell the money. If
+     nodes before they can pay to the publishers. When a buy happens, our coin
+     raise in value. Yes, then the publisher may or may not sell the money. If
      it sells, price of our coin *compensates* because the money to pay
-     moderators was increased before. If they hold, price increases.
+     publishers was increased before. If they hold, price increases.
 4. Free content is still possible in option 1. Content can be uploaded by
    users for free, but ads will be added once a certain video or other files
    starts to require a lot of bandwidth. Allowing unlimited uploads for free
@@ -118,13 +118,13 @@ While a few of these disadvantages are legitimate, they still don't compare to t
    that option. No current video host offers this option because they would go
    bankrupt.
    - Javier: it is absolutetly not a disaster because in this system
-     moderators are REALLY motivated to find advertisers. *AND*, as I told
-     you, a node can ALWAYS choose their moderators, so they can choose a
-     moderator that inserts ads.
+     publishers are REALLY motivated to find advertisers. *AND*, as I told
+     you, a node can ALWAYS choose their publishers, so they can choose a
+     publisher that inserts ads.
    
 *** Disadvantages
 
-I don't see any, but Kyle insists that moderators are irrevocably going to sell
+I don't see any, but Kyle insists that publishers are irrevocably going to sell
 their coins immediately after they have paid, making the system to crash. I
 need to see serious proof of this.
 
@@ -179,7 +179,7 @@ explain it clearly, point by point:
    avoid speculation at all.People are free to buy and sell. What we can is
    control the speculation to make the system grow. How? By the intrinsic
    value of our network, and the services that provide our workers (mostly
-   moderators).  We have *more* intrinsic value than Bitcoin, because we
+   publishers).  We have *more* intrinsic value than Bitcoin, because we
    provide a *real* service beyond just being a currency.
    - Kyle:
       Providing extra value during the mining process does not mean anything. If 
@@ -207,14 +207,14 @@ explain it clearly, point by point:
       the currency with the services are two different things. As I've explained 
       many times, the currency is not backed up by the services because the nodes 
       don't have control over the price at a certain point.
-4. You assume that moderators are going to sell. Why? You're unable to give
+4. You assume that publishers are going to sell. Why? You're unable to give
    good answer except your biased opinion.
    - Kyle:
-      You assume that moderators are going to hold. Why? You're unable to give a 
+      You assume that publishers are going to hold. Why? You're unable to give a 
       good answer except your biased opinion.
-5. *Even if all moderators sell everything in the moment they are paid (a very
+5. *Even if all publishers sell everything in the moment they are paid (a very
    improbable thing), our system still can run STABLE*. Why? Because before a
-   moderator can sell, he must first have received a payment. And who is the
+   publisher can sell, he must first have received a payment. And who is the
    one who pays? The advertiser. And who is the one who sell our coins to
    advertisers? The nodes.
    - Kyle:
@@ -223,7 +223,7 @@ explain it clearly, point by point:
       control of the market over time as more mediacoins are created. Just like with
       bitcoin miners.
    *SO IT COMPENSATES*
-   Note that there is a buy and a sell. Advertisers buy, moderators sell, so
+   Note that there is a buy and a sell. Advertisers buy, publishers sell, so
    there is an equilibrium. And meanwhile the prices increases because more users
    and nodes come to the system.
    - Kyle:
@@ -248,7 +248,7 @@ That way we propagate the system easily and ensure a good start.
 - Speculation is reduced to minimum because nodes are not going to sell below
   the real price of bandwidth.
 - Nodes will have a constant incentive to be online.
-- Moderators can be paid properly.
+- Publishers can be paid properly.
 
 *** Disadvantages
 
@@ -302,9 +302,9 @@ price. Any publisher is free to put a price and special conditions.
 - No direct reward for developers is possible. Funding must be external.
 - No reward for early adopters (because we are not a currency anymore).
   
-* Decision to make about mixing moderators and nodes
+* Decision to make about mixing publishers and nodes
 
-If we mix moderators and nodes, it will have the following problems:
+If we mix publishers and nodes, it will have the following problems:
 
 1. Someone willing to do moderation must be a technical guy and manage a
    node. This means managing an entire server and be aware of security risks,
@@ -322,10 +322,10 @@ I will response to this section in the future.
 
 ** Ethical reasons
 
-There is really not a good reason to mix moderators and nodes. Moderators are
+There is really not a good reason to mix publishers and nodes. Publishers are
 the base for a nice thin layer which will facilitate things to everyone.
-By making imposible for a moderator to select a node, you ensure that any node
-can attach to a moderator, and the human behind the moderation service knows
+By making imposible for a publisher to select a node, you ensure that any node
+can attach to a publisher, and the human behind the moderation service knows
 that nodes are going to follow him if he provides good content. In fact, he
 will desire that nodes follow him.
 
@@ -334,7 +334,7 @@ I will response to this section in the future.
 
 ** Economic reasons
 
-The same cannot be said when a node and a moderator are not the same. Because
+The same cannot be said when a node and a publisher are not the same. Because
 of the way that the protocol is going to be constructed, it would be easier
 for the node to create a kind of apartheid for nodes trying to copy him.
 
