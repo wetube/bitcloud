@@ -6,6 +6,9 @@ This will be a rather brief explanation of the inner workings of the Bitcloud pr
 
 ### Proof of Bandwidth
 
+Technical paper:
+https://github.com/wetube/bitcloud/blob/master/proof-of-bandwidth.org
+
 Bitcloud works on a variation of [proof of stake](https://bitcoin.it/wiki/Proof_of_Stake) known as proof of bandwidth. The nodes in this system are similar to the miners in the Bitcoin protocol in that they mine cloudcoins by providing bandwidth to the network. Instead of using a proof of work system where miners are looking for the solution to a complex mathematical equation, the nodes in Bitcloud are rewarded based on their share of the total amount of bandwidth used in the Bitcloud network. Each [block reward](https://en.bitcoin.it/wiki/Mining) is distributed among the nodes based on their share of the overall amount of bandwidth needed by the Bitcloud users.
 
 ### Publishers
@@ -18,7 +21,13 @@ In addition to the option to have publishers pick what can be stored on their se
 
 ### Decisions to Be Made
 
-There are still many key decisions that need to be made in the Bitcloud protocol. We have a basic idea of how everything will work, but we need assistance from programmers and thinkers from around the world who want to help this project. We've tried to come up with specific solutions as a two-man team, but there are simply too many aspects of the protocol for us to tackle alone. Head over to #bitcloud on Freenode IRC or /r/bitcloud on Reddit if you'd like to join us.
+There are still many key decisions that need to be made in the Bitcloud
+protocol. We have a basic idea of how everything will work, but we need
+assistance from programmers and thinkers from around the world who want to
+help this project. We've tried to come up with specific solutions as a two-man
+team, but there are simply too many aspects of the protocol for us to tackle
+alone. Head over to #bitcloud (general) and #bitcloud-dev (development) on
+Freenode IRC or [our forum](http://talk.bitcloudproject.org) if you'd like to join us.
 
 ## Bitcloud is a Distributed Autonomous Corporation
 
