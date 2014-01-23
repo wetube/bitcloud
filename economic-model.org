@@ -167,4 +167,6 @@ earning money by mining, so they can cover expenses.
 
 * Blockchain
 
-TODO.
+The blockchain is to be decided here, please have a look, read all the options and add your owns:
+
+https://github.com/wetube/bitcloud/blob/master/bitcloud-decisions.org
