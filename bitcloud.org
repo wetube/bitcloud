@@ -20,22 +20,30 @@ Tor.
 
 Users adhering to this protocol will be able to:
 
-  - Upload any file to the Bitcloud net and make it available to anyone.
-  - Download and stream the content to anyone.
-  - Select which publisher you want to use, from anyone.
-  - Earn money from advertising or disable advertising completely.
+- Become an author and upload any file to the Bitcloud net and make it available to anyone.
+- Download and stream the content from other users and publishers.
+- Select which publisher s/he want to use.
+- Authors may earn money from paid content. Free content is possible.
 
 Nodes adhering to this protocol will be able to:
 
 - Generate and earn profitable income in relation to the bandwidth
     they share.
 - Select what content they cache and serve by selecting publishers.
+- Be paid for guarantied storage.
+- Store non-guarantied content based on popular acceptance.
+- Be part of the government of the entire net.
+- Receive a commission for inserting ads in the content.
+- Rent itself to a publisher.
 
 Publishers adhering to this protocol will be able to:
 
 - Approve and categorize user content.
-- Approve or ban nodes.
+- Sell paid content and receive a commission.
+- Trade with nodes for storage and bandwidth.
 - Earn profitable income throughout advertising.
+- Accept free content at will.
+- Sell storage for the nodes and receive a commission.
 
 Any person can become a *user*, a *node* and/or a *publisher* at any time. In
 addition to this, there will be client applications which serve as an
@@ -46,20 +54,11 @@ of interface, providing that they follow the rules described in this protocol.
 The Bitcloud blockchain can be independently accessed for money transactions,
 so external wallets without using the main interface are perfectly feasible.
 
-  Bitcloud works by following a special set of premises referred as
-  /laws/. The laws in the software ensure that the system is running
-  smooth without spammers and selfish serving, so everybody can trust
-  the system. These laws are initially imposed by the programmers and
-  can dynamically change over versions.
-
-  The entire system can be fully scriptable in real time using simple to use
-  and parse lambda expressions, so advanced users and programmers can tweak
-  and modify the way in which they are connected to the Bitcloud net, embed
-  actions into web pages, use in their internal programs (in any language),
-  etc. Nodes can be accessed in real time by their owners with full control to
-  the entire running system. We are looking forward an incredible level of
-  flexibility in where all users can review and enhance the living (running)
-  network.
+Bitcloud works by following a special set of premises referred as /laws/
+(BCL). The laws in the software ensure that the system is running smooth
+without spammers and selfish serving, so everybody can trust the system. These
+laws are initially imposed by the programmers and can dynamically change over
+versions.
   
 ** We plan to go mainstream
 
@@ -95,6 +94,43 @@ unprotected content, so only direct access to the node can conclude into
 liability. But because source and destination cannot be determined, finding
 such a node becomes extremely difficult. This improves protection compared to
 Tor.
+
+** TO-THINK Modules and plugins
+
+Bitcloud is constructed by the integration of an inter-dependant chain of
+modules and plugins, each one having its own BCL (laws).
+
+For example, there are the fundamental modules of routing, storage, and
+goverment. From there on, a complete set of plugins can be constructed.
+
+Each plugin will allow publishers to create sub-nets. In the case of the cloud
+module (the first and most important one) the publishers create a sub-net with
+only the content moderated by them. Collaboration between publishers is
+possible.
+
+Examples:
+
+- A social plugin, like Facebook, Twitter, and G+. Any publisher will have an
+  independent social sub-net, so it is possible to create different social
+  nets each one specialized under the rules of the particular publisher.
+- A wiki plugin. Each publisher will have and moderate its own wiki.
+- A forum plugin. Each publisher will moderate and establish the rules of his
+  own forum.
+- A market plugin. Each publisher will be in charge of one store or collection
+  of stores and will moderate sellers and customers.
+
+The possibilities are endless. We can virtually replace every single major
+layer of the actual Internet in a decentralized way.
+
+** Scriptable
+
+The entire system can be fully scriptable in real time using simple to use and
+parse lambda expressions, so advanced users and programmers can tweak and
+modify the way in which they are connected to the Bitcloud net, embed actions
+into web pages, use in their internal programs (in any language), etc. Nodes
+can be accessed in real time by their owners with full control to the entire
+running system. We are looking forward an incredible level of flexibility in
+where all users can review and enhance the living (running) network.
 
 * Keys for fast understanding
 
@@ -273,7 +309,7 @@ LTC)`. If a node accept BTC, it must run the *bitcoind* daemon.
 Is a list of normal publishers for which the content is accepted
 to be cached. The content cache can vary, so a node can
 automatically select the content to be cached in function of the
-number of requests. If this variable is NIL, the node becomes
+number of requests. If this variable is F, the node becomes
 unmoderated and caches everything that goes through.
 
 **** preferential-publishers
@@ -491,9 +527,19 @@ by applying all the laws affecting users. /Service Law/.
 
 *** EARLY-DRAFT Unprotected routing - Proof of Bandwidth
 
+See also in the separated paper:
+
+https://github.com/wetube/bitcloud/blob/master/proof-of-bandwidth.org
+
 Every single user is connected to 4 nodes using the User Router coded in the
 interface. These connections are meant to both transfer the content and to
 apply the BCL (Bitcloud Cryptographic Law).
+
+Even if the content is not protected, all communications are encrypted, in
+order for an external viewer to not be able to distinguish between protected
+and unprotected content.
+
+Encription in the server end is also recommended.
 
 Example graph:
 #+BEGIN_SRC plantuml :file "img/unprotected-route.png"
@@ -562,6 +608,10 @@ The process (using the graph above as an example):
   user + 4 nodes).
 
 *** EARLY-DRAFT Protected routing - Proof of Bandwidth
+
+See also the separate paper:
+
+https://github.com/wetube/bitcloud/blob/master/proof-of-bandwidth.org
 
 When a content is marked as *protected*, the Bitcloud net protects both the IP
 and domain name of the node serving the content. The user requesting the
@@ -750,7 +800,7 @@ Values can be of type:
 
   : (search 'wetube :publishers '(modA modB))
   
-- /booleans/ which are just /t/ or /nil/:
+- /booleans/ which are just /t/ or /f/:
 
   : (verdict t :reward 1.23)
 
@@ -901,10 +951,10 @@ lambda expression, so it is easy to parse from scripts[fn:1]:
 
 #+BEGIN_SRC lisp
    (verdict t :reward 0.2345)
-   (verdict nil :penalization 1.3 :ban 6)
+   (verdict f :penalization 1.3 :ban 6)
 #+END_SRC
 
-The first var is *t* or *nil* indicating if the verdict is favorable or
+The first var is *t* or *f* indicating if the verdict is favorable or
 not. The rest indicates the properties of the verdict, to be
 applied by the *enforce* *generic*.
 
@@ -921,28 +971,15 @@ using relevant parts of the old data for the new start.
      - All nodes must be in sync of time with the official world time
        at GMT with a maximum variation of 10 seconds. Clients are not
        forced.
-
-       : (defgeneric judge-time (worker))
-
      - Check is made sending a request to the other node and comparing
        to the actual date in the moment of sending the request.
-
-       : (defun request-time (node))
-
        Function returns `(get-universal-time)` of the other node.
-
      - No reward for compliance.
-
-       : (verdict t)
-
      - Penalization of 1 MAC (X) for every 10 seconds out of sync on
        each block generation. Ban for Y periods if it is 30s or more
        or the node hasn't got enough money to pay penalization. All
        operations of the node for the current block are rejected (Z)
        only if time variation is bigger than 30s.
-
-       : (verdict nil :penalization X :ban Y :reject Z)
-
        Y is 1 for one time ban. Y is 6 if the node persists. Y is 144
        if it persists even more. Y (1,6,144)
 
@@ -950,40 +987,27 @@ using relevant parts of the old data for the new start.
 
      - All nodes must write the correct dates in all connections and
        associated transactions.
-
-       : (defgeneric judge-timestamps (node connection))
-
      - Check is made looking at the states written by the node in the
        pool. All dates must be correctly dated within the period of
        the block being analyzed.
-
      - No rewards for compliance.
-
-       : (verdict t)
-
      - Immediate penalization of 1 MAC and ban for Y (6, 144,
        288). Reject all transactions.
-
-       : (verdict nil :penalization 1 :ban Y :reject 'all)
 
 *** EARLY-DRAFT Lag Law
 
     - All workers must answer in less than X seconds to any query or
       **sync** function. Recommended constant for now: 600ms.
-
     - No rewards for compliance.
-
-      : (verdict t)
-
     - Ban X(1,2,6,144) if slow or saturated connections.
-
-      : (verdict nil :ban X)
 
 *** TO-THINK Bandwidth Law (Proof of Bandwidth)
 
+In a separate paper for now:
+
 
 https://github.com/wetube/bitcloud/blob/master/proof-of-bandwidth.org
-  
+
   
 
 **** TO-THINK Quality bandwidth check
@@ -1003,20 +1027,9 @@ No reward for compliance.
 **** Availability check
 *** TO-THINK Dispersion Law
 
-Ensure randomness when selecting nodes.
-We must provide a way to assign random nodes to concrete user IPs, and they
-can't change for the time that a block is generated, to avoid users requesting
-many random nodes in a short period of time.
+In a separate paper for now:
 
-This law also must forbid the connection of users to nodes using correlative
-IPs to avoid the "bulk IP attack". Example: /123.123.123.X/ being /X/ the
-correlative IPs.
-
-At the same time we can optimize by connecting to geographically closer nodes
-by prioritizing the assignment of certain nodes, for example those matching
-the mask /255.0.0.0/. Only applicable if there are sufficient nodes inside the
-mask to assure certain randomness.
-
+https://github.com/wetube/bitcloud/blob/master/proof-of-bandwidth.org
 
 **** Random connection check
 **** Short Circuit check
@@ -1081,12 +1094,6 @@ constantly calculated in real time.
 
   This is the interface for the node (not the users) so the
   administrator can see and tweak values in real time.
-
-* TO-THINK Future as a Social Distributed application
-
-  With not so much modifications, this DA could also provide social content
-  with characteristics competing to those of centralized private sites like
-  Facebook and Twitter.
 
 * Footnotes
 
