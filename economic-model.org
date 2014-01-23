@@ -206,15 +206,15 @@ https://github.com/wetube/bitcloud/blob/master/bitcloud-decisions.org
 More deails on services offered
 
 - Free bandwidth.
-..* "we always offer free bandwidth so we can effectively broadcast the real business here: the rest of the
+  * "we always offer free bandwidth so we can effectively broadcast the real business here: the rest of the
 services". The browsing or consumption of bandwidth will be free.
 
 - Free non-guaranteed storage.
-..* Non guarantied content may or may not stay in the node depending on
+  * Non guarantied content may or may not stay in the node depending on
 technical requirements. For example, when the node runs out of storage space
 they may remove the least requested content out of their hard disks.
 - Paid guaranteed storage.
-..* 
+  * 
 The difference between guarantied content and not guarantied content is that
 guarantied content is paid at periodical intervals and nodes are enforced by
 the bitcloud law to actually make sure that the content is always
@@ -223,9 +223,9 @@ in essence what is being purchased is the guarantee of availability ( or hosting
 - Paid content (user pays to download).
 - Free content.
 - Advertising.
-..* ads drive revenue. advertisers can choose to pay to be more visible and attract more sales. this can be also further developed when third party services can be offered on top of bitcloud.
+  * ads drive revenue. advertisers can choose to pay to be more visible and attract more sales. this can be also further developed when third party services can be offered on top of bitcloud.
 - Name registration and resolution.
 - Free moderation.
 - Paid moderation.
 - Origin certification 
-..* the idea of origin certification needs to be developed more. In essence is to provide distributed certification authority, that can be used for copyright management or "authorship". This could have many applications a lot like the current SSL certificates, or GPG, or Patent office (I certify that I am the creator and owner of this or that content). // needs further development
+  * the idea of origin certification needs to be developed more. In essence is to provide distributed certification authority, that can be used for copyright management or "authorship". This could have many applications a lot like the current SSL certificates, or GPG, or Patent office (I certify that I am the creator and owner of this or that content). // needs further development
