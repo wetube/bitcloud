@@ -33,12 +33,15 @@ A word on origin certification: the idea is simply to provide a service that gua
 So the whole idea is to give value to our coin by providing good quality
 services.
 
-* The user chooses between advertising or paid content
+* 3 service model proposals
 
-Our main model of income is from advertisement.
+Our main model of income is from advertisement. Based on this the user should have three options of service:
+1. Paid content
+2. Free content
+3. ad supported content (pay to remove ads is optional)
 
 Most users in most places will chose not to pay for the content, but there is
-no economy if all is free. Someone at some point must introduce a form of
+no economy if everything is free. Someone at some point must introduce a form of
 income.
 
 So we introduce advertisement for free content, and remove it if the user pays
@@ -52,12 +55,12 @@ the content. The first node to attend the request receives a commission for
 inserting the ads, and the rest of the nodes follow.
 
 The advertising market of bitcloud is going to be auto-regulated. Actual humans
--advertisers- contact with other humans -publishers- and trade. They put the
+-advertisers- contact with other humans -publishers- and trade. They set the
 price and the conditions. No enforcement is made by the system itself.
 This is the *only* way to provide quality advertisement.
 
 All nodes that store the content with ads are also rewarded with a commission
-for it. This way, we ensure that transactions are done within cloudcoins and
+for it. This way, we ensure that transactions are done with cloudcoins and
 that the node is motivated to actually do the work of inserting the ads. Also
 will mean that nodes are going to be in the search for good quality publishers
 with good conditions and a good rate of commission/quality. In that case, the
