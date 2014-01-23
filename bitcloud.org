@@ -166,23 +166,23 @@ A worker is basically any entity that is a *user*, a *publisher* or a
 have some variables in common, like the alias or the
 public-key. Then we derive the specifics workers from this class.
 
-#+BEGIN_SRC plantuml :file "img/worker-class.png"
-User:
-class Worker {
- alias
- private-key
- public-key
- banned?
- banned-time
- protected?
- IP
-}
-Worker --|>  Node
-Worker --|> Publisher
-Worker --|> User
-#+END_SRC
+# #+BEGIN_SRC plantuml :file "img/worker-class.png"
+# User:
+# class Worker {
+#  alias
+#  private-key
+#  public-key
+#  banned?
+#  banned-time
+#  protected?
+#  IP
+# }
+# Worker --|>  Node
+# Worker --|> Publisher
+# Worker --|> User
+# #+END_SRC
 
-#+RESULTS:
+# #+RESULTS:
 [[file:img/worker-class.png]]
 
 **** TO-THINK alias
@@ -245,7 +245,7 @@ Bitcloud network. It's contents are perpetual and immutable.
 In addition, there will be a *Node Pool*. This pool is regenerated
 every 10 minutes after a new block is generated and contains the
 state of all nodes. When regenerated, all nodes apply the rules
-under the section *Proof of Stake* to it, to ensure that every
+under the section /BCL/ to it, to ensure that every
 node meets the rules and no one tries to take advantages over the
 rest.
 
@@ -262,25 +262,25 @@ Publishers can't ever select Nodes. See *Publisher Class* for more details.
 a node asking for storage in exchange of money, and the node is free to accept
 or deny.
 
-#+BEGIN_SRC plantuml :file "img/node-class.png"
-class Node {
- dns-name    
- max-download-speed
- max-upload-speed
- max-space
- signature
- accepted-coins
- publishers
- preferential-publishers
- cloud-publishers
- content-waiting-for-approval
- protected?
- shutdown-date
-}
-Worker -right-|> Node
-#+END_SRC
+# #+BEGIN_SRC plantuml :file "img/node-class.png"
+# class Node {
+#  dns-name    
+#  max-download-speed
+#  max-upload-speed
+#  max-space
+#  signature
+#  accepted-coins
+#  publishers
+#  preferential-publishers
+#  cloud-publishers
+#  content-waiting-for-approval
+#  protected?
+#  shutdown-date
+# }
+# Worker -right-|> Node
+# #+END_SRC
 
-#+RESULTS:
+# #+RESULTS:
 [[file:img/node-class.png]]
 
 **** max-download-speed and max-upload-speed
@@ -380,20 +380,20 @@ interface, as the maintainer of the node can be another person, or even a
 rented pre-configured node from an ISP.
 
 
-#+BEGIN_SRC plantuml :file "img/publisher-class.png"
-class Publisher {
-     contents
-     trusted-users
-     superpublishers
-     advertisers
-     ads-price
-     ads-share-to-users
-     tags
-}
-Worker -right-|> Publisher
-#+END_SRC
+# #+BEGIN_SRC plantuml :file "img/publisher-class.png"
+# class Publisher {
+#      contents
+#      trusted-users
+#      superpublishers
+#      advertisers
+#      ads-price
+#      ads-share-to-users
+#      tags
+# }
+# Worker -right-|> Publisher
+# #+END_SRC
 
-#+RESULTS:
+# #+RESULTS:
 [[file:img/publisher-class.png]]
 
 *** contents
@@ -413,17 +413,17 @@ Usage of the system must be transparent to the user. S/he should be able to
 connect using his/her client or browser without having to do anything special
 and without requiring any technological expertise.
 
-#+BEGIN_SRC plantuml :file "img/user-class.png"
-class User {
-     votes
-      wallet
-      favorites
-      publishers
-      history
-      updloads
-}
-Worker -right-|> User
-#+END_SRC
+# #+BEGIN_SRC plantuml :file "img/user-class.png"
+# class User {
+#      votes
+#       wallet
+#       favorites
+#       publishers
+#       history
+#       updloads
+# }
+# Worker -right-|> User
+# #+END_SRC
 
 #+RESULTS:
 [[file:img/user-class.png]]
@@ -542,36 +542,36 @@ and unprotected content.
 Encription in the server end is also recommended.
 
 Example graph:
-#+BEGIN_SRC plantuml :file "img/unprotected-route.png"
-:User:     <-down-> (User Router) : Request Content
-node Node1 {
-(Node Router) as NR1
-}
-NR1 <-up-> (User Router)
-node Node2 {
-(Node Router) as NR2
-}
-NR2 <-up-> (User Router)
-node Node3 {
-(Node Router) as NR3
-node Final3 as "Final Node C"
-}
-NR3 <-up-> (User Router)
-node Node4 {
-(Node Router) as NR4
-}
-NR4 <-up-> (User Router)
-node Final1 as "Final Node A"
-node Final2 as "Final Node B"
-NR1 <--> Final1
-NR2 <--> Final1
-NR2 <--> Final2
-NR2 <--> Final3
-NR3 <--> Final3
-NR4 <--> Final3
-#+END_SRC
+# #+BEGIN_SRC plantuml :file "img/unprotected-route.png"
+# :User:     <-down-> (User Router) : Request Content
+# node Node1 {
+# (Node Router) as NR1
+# }
+# NR1 <-up-> (User Router)
+# node Node2 {
+# (Node Router) as NR2
+# }
+# NR2 <-up-> (User Router)
+# node Node3 {
+# (Node Router) as NR3
+# node Final3 as "Final Node C"
+# }
+# NR3 <-up-> (User Router)
+# node Node4 {
+# (Node Router) as NR4
+# }
+# NR4 <-up-> (User Router)
+# node Final1 as "Final Node A"
+# node Final2 as "Final Node B"
+# NR1 <--> Final1
+# NR2 <--> Final1
+# NR2 <--> Final2
+# NR2 <--> Final3
+# NR3 <--> Final3
+# NR4 <--> Final3
+# #+END_SRC
 
-#+RESULTS:
+# #+RESULTS:
 [[file:img/unprotected-route.png]]
 
 The process (using the graph above as an example):
@@ -628,50 +628,50 @@ because it is multi-layered encrypted.
 We use a routing process similar to Tor Onion hidden services, optimized to
 our purposes.
 
-#+BEGIN_SRC plantuml :file "img/protected-route.png"
-cloud "Cloud of Nodes" as MN {
-node "<color:red>PROTECTED NODE B</color>" as pnode
-node "MiddleNodeA" as mnodeA
-node "MiddleNodeB" as mnodeB
-node "MiddleNodeC" as mnodeC
-node "MiddleNodeD" as mnodeD
-node "MiddleNodeE" as mnodeE
-node "MiddleNodeF" as mnodeF
-}
+# #+BEGIN_SRC plantuml :file "img/protected-route.png"
+# cloud "Cloud of Nodes" as MN {
+# node "<color:red>PROTECTED NODE B</color>" as pnode
+# node "MiddleNodeA" as mnodeA
+# node "MiddleNodeB" as mnodeB
+# node "MiddleNodeC" as mnodeC
+# node "MiddleNodeD" as mnodeD
+# node "MiddleNodeE" as mnodeE
+# node "MiddleNodeF" as mnodeF
+# }
 
-node Node1 {
-node "<color:red>PROTECTED NODE A</color>" as pnode2
-(Node Router) as NR1
-NR1 <--> pnode2
-}
-node Node2 {
-(Node Router) as NR2
-}
-node Node3 {
-(Node Router) as NR3
-}
-node Node4 {
-(Node Router) as NR4
-}
-NR1 <.down.> mnodeA
-NR2 <.down.> mnodeB
-NR3 <.down.> mnodeC
-NR4 <.down.> mnodeD  : "<b>multi-layer encrypted data</b>"
-(User Router) as RS
-RS     <-down-> NR1
-RS     <-down-> NR2
-RS     <-down-> NR3
-RS     <-down-> NR4
-:User:     <-down-> RS : Request protected content
-mnodeA <--> mnodeF
-mnodeF <--> pnode
-mnodeB <----> pnode
-mnodeC <-> mnodeD
-mnodeD <--> mnodeE
-mnodeE <--> pnode
-#+END_SRC
+# node Node1 {
+# node "<color:red>PROTECTED NODE A</color>" as pnode2
+# (Node Router) as NR1
+# NR1 <--> pnode2
+# }
+# node Node2 {
+# (Node Router) as NR2
+# }
+# node Node3 {
+# (Node Router) as NR3
+# }
+# node Node4 {
+# (Node Router) as NR4
+# }
+# NR1 <.down.> mnodeA
+# NR2 <.down.> mnodeB
+# NR3 <.down.> mnodeC
+# NR4 <.down.> mnodeD  : "<b>multi-layer encrypted data</b>"
+# (User Router) as RS
+# RS     <-down-> NR1
+# RS     <-down-> NR2
+# RS     <-down-> NR3
+# RS     <-down-> NR4
+# :User:     <-down-> RS : Request protected content
+# mnodeA <--> mnodeF
+# mnodeF <--> pnode
+# mnodeB <----> pnode
+# mnodeC <-> mnodeD
+# mnodeD <--> mnodeE
+# mnodeE <--> pnode
+# #+END_SRC
 
-#+RESULTS:
+# #+RESULTS:
 [[file:img/protected-route.png]]
 
 - The user chooses a collection of 4 random nodes. /Dispersion Law/.
@@ -722,31 +722,31 @@ the user to not be banned.
 Its principles are simple, and should be easy to code in any language, even
 in JavaScript for the browser.
 
-#+BEGIN_SRC plantuml :file "img/protected-route-selector.png"
-(*) -down-> "Ask Entry Point for random nodes"
---> ===AN===
--down-> "Ask Node1"
--down-> ===Sync===
-===AN=== --> "Ask Node2"
--down-> ===Sync===
-===AN=== --> "Ask Node3"
--down-> ===Sync===
-===AN=== --> "Ask Node4"
--down-> ===Sync===
--down-> "Select Fastest"
--down-> "Download/Upload/Stream"
-if "is quality ok?" then
- --> [low quality] "Inform low quality to other nodes"
-else
- ----> [high quality] "Inform high quality to other nodes"
- -down-> (*)
-endif
-"Inform low quality to other nodes" --> "ask to the next fastest"
- -> "Download/Upload/Stream"
-"Inform low quality to other nodes" ..> [no more nodes] "<color:red>ERROR</color>"
-#+END_SRC
+# #+BEGIN_SRC plantuml :file "img/protected-route-selector.png"
+# (*) -down-> "Ask Entry Point for random nodes"
+# --> ===AN===
+# -down-> "Ask Node1"
+# -down-> ===Sync===
+# ===AN=== --> "Ask Node2"
+# -down-> ===Sync===
+# ===AN=== --> "Ask Node3"
+# -down-> ===Sync===
+# ===AN=== --> "Ask Node4"
+# -down-> ===Sync===
+# -down-> "Select Fastest"
+# -down-> "Download/Upload/Stream"
+# if "is quality ok?" then
+#  --> [low quality] "Inform low quality to other nodes"
+# else
+#  ----> [high quality] "Inform high quality to other nodes"
+#  -down-> (*)
+# endif
+# "Inform low quality to other nodes" --> "ask to the next fastest"
+#  -> "Download/Upload/Stream"
+# "Inform low quality to other nodes" ..> [no more nodes] "<color:red>ERROR</color>"
+# #+END_SRC
 
-#+RESULTS:
+# #+RESULTS:
 [[file:img/protected-route-selector.png]]
 
 **** The Route Finder
@@ -754,144 +754,6 @@ endif
 #+BEGIN_SRC plantuml :file "img/protected-route-finder.png"
 
 #+END_SRC
-
-* TO-THINK Language 
-
-Bitcloud is a very complex distributed database and certainly cannot be
-satisfactory operated without a proper language.
-
-We choose a similar query language to SQL, but using s-exprs or lambda
-expressions so it is easier to parse, use and expand. We provide many
-convenient forms and functions so user interface designers can extensively
-take advantage from them.
-
-** Commands
-
-Any command is visually constructed by first specifying the name and then
-their parameters, all between parenthesis, this way:
-
-: (command value1 :param2 value2 :param3 value3)
-
-All parameter names are prefixed with a /:/.
-
-The first /value/ doesn't need a parameter name because it is the fundamental
-parameter for the command.
-
-The rest of the parameters are named, and in fact their positions doesn't
-matter at all.
-
-Values can be of type:
-
-- /strings/, surrounded by /""/:
-  
-  : (search "wetube")
-  
-- /numbers/ inserted directly
-
-  : (search "wetube" :show-results 50)
-  
-- /single strings/ or /symbols/, they are the same as strings but used for
-  just one word:
-
-  : (search 'wetube)
-
-- /literal lists/ prefixed by a /'/ and followed by parenthesis and values
-  separated by spaces:
-
-  : (search 'wetube :publishers '(modA modB))
-  
-- /booleans/ which are just /t/ or /f/:
-
-  : (verdict t :reward 1.23)
-
-- /output from other commands/ surrounded by parenthesis without the /'/:
-
-  : (search 'wetube :publishers (search-publishers 'mod :protected t))
-  
-** Object Format
-
-In addition to commands, we also use lambda expressions to form the format of
-objects, mainly used for return values from commands, blockchain transactions
-and Node Pool states.
-
-: (object value1 value2 :slot1 slot-value1 :slot2 slot-value1)
-
-In contrast to commands, an object may have any number of unnamed values. It
-can be the case that some objects just don't have any predefined slots.
-
-Named slots are always at the end of the lambda list to avoid confusion.
-
-It is better seen as examples:
-
-: (verdict t :reward 1.23)
-: (results )
-
-** Why lambda expressions?
-
-Mostly because they are easy to parse, extensible, and easy to construct lists
-in. We are using a lot of lists and we must provide a way to effectively manage
-them.  Another advantage is that we can also use the same language for the the
-object and command formats.
-
-Other alternative would be: a combination of SQL constructs and JSON objects,
-but that would be harder to think and parse, and would require bigger programs
-for small clients like JavaScript embedded scripts.
-
-** Library
-
-We provide many utility functions and constructs so workers can do very
-advanced queries to nodes.
-
-*** COMMENT defines
-**** Specials forms
-***** if/else
-***** not
-***** and or
-***** let
-**** Comparison
-***** < <= >= > =
-**** Lists
-***** length
-***** member
-***** reduce
-***** list
-***** push
-***** pop
-***** map
-**** Fundamentals
-***** log
-***** error
-**** Content
-***** search
-***** stream
-***** download
-***** upload
-**** Users
-***** register
-***** profile
-**** Publishers
-***** search-publishers
-***** categorize
-***** delete
-**** Nodes
-**** Money
-***** pay
-***** exchange
-**** Encryption
-***** verify-signature
-**** Law
-***** judge
-***** enforce
-
-** Compression
-
-Compression is very easy to implement for lambda expressions and happens in
-real time when storing the blockchain in a file. We just need to assign a
-constant binary number for every tag and store that number instead of full
-names. Numbers can be stored in a fixed size 64 bit floating point format.
-
-In addition, there should be a second compression pass using the standard LZO
-libraries, available for all the languages.
 
 * EARLY-DRAFT The Bitcloud Cryptography Law (BCL)
 
@@ -935,28 +797,18 @@ publishers.
 This is a subprocess of the general *sync* process, as described in the
 Nodepool section.
 
-#+BEGIN_SRC plantuml :file "img/appliance1.png"
-(*) -right-> [sync process] select workers to judge
--right-> judge workers
--right-> enforce verdicts
--right-> [freeze pool process] (*)
-#+END_SRC
+# #+BEGIN_SRC plantuml :file "img/appliance1.png"
+# (*) -right-> [sync process] select workers to judge
+# -right-> judge workers
+# -right-> enforce verdicts
+# -right-> [freeze pool process] (*)
+# #+END_SRC
 
-#+RESULTS:
+# #+RESULTS:
 [[file:img/appliance1.png]]
 
 
-The return of those functions is always a verdict, in the form of
-lambda expression, so it is easy to parse from scripts[fn:1]:
-
-#+BEGIN_SRC lisp
-   (verdict t :reward 0.2345)
-   (verdict f :penalization 1.3 :ban 6)
-#+END_SRC
-
-The first var is *t* or *f* indicating if the verdict is favorable or
-not. The rest indicates the properties of the verdict, to be
-applied by the *enforce* *generic*.
+The return of those functions is always a verdic.
 
 The purpose of it is to certificate (sign) the verdict and write it in the
 Node Pool State when appropriate. When there is general consensus (for
@@ -1057,16 +909,16 @@ like Wetube.
 
 ** TO-THINK Structure
 
-#+BEGIN_SRC plantuml :file "img/blockchain-general.png"
-Block1 : Born
-Block1 -> Block2
-Block2 -> Block3
-Block3 -> BlockN
-BlockN -> LastBlock
-LastBlock -> [*] : Block being made
-#+END_SRC
+# #+BEGIN_SRC plantuml :file "img/blockchain-general.png"
+# Block1 : Born
+# Block1 -> Block2
+# Block2 -> Block3
+# Block3 -> BlockN
+# BlockN -> LastBlock
+# LastBlock -> [*] : Block being made
+# #+END_SRC
 
-#+RESULTS:
+# #+RESULTS:
 [[file:img/blockchain-general.png]]
 
 ** TO-THINK The cycle
@@ -1095,13 +947,132 @@ constantly calculated in real time.
   This is the interface for the node (not the users) so the
   administrator can see and tweak values in real time.
 
-* Footnotes
+* TO-THINK Language 
 
-[fn:1] In order to make things easy for system administrators and programmers,
-we are using lambda expressions. These are simple expressions enclosed into
-parenthesis with the action in the first position. It is actually very easy to
-translate from json-format to lambda expressions. We choose lambda
-expressions because they need less space and are faster to parse and write.
+Bitcloud is a very complex distributed database and certainly cannot be
+satisfactory operated without a proper language.
 
-[fn:2] Renting a server or VPS is very cheap today.
+We choose a similar query language to SQL, but using s-exprs or lambda
+expressions so it is easier to parse, use and expand. We provide many
+convenient forms and functions so user interface designers can extensively
+take advantage from them.
+
+** Commands
+
+Any command is visually constructed by first specifying the name and then
+their parameters, all between parenthesis, this way:
+
+: (command value1 :param2 value2 :param3 value3)
+
+All parameter names are prefixed with a /:/.
+
+The first /value/ doesn't need a parameter name because it is the fundamental
+parameter for the command.
+
+The rest of the parameters are named, and in fact their positions doesn't
+matter at all.
+
+Values can be of type:
+
+- /strings/, surrounded by /""/:
+  
+  : (search "wetube")
+  
+- /numbers/ inserted directly
+
+  : (search "wetube" :show-results 50)
+  
+- /single strings/ or /symbols/, they are the same as strings but used for
+  just one word:
+
+  : (search 'wetube)
+
+- /literal lists/ prefixed by a /'/ and followed by parenthesis and values
+  separated by spaces:
+
+  : (search 'wetube :publishers '(modA modB))
+  
+- /booleans/ which are just /t/ or /f/:
+
+  : (verdict t :reward 1.23)
+
+- /output from other commands/ surrounded by parenthesis without the /'/:
+
+  : (search 'wetube :publishers (search-publishers 'mod :protected t))
+  
+** Object Format
+
+In addition to commands, we also use lambda expressions to form the format of
+objects, mainly used for return values from commands, blockchain transactions
+and Node Pool states.
+
+: (object value1 value2 :slot1 slot-value1 :slot2 slot-value1)
+
+In contrast to commands, an object may have any number of unnamed values. It
+can be the case that some objects just don't have any predefined slots.
+
+Named slots are always at the end of the lambda list to avoid confusion.
+
+It is better seen as examples:
+
+: (verdict t :reward 1.23)
+: (results )
+
+
+** Library
+
+We provide many utility functions and constructs so workers can do very
+advanced queries to nodes.
+
+*** COMMENT defines
+**** Specials forms
+***** if/else
+***** not
+***** and or
+***** let
+**** Comparison
+***** < <= >= > =
+**** Lists
+***** length
+***** member
+***** reduce
+***** list
+***** push
+***** pop
+***** map
+**** Fundamentals
+***** log
+***** error
+**** Content
+***** search
+***** stream
+***** download
+***** upload
+**** Users
+***** register
+***** profile
+**** Publishers
+***** search-publishers
+***** categorize
+***** delete
+**** Nodes
+**** Money
+***** pay
+***** exchange
+**** Encryption
+***** verify-signature
+**** Law
+***** judge
+***** enforce
+
+** COMMENT Compression
+
+Compression is very easy to implement for lambda expressions and happens in
+real time when storing the blockchain in a file. We just need to assign a
+constant binary number for every tag and store that number instead of full
+names. Numbers can be stored in a fixed size 64 bit floating point format.
+
+In addition, there should be a second compression pass using the standard LZO
+libraries, available for all the languages.
+
 
