@@ -29,7 +29,49 @@ Services:
 So the whole idea is to give value to our coin by providing good quality
 services.
 
-* Analogy for paid service
+* The user chooses between advertising or paid content
+
+Our main model of income is from advertisement.
+
+Most users in most places will chose not to pay for the content, but there is
+no economy if all is free. Someone at some point must introduce a form of
+income.
+
+So we introduce advertisement for free content, and remove it if the user pays
+for the raw original content.
+
+Advertisement is hardcoded into the content, so the final user can't cheat the
+system by installing an ad-block plugin in their clients interface.
+
+Advertisers pay to publishers and nodes are enforced to insert the ads into
+the content. The first node to attend the request receives a commission for
+inserting the ads, and the rest of the nodes follow.
+
+The advertising market of bitcloud is going to be auto-regulated. Actual humans
+-advertisers- contact with other humans -publishers- and trade. They put the
+price and the conditions. No enforcement is made by the system itself.
+This is the *only* way to provide quality advertisement.
+
+All nodes that store the content with ads are also rewarded with a commission
+for it. This way, we ensure that transactions are done within cloudcoins and
+that the node is motivated to actually do the work of inserting the ads. Also
+will mean that nodes are going to be in the search for good quality publishers
+with good conditions and a good rate of commission/quality. In that case, the
+disavantage to use an external coin for trades between advertisers and
+publishers is that publisher cannot ensure a proper redistribution of its
+content, which could ultimately mean low quality of service - if there are
+many viewers of a certain content and the publisher hasn't got enough nodes
+attached that could mean that those nodes could become saturated. That is not
+in the interest of any publisher.
+
+Publishers trying to abuse by advertising too much, will not be chosen by
+users. Ads will be always relevant to the content shown, because advertisers
+will not choose publishers that provide content that they are not interested
+in.
+
+* Analogy for paid content
+
+Some users will not want ads, so they pay for the content.
 
 Lets compare Bitcloud with the industry of book selling.
 
@@ -126,34 +168,8 @@ be freely traded without restriction or censorship.
 
 * Free service
 
-In addition to paid services, we are of course offering free
-services. Publishers have the liberty to choose what content is free.
-
-For some free content, publishers can also choose to hardcode ads inside the
-content itself. Advertisers pay to publishers and nodes are enforced to insert
-the ads into the content.
-
-The advertising market of bitcloud is going to be auto-regulated. Actual humans
--advertisers- contact with other humans -publishers- and trade. They put the
-price and the conditions. No enforcement is made by the system itself.
-This is the *only* way to provide quality advertisement.
-
-All nodes that store the content with ads are also rewarded with a commission
-for it. This way, we ensure that transactions are done within cloudcoins and
-that the node is motivated to actually do the work of inserting the ads. Also
-will mean that nodes are going to be in the search for good quality publishers
-with good conditions and a good rate of commission/quality. In that case, the
-disavantage to use an external coin for trades between advertisers and
-publishers is that publisher cannot ensure a proper redistribution of its
-content, which could ultimately mean low quality of service - if there are
-many viewers of a certain content and the publisher hasn't got enough nodes
-attached that could mean that those nodes could become saturated. That is not
-in the interest of any publisher.
-
-Publishers trying to abuse by advertising too much, will not be chosen by
-users. Ads will be always relevant to the content shown, because advertisers
-will not choose publishers that provide content that they are not interested
-in.
+In addition to paid content and content with ads, we are of course offering
+free services. Publishers have the liberty to choose what content is free.
 
 Most individual users will prefer free content without ads, but chances are
 that it is going to be difficult to find a reputable publisher that accepts
