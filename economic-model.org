@@ -39,13 +39,13 @@ Lets compare Bitcloud with the industry of book selling.
 - Node miners represent the bankers.
 - Node law enforces represent the government.
 
-So when a customer enters into a bookstore, the first we observe is that
+So when a customer enters into a bookstore, the first thing we observe is that
 entering into the store is FREE. If a bookstore charges money for entrance,
 customers will be reluctant to enter. Equivalence: we always offer free
 bandwidth so we can effectively broadcast the real business here: the rest of the
 services. Note that the bookstore actually has to pay for the building,
 electricity, workers, etc. They compensate the expenses by earning a
-commission in the goods they sell. We compensate free bandwidth by the other
+commission for the goods they sell. We compensate free bandwidth by the other
 services we offer and also by mining hardware.
 
 Now, in the business chain, one step up, we find publishers. Publishers ensure
@@ -54,46 +54,46 @@ reject low quality books and/or non-aligned to those ideals. They receive a
 commission and in exchange they boost the reputation of the books they
 promote. Equivalence: we have publishers, they select, categorize, and provide
 a face and an opportunity for the content to be broadcasted in accordance with
-their ideals and quality requirements, and they receive a commission for
+their ideals and quality requirements, and they receive a comission for
 so. Our publishers *will* provide *quality* content being searched by
 the user.
 
-Note: if you look at actual p2p systems, specially Kademlia (eMule), the
-result of searches are a total mess. Repeated content, corrupted content, fake
+Note: if you look at current p2p systems, specially Kademlia (eMule), the
+search results are a total mess. Repeated content, corrupted content, fake
 content, incorrectly categorized content, illegal content, etc. We want to
 avoid that. Publishers will avoid that because they are actually humans
 looking for quality.
 
-An important thing to take in count: publishers do *not* need to moderate all
+An important thing to take into account: publishers do *not* need to moderate all
 the content that arrives to the system. They just go and search for content in
 other publishers or in the unmoderated area, and accept content from
 users. Author users must look for good publishers before they try to upload
 anything, and request acceptance to the publishers, just like a book author
-request acceptance from a publisher.
+requests acceptance from a publisher.
 
-In case that an user cannot find a publisher, he is always free to become one
+In the case that a user cannot find a publisher, he is always free to become one
 by himself and ask nodes for acceptance. In the ultimate case that no node
 accepts him, he can setup a new node.
 
 Now, talking about the bookstores, they *store* books. For so they need the
-space and resources. They earn a commission on sells because they had the
+space and resources. They earn a commission on sales because they had the
 space there available for the books, so users can physically retrieve
 them. Equivalence: node storage system. Users can retrieve content stored in
-the nodes. Nodes receive a commission on sells they store.
+the nodes. Nodes receive a commission on content they store.
 
-In addition, nodes may store not only commissioned content, but also
-guarantied content, being the equivalent of the store renter for the local.
+In addition, nodes may store not only paid content, but also
+guarantied content, being the equivalent of the store renter for the premises.
 The difference between guarantied content and not guarantied content is that
 guarantied content is paid at periodical intervals and nodes are enforced by
 the bitcloud law to actually make sure that the content is always
 available. Non guarantied content may or may not stay in the node depending on
 technical requirements. For example, when the node runs out of storage space
-they may remove the less solicited content out of their hard disk.
+they may remove the least requested content out of their hard disks.
 
 Now, there is an important point: bookstores are completely free to choose
-what publishers do they want to sell. They don't want to indiscriminately
-full their store with random books. They are forced to do a good selections of
-publishers, otherwise his business can crack. Customers are not going to buy
+what publishers they want to sell. They don't want to indiscriminately
+fill their stores with random books. They are forced to offer a good selection of
+publishers, otherwise their business can suffer. Customers are not going to buy
 anything they don't want. Most customers would not buy illegal things
 either. Equivalence: in our system, nodes are completely free to choose what
 publishers to be attached to.
@@ -109,14 +109,14 @@ bitcoins).
 
 Usually, the coins mined are sold to customers coming from other
 currencies. Value of our coin is directly dependent on the services we
-provide. The best services we provide, the more customers are going to enter
-in our system. The more customers enter in our system, the more is in the
-interest of companies to enter our system.
+provide. The better the services we provide, the more customers are going to enter
+ our system. The more customers enter our system, the more 
+interesting it is for companies to enter our system.
 
 We have a huge real potential in every single industrial field related to
 content providing. We can easily attract film industries, music industries,
 game industries, ISPs, advertisers, news agencies, non-profit organizations,
-individual artists and much more. Possibilities are so huge that are almost
+individual artists and much more. Possibilities are so huge that they are almost
 unimaginable at this point. We are going to change the entire copyright
 industry forever.  Most importantly, I think we are going to find a solution
 that can mitigate the actual friction between companies and actual humans.
@@ -130,18 +130,18 @@ In addition to paid services, we are of course offering free
 services. Publishers have the liberty to choose what content is free.
 
 For some free content, publishers can also choose to hardcode ads inside the
-content itself. Advertisers pay to publishers and nodes are enforced to insert
+content itself. Advertisers pay publishers and nodes are enforced to insert
 the ads into the content.
 
 The advertising market of bitcloud is going to be auto-regulated. Actual humans
--advertisers- contact with other humans -publishers- and trade. They put the
+-advertisers- contact with other humans -publishers- and trade. They set the
 price and the conditions. No enforcement is made by the system itself.
 This is the *only* way to provide quality advertisement.
 
 All nodes that store the content with ads are also rewarded with a commission
-for it. This way, we ensure that transactions are done within cloudcoins and
+for it. This way, we ensure that transactions are done with cloudcoins and
 that the node is motivated to actually do the work of inserting the ads. Also
-will mean that nodes are going to be in the search for good quality publishers
+it will mean that nodes are going to be in the search for good quality publishers
 with good conditions and a good rate of commission/quality. In that case, the
 disavantage to use an external coin for trades between advertisers and
 publishers is that publisher cannot ensure a proper redistribution of its
@@ -162,11 +162,11 @@ in their content can perfectly choose to setup a node themselves. That will be
 the case of many non-profit organizations.
 
 That is perfectly ok, because those free-only nodes at least are providing
-bandwidth and encouraging the well wealth of the entire system. They are also
+bandwidth and encouraging the well wealth/health of the entire system. They are also
 earning money by mining, so they can cover expenses.
 
 * Blockchain
 
-The blockchain is to be decided here, please have a look, read all the options and add your owns:
+The blockchain is to be decided here, please have a look, read all the options and add your own:
 
 https://github.com/wetube/bitcloud/blob/master/bitcloud-decisions.org
