@@ -25,6 +25,10 @@ Services:
 - Name registration and resolution.
 - Free moderation.
 - Paid moderation.
+- Origin certification 
+
+A word on origin certification: the idea is simply to provide a service that guarantees that the content creator is the original content creator (sort of a copyright service). This could be evaluated so that piracy of some content could be traced back to the source, or so that a content creator could justify/certify in case of copyright infringement.
+
 
 So the whole idea is to give value to our coin by providing good quality
 services.
