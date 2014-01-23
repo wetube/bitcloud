@@ -25,20 +25,18 @@ Services:
 - Name registration and resolution.
 - Free moderation.
 - Paid moderation.
-- Origin certification 
 
-A word on origin certification: the idea is simply to provide a service that guarantees that the content creator is the original content creator (sort of a copyright service). This could be evaluated so that piracy of some content could be traced back to the source, or so that a content creator could justify/certify in case of copyright infringement.
+  
+* 3 service model proposal
 
+Our main model of income is from advertisement. Based on this the user should
+have three options of service:
 
-So the whole idea is to give value to our coin by providing good quality
-services.
-
-* 3 service model proposals
-
-Our main model of income is from advertisement. Based on this the user should have three options of service:
 1. Paid content
 2. Free content
 3. ad supported content (pay to remove ads is optional)
+
+** Ad supported content
 
 Most users in most places will chose not to pay for the content, but there is
 no economy if everything is free. Someone at some point must introduce a form of
@@ -76,7 +74,7 @@ users. Ads will be always relevant to the content shown, because advertisers
 will not choose publishers that provide content that they are not interested
 in.
 
-* Paid content
+** Paid content
 
 Some users will not want ads, so they pay for the content.
 
@@ -175,11 +173,10 @@ that can mitigate the actual friction between companies and actual humans.
 We are also constructing a *virtual market*. A place in which information can
 be freely traded without restriction or censorship.
 
-* Free service
+** Free content
 
 In addition to paid content and content with ads, we are of course offering
 free services. Publishers have the liberty to choose what content is free.
-
 
 Most individual users will prefer free content without ads, but chances are
 that it is going to be difficult to find a reputable publisher that accepts
@@ -203,22 +200,20 @@ The blockchain is to be decided here, please have a look, read all the options a
 https://github.com/wetube/bitcloud/blob/master/bitcloud-decisions.org
 
 * Services 
-More deails on services offered
+More deails on services offered:
 
 - Free bandwidth.
-  * "we always offer free bandwidth so we can effectively broadcast the real business here: the rest of the
-services". The browsing or consumption of bandwidth will be free.
-
+  We always offer free bandwidth so we can effectively
+  broadcast the real business here: the rest of the services. The browsing or
+  consumption of bandwidth will be free.
 - Free non-guaranteed storage.
-  * Non guarantied content may or may not stay in the node depending on technical requirements. For example, when the node runs out of storage space they may remove the least requested content out of their hard disks.
+  Non guarantied content may or may not stay in the node depending on technical requirements. For example, when the node runs out of storage space they may remove the least requested content out of their hard disks.
 - Paid guaranteed storage.
-  * The difference between guarantied content and not guarantied content is that guarantied content is paid at periodical intervals and nodes are enforced by the bitcloud law to actually make sure that the content is always available. In essence what is being purchased is the guarantee of availability ( or hosting ) of the resource.
+  The difference between guarantied content and not guarantied content is that guarantied content is paid at periodical intervals and nodes are enforced by the bitcloud law to actually make sure that the content is always available. In essence what is being purchased is the guarantee of availability ( or hosting ) of the resource.
 - Paid content (user pays to download).
 - Free content.
 - Advertising.
-  * ads drive revenue. advertisers can choose to pay to be more visible and attract more sales. this can be also further developed when third party services can be offered on top of bitcloud.
+  Ads drive revenue. advertisers can choose to pay to be more visible and attract more sales. this can be also further developed when third party services can be offered on top of bitcloud.
 - Name registration and resolution.
 - Free moderation.
 - Paid moderation.
-- Origin certification 
-  * the idea of origin certification needs to be developed more. In essence is to provide distributed certification authority, that can be used for copyright management or "authorship". This could have many applications a lot like the current SSL certificates, or GPG, or Patent office (I certify that I am the creator and owner of this or that content). // needs further development
