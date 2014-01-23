@@ -210,16 +210,9 @@ More deails on services offered
 services". The browsing or consumption of bandwidth will be free.
 
 - Free non-guaranteed storage.
-  * Non guarantied content may or may not stay in the node depending on
-technical requirements. For example, when the node runs out of storage space
-they may remove the least requested content out of their hard disks.
+  * Non guarantied content may or may not stay in the node depending on technical requirements. For example, when the node runs out of storage space they may remove the least requested content out of their hard disks.
 - Paid guaranteed storage.
-  * 
-The difference between guarantied content and not guarantied content is that
-guarantied content is paid at periodical intervals and nodes are enforced by
-the bitcloud law to actually make sure that the content is always
-available. 
-in essence what is being purchased is the guarantee of availability ( or hosting ) of the resource.
+  * The difference between guarantied content and not guarantied content is that guarantied content is paid at periodical intervals and nodes are enforced by the bitcloud law to actually make sure that the content is always available. In essence what is being purchased is the guarantee of availability ( or hosting ) of the resource.
 - Paid content (user pays to download).
 - Free content.
 - Advertising.
