@@ -30,8 +30,8 @@ Nodes adhering to this protocol will be able to:
 - Generate and earn profitable income in relation to the bandwidth
     they share.
 - Select what content they cache and serve by selecting publishers.
-- Be paid for guarantied storage.
-- Store non-guarantied content based on popular acceptance.
+- Be paid for guaranteed storage.
+- Store non-guaranteed content based on popular acceptance.
 - Be part of the government of the entire net.
 - Receive a commission for inserting ads in the content.
 - Rent itself to a publisher.
@@ -283,14 +283,14 @@ Worker -right-|> Node
 #+RESULTS:
 [[file:img/node-class.png]]
 
-**** max-download-speed and **max-upload-speed**
+**** max-download-speed and max-upload-speed
 
-Are the variables that define how much the owner of the node
-wants to share, expressed in Mb/s.
+Are the variables that define how much bandwidth the owner of the node
+wants to share, expressed in megabyte/s.
 
 **** max-space
 
-Is in Mb and it is the maximum size to allocate for the files
+Is expressed in megabytes and it is the maximum size to allocate for the files
 cache. When the space occupied by the cache pass this variable,
 the least requested files are deleted.
 
@@ -301,8 +301,8 @@ in the BCL routines.
 
 **** accepted-coins
 
-Is a list of accepted coins for exchange. For example `'(BTC
-LTC)`. If a node accept BTC, it must run the *bitcoind* daemon.
+Is a list of accepted coins for exchange. For example `(BTC
+LTC)`. If a node accepts BTC, it must run the *bitcoind* daemon.
 
 **** publishers
 
@@ -326,8 +326,8 @@ stored until 1 year has passed since the user paid, or until the
 user deletes it or the publisher stops supporting the user.
 
 *Note*: the sum of the space required by the publishers in
-**cloud-publishers** and **preferential-publishers** should be
-less than **max-space**. *bitcloud* daemon should log a warning if
+*cloud-publishers* and *preferential-publishers* should be
+less than *max-space*. *bitcloud* daemon should log a warning if
 that happens, and POS policies could ban the node.
 
 **** content-waiting-for-approval
@@ -997,7 +997,7 @@ using relevant parts of the old data for the new start.
 *** EARLY-DRAFT Lag Law
 
     - All workers must answer in less than X seconds to any query or
-      **sync** function. Recommended constant for now: 600ms.
+      *sync* function. Recommended constant for now: 600ms.
     - No rewards for compliance.
     - Ban X(1,2,6,144) if slow or saturated connections.
 
