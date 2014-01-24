@@ -4,7 +4,16 @@ Warning: I'm not an economist so probably the terminology here is not fully
 correct. This is just a proposal and, in case of being accepted in the general
 sense, an economist should rewrite it.
 
-My proposal is to construct an entire micro-economy based on virtual services.
+We have a huge real potential in every single industrial field related to
+content providing. We can easily attract film industries, music industries,
+game industries, ISPs, advertisers, news agencies, non-profit organizations,
+individual artists and much more. Possibilities are so huge that they are almost
+unimaginable at this point. We are going to change the entire copyright
+industry forever.  Most importantly, I think we are going to find a solution
+that can mitigate the actual friction between companies and actual humans.
+
+
+My proposal is to construct an entire internal economy based on virtual services.
 
 Major group participants:
 
@@ -161,14 +170,6 @@ currencies. Value of our coin is directly dependent on the services we
 provide. The better the services we provide, the more customers are going to enter
  our system. The more customers enter our system, the more 
 interesting it is for companies to enter our system.
-
-We have a huge real potential in every single industrial field related to
-content providing. We can easily attract film industries, music industries,
-game industries, ISPs, advertisers, news agencies, non-profit organizations,
-individual artists and much more. Possibilities are so huge that they are almost
-unimaginable at this point. We are going to change the entire copyright
-industry forever.  Most importantly, I think we are going to find a solution
-that can mitigate the actual friction between companies and actual humans.
 
 We are also constructing a *virtual market*. A place in which information can
 be freely traded without restriction or censorship.
