@@ -28,18 +28,112 @@ penalizations directly in the blockchain. Other actions like banning
 persisting low quality nodes for a period of time are also feasible.
 
 
-
 * Routing
-** Normal content
-See unprotected routing in the main paper for now:
 
-https://github.com/wetube/bitcloud/blob/master/bitcloud.org#unprotected-routing---proof-of-bandwidth
+** Normal content
+
+Every single user is connected to 4 nodes using the User Router coded in the
+interface. These connections are meant to both transfer the content and to
+apply the BCL (Bitcloud Cryptographic Law).
+
+Even if the content is not protected, all communications are encrypted, in
+order for an external viewer to not be able to distinguish between protected
+and unprotected content.
+
+Encription in the server end is also recommended.
+
+[[file:img/unprotected-route.png]]
+
+The process (using the graph above as an example):
+
+- The User Router finds 4 random nodes. This router is coded in the user
+  interface. /Dispersion Law/
+- The User Router asks the 4 nodes to find a route to the content. /Service Law/
+- Nodes answer with route data. /Service Law/
+- The User Router selects the fastest. The fastest is calculated in function
+  of the data retrieved in the last point, and usually is a combination of
+  bandwidth available and shortest distance. In the example, Node3 is the
+  fastest because it happens to be also a Final Node for the requested
+  content. The second fastest should be Node2 because it has more connections
+  to nodes having the content. If the requested content is cached in any of
+  the Nodes, it should be considered as fast as actually being a Final Node.
+- Money is generated *only* in the User Router's connected nodes, never in
+  the Final Nodes to avoid short circuits. Only exception is when the Final
+  Node is also one of the connected nodes. /Bandwidth Law/
+- If a Final Node denies service, /Service Law/ is applied.
+- Optionally, connected nodes can cache the content so they don't need to
+  retrieve the content from the Final Nodes if the content is requested
+  often.
+- While the User is downloading/uploading the content, he must inform all the
+  connected nodes about the quality of the connection. If quality is low, he
+  can select another route from another node and denounce about the issue to
+  the other nodes, so they can apply the law. See "User Router"
+  section for a better explanation. /Bandwidth Law/
+- If quality is low, an Investigation Process to find the culprit is
+  executed. Culprit can be the Final Node, the connected Node, both, or
+  none. /Bandwidth Law/ - /Check low quality culprit/ section.
+- User is banned if he tries to abuse bandwidth or the law. /Bandwidth Law/ -
+  /Abuse check/ section.
+- Law is enforced when at least 3 of the 5 workers agree (the 5 workers are 1
+  user + 4 nodes).
+
 
 ** Anonymous content
 
-See protected routing in the main paper for now:
+When a content is marked as *protected*, the Bitcloud net protects both the IP
+and domain name of the node serving the content. The user requesting the
+connection is also protected. There is still a way for auditors to know that a
+certain computer is acting as a protected node, but will not be able to know
+what is the protected content that is serving. Even more, external auditors
+cannot distinguish between the content routed or served while analyzing the
+traffic to a specific node.
 
-https://github.com/wetube/bitcloud/blob/master/bitcloud.org#protected-routing---proof-of-bandwidth
+All nodes are enforced to accept protected content routed, even if they are
+not protected themselves. Nodes cannot know what the content being routed is
+because it is multi-layered encrypted.
+
+We use a routing process similar to Tor Onion hidden services, optimized to
+our purposes.
+
+[[file:img/protected-route.png]]
+
+- The user chooses a collection of 4 random nodes. /Dispersion Law/.
+- The User Router (coded in the interface) asks the 4 nodes to find a route
+  to the Protected Node, encrypting the request with the public key
+  associated to the Protected Content, and adding its public key inside the
+  encrypted request (so only the real Protected Node can know what is sent
+  back).  /Service Law/
+- Each node tries to find a competitive route to the Protected Node and answer
+  fast to the User. The way to do this is by sending the encrypted request to
+  all the nodes it is connected to and wait for an answer. /Service Law/
+- The Private Node is found when it is able to decrypt the request. Otherwise
+  it is re-dispatched to all connected nodes.
+- To protect itself, the Protected Node adds a random time (lag) of response
+  to the request, equivalent to several searches. We recommend a random number
+  between 1s and 5s. Once answered, the node must stick to that approximate
+  lag, but can change it when requesting a different content for another
+  publisher or when certain time has passed.
+- There is the lucky possibility that a connected Node is also the protected
+  one having the content (like Node1 in the graph). In that case the protected
+  node adds the convenient lag time to protect itself.
+- Meanwhile all nodes are attending other requests for other contents, so
+  nobody knows if the other requests are actually part of the original request
+  or not.
+- The Protected Node always sends back the content encrypted with the public
+  key inside the request, so only the user can know what the content is.
+- The User Router chooses the fastest route.
+- *Only* the User Router's connected nodes generate any money, to avoid short
+  circuit cheats. /Bandwidth Law/
+- The User download/stream/upload the content throughout the fastest
+  route. /Bandwidth Law/
+- Meanwhile, the User informs the rest of the nodes about the quality of the
+  connection. /Bandwidth Law/.
+- If the quality is low, the User Router tries to change to another route
+  Node while informing the issue. /Bandwidth Law/
+- The selected node also enforces the /Bandwidth Law/ and /Service Law/ for
+  the Middle Node it is connected to.
+- Each Middle Node also enforces the /Bandwidth Law/ for their connections.
+
 
 * Dispersion Law
 
