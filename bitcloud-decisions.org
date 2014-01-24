@@ -303,3 +303,48 @@ price. Any publisher is free to put a price and special conditions.
 - No reward for early adopters (because we are not a currency anymore).
   
 
+** Option 5: Hook to External Economy and use existing resources
+
+In summary, we realize that there are several suitable external economies that
+already exist and we're in the business of infrastructure, not economic theory.
+
+Accordingly, the system is concerned with primarily delivering content from a 
+provider to a consumer on a 1:1 basis and ensuring that those transactions can
+be accounted for, but without getting into the nitty-gritty details of handling
+payments.
+
+Use the blockchain as a way to facilitate maintenance of the network (as per 
+the example set by Namecoin).
+
+Publishers act as escrow agents to facilitate transactions between the consumers
+of the content and the nodes.
+
+Publishers have a toolset allowing them to automatically track whether content has
+been delivered, whether payment has been completed, and automatically notify both
+parties to a transaction that it has been completed successfully.
+
+In this model, all content is encrypted both for transit and encrypted by a nonce
+key until payment is verified by the escrow agent; at which time, a key exchange 
+mediated by the publisher occurs, the content is unlocked and the node receives 
+payment.
+
+See https://en.bitcoin.it/wiki/Contracts for how this type of escrow works with 
+bitcoin and bitcoin-derived currencies.
+
+**** Advantages
+
+- The project's scope becomes much narrower, allowing for faster implementation
+- Content payment can be handled in the users' choice of currencies
+- We don't need to facilitate payments directly and can 'hook in' to other currencies, expanding our reach
+- Using bitcloud as a framework to facilitate transactions does not limit the types of transactions that can be made
+- Also, this allows other developers to build their own clients to use bitcloud, attracting new innovations
+- Keeping transactions out of the blockchain allows for a smaller blockchain & doesn't require all users have it
+- Cryptographic 'key' locking can allow for 'stream' transactions as well
+- All traffic being encrypted means 'private' transactions do not stand out
+- Infrastructure becomes more decentralized
+
+**** Disadvantages
+
+- We don't get filthy rich from having invented yet another cryptocurrency
+- Automated escrow agents will require quite a bit of work to implement
+- Instead of one client, we need three clients: one for users, one for nodes, one for publishers
