@@ -75,3 +75,20 @@ major layer of the actual Internet in a decentralized way by using publishers.
 NOW, how can a company or corporation will want to enter into our
 structure if they CAN'T moderate and take control of the content they
 provide?
+
+*** And if we remove publishers, some problems arise:
+
+
+1) Low quality content: repeated with small variation, corrupted, illegal,
+   incorrectly categorized, etc.
+2) Sometimes, specially for non-profit organizations, their content will not
+   be ranked apropiatelly and cannot compete against stupid videos which are
+   less important for humanity but most fool people want to see, so they will
+   be removed when space is over. Most artists will be against this too.
+3) You are now centralizing power in botnets that will constantly going to be
+   run to rank certain videos, and consume most of the bandwidth resources.
+4) No motivation for artists and industries to enter a non-moderated system
+   with low quality.
+5) There could be legal issues because all nodes can be blamed to contain
+   parts of illegal content (it doesn't matter if they are stored encrypted
+   because the content is plublicily accessible anyway).
