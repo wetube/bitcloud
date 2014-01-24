@@ -1,0 +1,77 @@
+The concept of publishers can be a MAJOR incentive for this
+project to be accepted by the information related industries.
+
+We have a huge real potential in every single industrial field related
+to content providing. We can easily attract film industries, music
+industries, game industries, ISPs, advertisers, news agencies,
+non-profit organizations, individual artists and much more.
+Possibilities are so huge that they are almost unimaginable at this
+point. We are going to change the entire copyright industry forever.
+
+
+So I really think that this is crucial. We have to choose between:
+
+a) Be another geek p2p protocol being used by people that won't
+contribute to our economy.
+b) Go mainstream. Be the new revolution as iTunes was, but even much
+much wider. If we success, we are talking about the "entire world" using
+our system to interchange information, trade information, and correctly
+categorize information.
+
+Note: if you look at current p2p systems, specially Kademlia (eMule),
+the search results are a total mess. Repeated content, corrupted
+content, fake content, incorrectly categorized content, illegal content,
+etc. We want to avoid that. Publishers will avoid that because they are
+actually humans looking for quality.
+
+Bitcloud is constructed by the integration of an inter-dependant chain
+of modules and plugins, each one having its own BCL (laws).
+
+For example, there are the fundamental modules of routing, storage, and
+goverment. From there on, a complete set of plugins can be constructed.
+
+Each plugin will allow publishers to create sub-nets. In the case of the
+cloud module (the first and most important one) the publishers create a
+sub-net with only the content moderated by them. Collaboration between
+publishers is possible.
+
+Examples:
+
+- Cloud plubishers: a publisher does have a collection of files approved. For
+  example, a film company, a music store, a software provider, etc.
+- A social plugin, like Facebook, Twitter, and G+. Any publisher will
+have an independent social sub-net, so it is possible to create
+different social nets each one specialized under the rules of the
+particular publisher.
+-  A wiki plugin. Each publisher will have and moderate its own wiki.
+-  A forum plugin. Each publisher will moderate and establish the rules
+of his own forum.
+- A market plugin. Each publisher will be in charge of one store or
+collection of stores and will moderate sellers and customers.
+
+Now, the important thing to remember here is that nodes CAN select any
+publishers as wish, and optimize the space and resources for THOSE publishers.
+Publishers can pay the nodes or make contracts, or some nodes can just be
+owned by the pusblishers.
+
+Also, publishers act as escrow agents to facilitate transactions between the
+consumers of the content and the nodes when there is some paid service that
+needs to be made.
+
+In this model, all content is encrypted both for transit and encrypted by a
+nonce key until payment is verified by the escrow agent; at which time, a key
+exchange mediated by the publisher occurs, the content is unlocked and the
+node receives payment.
+
+Publishers have a toolset allowing them to automatically track whether content
+has been delivered, whether payment has been completed, and automatically
+notify both parties to a transaction that it has been completed successfully.
+
+
+The possibilities are endless. We can virtually replace every single
+major layer of the actual Internet in a decentralized way by using publishers.
+
+
+NOW, how can a company or corporation will want to enter into our
+structure if they CAN'T moderate and take control of the content they
+provide?
