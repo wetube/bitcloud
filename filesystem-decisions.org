@@ -1,0 +1,21 @@
+#+STARTUP: align fold hidestars indent
+
+
+* Fixed filesystem
+
+Every node selects a list of publishers and the content from those publisers
+is stored directly encripted in the disk of the server.
+
+** Advantages
+- Don't have to worry about distributing content. Content is stored directly
+  in the nodes.
+- Very easy to implement.
+- Politically is better because the entire Bitcloud cannot be accused of
+  storing illegal content, only some nodes.
+  
+** Disavantages
+- Less optimized storage.
+- Small nodes couldn't store the content of major publishers.
+  
+* Distributed filesystem
+** Tahoe-Leafs like filesystem
