@@ -2,7 +2,7 @@
 #+TITLE: Bitcloud: A Peer to Peer System for Sharing Bandwidth
 #+LANGUAGE: en
 #+STARTUP: align fold hidestars
-#+OPTIONS: H:7 num:nil toc:t \n:nil stat:nil timestamp:nil html-postamble:nil inline-images:t
+#+OPTIONS: H:7 num:t toc:t \n:nil stat:nil timestamp:nil html-postamble:nil inline-images:t
 
 * Warning, please read first
 
@@ -213,10 +213,11 @@ cannot use the Bitcloud for a specific period of time defined in
 Is *t* if the worker enters into a special mode in which all the
 content it uploads, moderates or stores is encrypted and enrouted
 protected (the IP cannot be determined). More below.
+It is possible to use both a protected and an unproteced worker in the same IP.
 
 **** IP
 
-The actual IP of the node or nothing if protected.
+The list of IPs of the worker or NULL if protected.
 
 ** EARLY-DRAFT Nodes
 
@@ -262,25 +263,24 @@ Publishers can't ever select Nodes. See *Publisher Class* for more details.
 a node asking for storage in exchange of money, and the node is free to accept
 or deny.
 
-# #+BEGIN_SRC plantuml :file "img/node-class.png"
-# class Node {
-#  dns-name    
-#  max-download-speed
-#  max-upload-speed
-#  max-space
-#  signature
-#  accepted-coins
-#  publishers
-#  preferential-publishers
-#  cloud-publishers
-#  content-waiting-for-approval
-#  protected?
-#  shutdown-date
-# }
-# Worker -right-|> Node
-# #+END_SRC
+#+BEGIN_SRC plantuml :file "img/node-class.png"
+class Node {
+ dns-name    
+ max-download-speed
+ max-upload-speed
+ max-space
+ signature
+ accepted-coins
+ publishers
+ preferential-publishers
+ cloud-publishers
+ content-waiting-for-approval
+ shutdown-date
+}
+Worker -right-|> Node
+#+END_SRC
 
-# #+RESULTS:
+#+RESULTS:
 [[file:img/node-class.png]]
 
 **** max-download-speed and max-upload-speed
@@ -342,17 +342,24 @@ publisher adhered to this node. Once that time has passed, the awaiting
 content is deleted from the cache. Minimum time allowed is 12
 hours. Defaults to 48.
 
-**** protected?
+**** shutdown-date
+
+When the node will be shut down automatically. Useful for protected
+nodes that serve delicate content.
+
+**** protected? (inherited from Worker)
 
 Whether the node IP is protected and the content in the local
 cache is encrypted with the private key of the node. But this has
 some downsides, the most important is that data is routed
 throughout many nodes, adding costs in bandwidth and latency.
 
-**** shutdown-date
+**** IP (inherited from Worker)
 
-When the node will be shut down automatically. Useful for protected
-nodes that serve delicate content.
+Ćollection of IPs corresponding to this node. A cluster of nodes can be
+possible and load balancing of the bandwidth and storage is a must.
+A simple node will have only one IP.
+This variable is NULL for protected nodes.
 
 ** TO-THINK Publishers
 
@@ -380,21 +387,22 @@ interface, as the maintainer of the node can be another person, or even a
 rented pre-configured node from an ISP.
 
 
-# #+BEGIN_SRC plantuml :file "img/publisher-class.png"
-# class Publisher {
-#      contents
-#      trusted-users
-#      superpublishers
-#      advertisers
-#      ads-price
-#      ads-share-to-users
-#      tags
-# }
-# Worker -right-|> Publisher
-# #+END_SRC
+#+BEGIN_SRC plantuml :file "img/publisher-class.png"
+class Publisher {
+     contents
+     trusted-users
+     superpublishers
+     advertisers
+     ads-price
+     ads-share-to-users
+     tags
+}
+Worker -right-|> Publisher
+#+END_SRC
 
-# #+RESULTS:
+#+RESULTS:
 [[file:img/publisher-class.png]]
+
 
 *** contents
 
@@ -413,17 +421,17 @@ Usage of the system must be transparent to the user. S/he should be able to
 connect using his/her client or browser without having to do anything special
 and without requiring any technological expertise.
 
-# #+BEGIN_SRC plantuml :file "img/user-class.png"
-# class User {
-#      votes
-#       wallet
-#       favorites
-#       publishers
-#       history
-#       updloads
-# }
-# Worker -right-|> User
-# #+END_SRC
+#+BEGIN_SRC plantuml :file "img/user-class.png"
+class User {
+     votes
+      wallet
+      favorites
+      publishers
+      history
+      updloads
+}
+Worker -right-|> User
+#+END_SRC
 
 #+RESULTS:
 [[file:img/user-class.png]]
