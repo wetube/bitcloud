@@ -2,7 +2,19 @@
 
 * Decision on the economic and business setup of Bitcloud.
 
-We have three choices:
+There are now 5 suggested options.
+
+    1. "Destruction of Money by Ads"
+    2. "Advertisers Pay Publishers"
+    3. "No Limit Per Block"
+    4. "No Blockchain"
+    5. "Use Existing Resources and External Economy"
+
+*NOTE*: Option 1 and 2 impose a limit per block. For example 100 coins per
+block even if there are millions of nodes connected. So the more nodes are
+connected, the more difficult is to earn money.
+   
+** Option 1: Destruction of Money by Ads
 
 1. Block is "mined" by nodes every 10 minutes. 100 cloudcoins per block. There is no limit on the number of cloudcoins, so mining goes on forever. Block rewards are dispersed proportionally to all nodes who provided bandwidth to the network during the last 10 minute window. Nodes can do three things with their newly minted cloudcoins: sell them, hold them, or use them to purchase services on Bitcloud.
     
@@ -11,15 +23,7 @@ We have three choices:
     2. If the node decides to purchase something on Bitcloud, for example cloud storage, those cloudcoins would be sent to a publisher. The publisher would then be holding the coins and decide what he wants to do with them.
         
         1. Proposed amendment to 1.ii: Ensure adequate incentive to early adopters (increasing cloudcoin value) by tapering off the number of coins in the block reward over time, and by giving a way for publishers to pay a fee to nodes that carry their content.  These are similar to Bitcoins halving block reward every 4 years and transaction fee, respectively.
-3. Don't impose a limit per block, so for example 1 Tb generates always 1
-   Mediacoin
-
-*NOTE*: Option 1 and 2 impose a limit per block. For example 100 coins per
-block even if there are millions of nodes connected. So the more nodes are
-connected, the more difficult is to earn money.
-   
-** Option 1: destruction of money by ads
-
+        
 *** Advantages
 
 There aren't really any huge advantages to this system. The problem is that the mediacoins currency and network integrity is harmed with the other setup. - Kyle
@@ -81,7 +85,7 @@ There aren't really any huge advantages to this system. The problem is that the 
 8. An alternative protocol built in the form of Option 2 could still pop up, but obviously I think it would fail due to the same problems related to the value of the currency and network stability. It should also be noted that videos could be uploaded for free in option 1, but ads would need to be placed on the video once they received a certain number of views.
 
 While a few of these disadvantages are legitimate, they still don't compare to the disadvantage in option 2 where the entire network is unstable becaue the value of mediacoins is not tied to the number of users on the network.
-** Option 2: Advertisers pay publishers
+** Option 2: Advertisers Pay Publishers
 
 *** Advantages
 
@@ -229,10 +233,10 @@ explain it clearly, point by point:
    - Kyle:
      Same answer as above. The price does not increase because nodes don't control 
      the price after a certain point in time
-** Option 3: No limit per block
+** Option 3: No Limit per Block
 
 In this option, there is not a limit in the amount of what can be earned per
-block. For example, 1 Tb of bandwidth equals to 1 mediacoin.
+block. For example, 1 Tb of bandwidth equals 1 mediacoin.
 
 For original developers we can implement a kickstart reward, so they are
 compensated with a good amount of coins for the work of developing.
@@ -255,7 +259,7 @@ That way we propagate the system easily and ensure a good start.
 - Highly inflationary system, which is not good for investors.
 - We have to calculate very carefully the amount given to developers and early adopters.
 
-** Option 4: No blockchain
+** Option 4: No Blockchain
 
 In this option, there is no blockchain!
 And we base our entire economy in a system of coupons or contracts. This
@@ -303,7 +307,7 @@ price. Any publisher is free to put a price and special conditions.
 - No reward for early adopters (because we are not a currency anymore).
   
 
-** Option 5: Hook to External Economy and use existing resources
+** Option 5: Use Existing Resources and External Economy
 
 In summary, we realize that there are several suitable external economies that
 already exist and we're in the business of infrastructure, not economic theory.
