@@ -263,24 +263,24 @@ Publishers can't ever select Nodes. See *Publisher Class* for more details.
 a node asking for storage in exchange of money, and the node is free to accept
 or deny.
 
-#+BEGIN_SRC plantuml :file "img/node-class.png"
-class Node {
- dns-name    
- max-download-speed
- max-upload-speed
- max-space
- signature
- accepted-coins
- publishers
- preferential-publishers
- cloud-publishers
- content-waiting-for-approval
- shutdown-date
-}
-Worker -right-|> Node
-#+END_SRC
+# #+BEGIN_SRC plantuml :file "img/node-class.png"
+# class Node {
+#  dns-name    
+#  max-download-speed
+#  max-upload-speed
+#  max-space
+#  signature
+#  accepted-coins
+#  publishers
+#  preferential-publishers
+#  cloud-publishers
+#  content-waiting-for-approval
+#  shutdown-date
+# }
+# Worker -right-|> Node
+# #+END_SRC
 
-#+RESULTS:
+# #+RESULTS:
 [[file:img/node-class.png]]
 
 **** max-download-speed and max-upload-speed
@@ -387,20 +387,20 @@ interface, as the maintainer of the node can be another person, or even a
 rented pre-configured node from an ISP.
 
 
-#+BEGIN_SRC plantuml :file "img/publisher-class.png"
-class Publisher {
-     contents
-     trusted-users
-     superpublishers
-     advertisers
-     ads-price
-     ads-share-to-users
-     tags
-}
-Worker -right-|> Publisher
-#+END_SRC
+# #+BEGIN_SRC plantuml :file "img/publisher-class.png"
+# class Publisher {
+#      contents
+#      trusted-users
+#      superpublishers
+#      advertisers
+#      ads-price
+#      ads-share-to-users
+#      tags
+# }
+# Worker -right-|> Publisher
+# #+END_SRC
 
-#+RESULTS:
+# #+RESULTS:
 [[file:img/publisher-class.png]]
 
 
@@ -421,19 +421,19 @@ Usage of the system must be transparent to the user. S/he should be able to
 connect using his/her client or browser without having to do anything special
 and without requiring any technological expertise.
 
-#+BEGIN_SRC plantuml :file "img/user-class.png"
-class User {
-     votes
-      wallet
-      favorites
-      publishers
-      history
-      updloads
-}
-Worker -right-|> User
-#+END_SRC
+# #+BEGIN_SRC plantuml :file "img/user-class.png"
+# class User {
+#      votes
+#       wallet
+#       favorites
+#       publishers
+#       history
+#       updloads
+# }
+# Worker -right-|> User
+# #+END_SRC
 
-#+RESULTS:
+# #+RESULTS:
 [[file:img/user-class.png]]
 ** TO-THINK Alias and Keys
 
@@ -1032,46 +1032,45 @@ It is better seen as examples:
 We provide many utility functions and constructs so workers can do very
 advanced queries to nodes.
 
-*** COMMENT defines
-**** Specials forms
-***** if/else
-***** not
-***** and or
-***** let
-**** Comparison
-***** < <= >= > =
-**** Lists
-***** length
-***** member
-***** reduce
-***** list
-***** push
-***** pop
-***** map
-**** Fundamentals
-***** log
-***** error
-**** Content
-***** search
-***** stream
-***** download
-***** upload
-**** Users
-***** register
-***** profile
-**** Publishers
-***** search-publishers
-***** categorize
-***** delete
-**** Nodes
-**** Money
-***** pay
-***** exchange
-**** Encryption
-***** verify-signature
-**** Law
-***** judge
-***** enforce
+*** Specials forms
+**** if/else
+**** not
+**** and or
+**** let
+*** Comparison
+**** < <= >= > =
+*** Lists
+**** length
+**** member
+**** reduce
+**** list
+**** push
+**** pop
+**** map
+*** Fundamentals
+**** log
+**** error
+*** Content
+**** search
+**** stream
+**** download
+**** upload
+*** Users
+**** register
+**** profile
+*** Publishers
+**** search-publishers
+**** categorize
+**** delete
+*** Nodes
+*** Money
+**** pay
+**** exchange
+*** Encryption
+**** verify-signature
+*** Law
+**** judge
+**** enforce
 
 ** COMMENT Compression
 

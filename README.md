@@ -14,15 +14,6 @@ We are calling it Bitcloud, to separate it from Wetube, which is the interface. 
 We want, as an experiment, to make this process REALLY open,
 allowing anyone who wants to participate to share his or her opinion.
 
-**HOW TO GET STARTED**
-
-* First, read the proof-of-bandwidth.org paper.
-* Second, read the economic-model.org paper.
-* Third, read the introduction in the bitcloud.org paper. This paper is a
-  general structure of the many parts involving in the system, with some
-  details already written, and more to be written with your help.
-* Fourth, do pull request at will and talk in the forum and/or IRC.
-
 **SPREAD THE WORD**
 We are contacting developers and thinkers only now, as we don't want this project to become mainstream until we have something to really work in and a good bunch of developers.
 Please, spread the word between developers, marketers, thinkers, and similar people. There is no way that 1, 2 or 5 people can do this big project alone. We must go together.
