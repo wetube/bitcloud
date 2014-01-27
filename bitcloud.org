@@ -458,6 +458,15 @@ Node Pool.
 
 Money transactions affecting the public keys of any worker are published in
 the Blockchain.
+
+**** Escrow system
+
+Bitcloud will allow to pay services in Bitcoin (and probably other
+currencies), and for that, a system of automatic escrow must be provided.
+
+See /Escrow Law/
+
+
 ** TO-THINK Routing
 *** LATE-DRAFT HTTP as a base for user/node connections
 
@@ -895,12 +904,62 @@ https://github.com/wetube/bitcloud/blob/master/proof-of-bandwidth.org
 **** Short Circuit check
 
 *** TO-THINK Storage Law
+
+Taking in count that nodes can select publishers, and several nodes may store
+the content of the publishers, that means that there must be a proper way to
+ensure:
+- Efficent storage distribution.
+- That nodes cannot mess with the data, and a way to check it.
+- Fast access to the data.
+- Proper protection for the content.
+
 Being discussed here:
 http://talk.bitcloudproject.org/index.php?topic=10.0
 
 *** TO-THINK Advertising Law
 *** TO-THINK Enforcement Law
-*** TO-THINK Money Law
+*** TO-THINK Escrow Law
+
+Bitcloud allows the interaction with external currencies like Bitcoin.
+
+Bitcoin allows escrow since version 0.9. https://en.bitcoin.it/wiki/Contracts
+
+The only problem with the escrow in Bitcoin, is that there must be a third
+party (oracle) who is reviewing the work and signs the release or refund of
+the escrow once the work is done.
+
+In our system, there cannot be a trusted central authority because that
+defeats the idea of full decentralization. Also, we cannot trust individual
+nodes to do the work, because some of them might not be available and others
+could act maliciously.
+
+So we propose a solution: using [[http://www.cs.tau.ac.il/~bchor/Shamir.html][Shamir's sharing key algorithm]] to protect the
+key that releases the escrow, by distributing that key among several well
+reputed nodes.  This way, when an order is made in the Sync process to
+accomplish the release or refund the escrow of a transaction, at least half of
+the nodes having the Shamir encoded key must participate in the event.
+
+This is a new system of automatic escrow that can be entirely run in a
+distributed way with little to none possibilities of defeat, providing that
+nobody possesses more than 50% of the total well-reputed nodes.
+
+**** Process
+
+When a customer buys a service to a node or a publisher, a new escrow key is
+created by the customer and the connected node. Then, the connected node
+encrypt it by using the Shamir's algorithm and distribute the encrypted keys
+along the best nodes (those with no recent penalization and a good stand up
+time).
+
+When the work is done, the implied nodes are judged by the different
+applicable laws (ex. /Bandwidth Law/ or /Storage Law/) while the /sync/
+happens. If the verdict is favorable, an order to the nodes having the
+encrypted key is sent. All nodes having this key put the parts together and
+obtain the secret key to release the escrow, and do so.
+
+/Service law/ is applied to ensure that each part does the work.
+
+
 * TO-THINK Blockchain
 
 We use a Blockchain in order to store all money transactions, including the
