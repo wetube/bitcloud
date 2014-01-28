@@ -1,21 +1,28 @@
-
 * Laws of Bitcloud
 
-Bitcloud is a reputation-based system with rewards/penalizations applied to
-all the users.
-That's the only way to go if we want to ensure a certain quality of service,
-and be paid for that.
+Bitcloud is a reputation-based system with rewards and penalizations that apply to
+all of its users. This the only way for the system to work if we want to ensure a 
+certain quality of service, and be paid for it.
+
+Suggestion by cbbcbail: Reputation Systems have been used on several websites vey successfully. One example of a 
+very good reputation system can be found in the Stack Exchange Reputation System. Users
+are awarded "Repuatation" for doing things that aid the community and they lose it when 
+they do things that hinder the community. (For more information about the StackExchange Reputation
+System, go here: http://meta.stackoverflow.com/help/whats-reputation) I propose a similar system for 
+handling reputation. This will help determine if penalties or rewards need to be carried out. The Reputation
+as stated on the StackExchange website, "is a rough measurement of how much the community trusts you." 
+This applies very nicely to what we need on the Bitcloud community. Obviously, the rewarding and Penalizing
+part of it would be very different, but the basic concept appears to work perfectly.
 
 In the case of Bitcloud, bandwidth is free for the users, but nodes generate
 money from it. When money is involved in an automated system, you must ensure
 that all parts are commited to their work.
 
-The laws of Bitcloud are there to ensure an easy ramp to profitability, an
-incentive to keep availability and a short cutoff for reputation so workers
-stay relevant.
+The laws of Bitcloud are created to ensure an easy ramp to profitability, an
+incentive to keep availability, and a short cutoff for reputation so workers are held accountable.
 
-For example, the law of service could take in count the floating average of
-daily uptime, averaged across the past week, to enforce rewards by lowering
+For example, the Law of Service could take into account the floating average of
+daily uptime, averaged from the past week, to enforce rewards by lowering
 the difficulty of mining bandwidth, or penalize with more difficulty and/or
 even with direct penalization for low quality service.
 
@@ -24,8 +31,8 @@ implied in any query or transaction are forced to judge the rest of the nodes
 while the service is being executed. Verdicts of actions are recorded in the
 Node Pool. When a new block is generated, consensus of the majority of the
 nodes enforce the verdicts found in the nodepool and sign rewards and
-penalizations directly in the blockchain. Other actions like banning
-persisting low quality nodes for a period of time are also feasible.
+penalizations directly in the blockchain. Other actions like banning nodes 
+that are of low quality for a period of time are also feasible.
 
 
 * Routing
@@ -33,14 +40,14 @@ persisting low quality nodes for a period of time are also feasible.
 ** Normal content
 
 Every single user is connected to 4 nodes using the User Router coded in the
-interface. These connections are meant to both transfer the content and to
+interface. These connections are meant to both transfer the content, and to
 apply the BCL (Bitcloud Cryptographic Law).
 
 Even if the content is not protected, all communications are encrypted, in
-order for an external viewer to not be able to distinguish between protected
+order to prevent an external viewer from being able to distinguish between protected
 and unprotected content.
 
-Encription in the server end is also recommended.
+Encryption on the server end is also recommended.
 
 [[file:img/unprotected-route.png]]
 
@@ -80,17 +87,17 @@ The process (using the graph above as an example):
 
 ** Anonymous content
 
-When a content is marked as *protected*, the Bitcloud net protects both the IP
-and domain name of the node serving the content. The user requesting the
+When content is marked as "protected", the Bitcloud net protects both the IP
+and the domain name of the node serving the content. The user requesting the
 connection is also protected. There is still a way for auditors to know that a
 certain computer is acting as a protected node, but will not be able to know
 what is the protected content that is serving. Even more, external auditors
 cannot distinguish between the content routed or served while analyzing the
 traffic to a specific node.
 
-All nodes are enforced to accept protected content routed, even if they are
+All nodes are forced to accept protected content routed, even if they are
 not protected themselves. Nodes cannot know what the content being routed is
-because it is multi-layered encrypted.
+because it will be encrypted using multiple-layer encryption techniques.
 
 We use a routing process similar to Tor Onion hidden services, optimized to
 our purposes.
@@ -143,7 +150,10 @@ themselves and gaining money out of thin air.
 
 So we really need a random way of interconnecting workers. Even further,
 connection must be *assigned*, never chosen. Workers trying to connect to a
-non-assigned node must be penalized and even banned.
+non-assigned node must be penalized to prevent such dangerous actions.
+
+The Dispersion Law will prevent people froom connecting to any Node but the one they
+have been assigned.
 
 ** IP discrimination problems
 
@@ -159,66 +169,67 @@ We could discriminate by IP, but that present many problems:
   
 ** ID discrimination
 
-The classical Sybil attacks consist in the creation of millions of IDs in
-order to DDOS a system to obtain benefits or spam.
+The classic "Sybil Attacks" consist of the creation of millions of IDs in
+order to perform a Distributed Denial-of-Service Attack (DDOS). They do this 
+in a system in order to obtain benefits for themselves or to spam others.
 
 But what would happen if creating an ID becomes *expensive*? For example,
 it could take 1 day or 1 week to create a single name.  Sybil attacks
-would not be a realistic thing because you can't generate so many IDs to make
-viable such a thing.
+would no longer be realistic because it would be impossible to generate enough IDs
+to make such a thing a viable attack strategy.
 
-So we introduce *Mined Names*, similar to Keyhotee and Namecoin.
+In order to make IDs "expensive," we introduce *Mined Names*, similar to Keyhotee and Namecoin.
 
-Nodes and users willing to register a name are required to mine an ID before
-they can enter the system. This means we can discriminate by ID without having
-to worry about sybil attacks.
+Nodes and users willing to register a name (ID) are required to "mine" an ID before
+they are allowed to enter the system. This means we can discriminate by ID without having
+to worry about Sybil Attacks.
 
-In addition to allow the registered entrance of the workers in the system,
+In addition to allowing the registered entrance of the workers in the system,
 mined names are CA (certificate authorities) by themselves, capable of
-deriving (signing) other IDs. Anyway, derived IDs are not allowed for nodes or
-registered users in order to use the system. Only unregistered users can use
-them.
+deriving (signing) other IDs. Derived IDs will not be allowed for nodes or
+registered users in the system. Only unregistered users can use them.
 
 ** Unregistered users
 
-Anonymous unregistered users also require a pair of keys; do they require to
-be mining for 1 week before they can enter into the system? That would kill
-the whole idea of embeding content in webpages for universal access.
+Anonymous, unregistered users also require a pair of keys. How can they be 
+required to mine them for 1 week before they can enter into the system? That would kill
+the entire idea of embedding content in webpages for universal access.
 
-So we introduce *Delegated IDs*.
+In order to allow universal access as well as keys, we introduce *Delegated IDs*.
 
 A node is free to generate any number of unregistered IDs from its own mined
-ID. Everytime an unregistered user use any of these keys, the net can
+ID. Everytime an unregistered user uses any of these keys, the Bitcloud network can
 identify the originating node.
 
-Sybil attacks could be mitigated by putting a limit on the size of delegated
+Sybil attacks could be mitigated by putting a limit on the size of Delegated
 IDs, where the increase in mining power of the node gained by adding a new
-delegated ID would decrease after a certain number of delegated IDs were
-added. Considering N the average number of delegated IDs per node in the
-entire cloud, 1 through N would each gain 1 vote towards enforcement of
+Delegated ID would decrease after a certain number of Delegated IDs were
+added. Considering N the average number of Delegated IDs per node in the
+entire Cloud, 1 through N would each gain 1 vote towards enforcement of
 network activities and mining, testing the network, etc. After N, the weight
 would decrease in a logarithmic fashion and would eventually reach 0, losing
 mining power and confronting penalization in the form of ban for the node and
 all its derived IDs.
 
 In other words, nodes trying to create more unregistered users (assigning
-delegated IDs to them) than the average of the net will considerably lower
-their profits for mining bandwidth.
+Delegated IDs to them) than the average of the net will considerably lower
+their profits for mining bandwidth. Thereby destroying any incentive to do such a thing.
 
 This, combined with a way of detecting cross root CA intents of constant
 abuse results in a reliable way of mitigating Sybil attacks.
 
-*** Sybil attack for delegated IDs
+*** Sybil Attack for Delegated IDs Flaw
 
-Now, one important flaw with this is that any malicious user could request many delegated IDs, potentially harming innocent nodes.
+Now, one important flaw with this is that any malicious user could request many delegated IDs, 
+potentially harming innocent nodes.
 
-A possible solution may be the inclusion of captchas in the user interface of
+A possible solution may be the inclusion of Captchas in the user interface of
 the unregistered users. So when an unregistered user is trying to download or
 view something, the answer to the captcha must be effectively provided in
-order to obtain a delegated ID. Cookies could be used in some way, so users
-are not disturbed with captchas all the time.
+order to obtain a Delegated ID. Cookies could be used in some way, so users
+are not disturbed Captchas all the time.
 
-** Assignment algorithm
+** Assignment Algorithm
 
 The assignment must be provided by an algorithm executed in all the
 participant nodes, and enforced by mutually judging actions and emitting
