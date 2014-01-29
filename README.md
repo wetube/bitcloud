@@ -1,4 +1,4 @@
-**Bitcloud Objectives**
+# Bitcloud Objectives
 
 Read the non technical paper here:
 https://github.com/wetube/bitcloud/blob/master/Bitcloud%20Nontechnical%20White%20Paper.md
@@ -35,17 +35,22 @@ content will be immediately available for the rest of the world.
 
 
 
-**Help Work With us and Become Part of the Team**
+# Help Work With us and Become Part of the Team
 
 We want to make the process of creating Bitcloud *extremely* open,
 allowing anyone who wants to participate to share his or her opinion and help with the project.
 
 
-**Spread the Word**
+# Spread the Word
 
 We are contacting developers and thinkers only now, as we don't want this project to become mainstream until we have something to really work in and a good bunch of developers. This being said, we are looking to expand the development side of the project. So, please, spread the word between developers, marketers, thinkers, and other similar people who might help. There is no way that this big project can be completed by 1, 2 or 5 people. We must work together.
 
-**Contact Us**
+# Watch us
+
+Please subscribe to the "issues" in github by watching us and submit your questions and ideas.
+
+
+# Contact Us
 
 Contact us via Freenode at: #bitcloud for general talk and #bitcloud-dev for development talk.
 
