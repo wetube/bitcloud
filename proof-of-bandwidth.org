@@ -1,10 +1,10 @@
 * Laws of Bitcloud
 
 Bitcloud is a reputation-based system with rewards and penalizations that apply to
-all of its users. This the only way for the system to work if we want to ensure a 
+all of its users. This is the only way for the system to work if we want to ensure a 
 certain quality of service, and be paid for it.
 
-Suggestion by cbbcbail: Reputation Systems have been used on several websites vey successfully. One example of a 
+Suggestion by cbbcbail: Reputation Systems have been used on several websites very successfully. One example of a 
 very good reputation system can be found in the Stack Exchange Reputation System. Users
 are awarded "Repuatation" for doing things that aid the community and they lose it when 
 they do things that hinder the community. (For more information about the StackExchange Reputation
