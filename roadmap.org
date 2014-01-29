@@ -1,7 +1,7 @@
 #+STARTUP: align fold hidestars
 #+OPTIONS: H:7 num:t toc:t \n:nil stat:nil timestamp:nil html-postamble:nil inline-images:t
 #+LANGUAGE: en
-#+TITLE: Bitcloud: A Peer to Peer System for Sharing Bandwidth
+#+TITLE: *Bitcloud: A Peer to Peer System for Sharing Bandwidth*
 
 
 * Objectives for version 1.0
@@ -37,8 +37,8 @@ content will be immediately available for the rest of the world.
 
 * Objectives for version 2.0
 
-Plugins. Market, wiki, static webs, forums, market, etc.
+Create plugins for the network: Market, wiki, static webs, forums, market, etc.
 
 * Objectives for version 3.0
 
-Meshnetwork.
+Create a Meshnet for Bitcloud to run on.
