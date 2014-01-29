@@ -1,5 +1,8 @@
 **Bitcloud Objectives**
 
+Read the non technical paper here:
+https://github.com/wetube/bitcloud/blob/master/Bitcloud%20Nontechnical%20White%20Paper.md
+
 In essence, we want to construct a Peer to Peer system with economic
 incentives, a decentralized market for information, in which everybody will be
 able to upload, download and publish content, and install a node.
