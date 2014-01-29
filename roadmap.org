@@ -1,0 +1,45 @@
+#+STARTUP: align fold hidestars
+#+OPTIONS: H:7 num:t toc:t \n:nil stat:nil timestamp:nil html-postamble:nil inline-images:t
+#+LANGUAGE: en
+#+TITLE: Bitcloud: A Peer to Peer System for Sharing Bandwidth
+
+
+* Objectives for version 1.0
+
+In essence, we want to construct a Peer to Peer system with economic
+incentives, a decentralized market for information, in which everybody will be
+able to upload, download and publish content, and install a node.
+
+We concentrate on quality, and we regulate it.
+
+We offer the oportunity for nodes to be present in a global market easy to
+use, and offer their services of bandwidth and storage, so we are going to
+program a system able to check those ends. Publishers and users can pay the
+nodes and Bitcloud will be an automatic escrow system that checks that the
+work has been correctly done, rewarding good nodes and penalizing bad ones.
+
+Publishers and authors will have the opportunity to have a voice without
+having to compete against big giants. Our search engine will be globally
+available and content cannot be deleted by a central authority. We don't
+impose any kind of censorship nor central moderation system. We also offer
+optional easy integration with Tor, protecting both the origin and the end of
+the content.
+
+At the same time, we offer the opportunity of optional moderation throughout
+publishers. Publishers will have the important role of manual filtering of the
+content and provide great quality. Everyone can become a publisher.
+
+Authors have an opportunity to offer their content without restriction or
+imposition, by selecting a publisher or become one by themselves. Their content
+will be immediately available for the rest of the world, and we offer the right
+to choose between paid content or just donations. Bitcloud will be in charge
+of automatically checking all money transactions.
+
+
+* Objectives for version 2.0
+
+Plugins. Market, wiki, static webs, forums, market, etc.
+
+* Objectives for version 3.0
+
+Meshnetwork.
