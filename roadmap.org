@@ -10,15 +10,14 @@ In essence, we want to construct a Peer to Peer system with economic
 incentives, a decentralized market for information, in which everybody will be
 able to upload, download and publish content, and install a node.
 
-We concentrate on quality, and we regulate it.
-
 We offer the oportunity for nodes to be present in a global market easy to
 use, and offer their services of bandwidth and storage, so we are going to
 program a system able to check those ends. Publishers and users can pay the
 nodes and Bitcloud will be an automatic escrow system that checks that the
 work has been correctly done, rewarding good nodes and penalizing bad ones.
 
-Bitcloud will be in charge of automatically checking all money transactions.
+Bitcloud will be in charge of automatically distribute files along the
+network, and check all money transactions.
  
 Publishers and authors will have the opportunity to have a voice without
 having to compete against big giants. Our search engine will be globally
