@@ -18,7 +18,7 @@ is stored directly encripted in the disk of the server.
 - Small nodes couldn't store the content of major publishers.
   
 * Distributed filesystem
-** Tahoe-Leafs like filesystem
+** Tahoe-LAFS like filesystem
 
 *** Distributed-option-1
 
