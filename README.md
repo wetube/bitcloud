@@ -16,8 +16,14 @@ work has been correctly done, rewarding good nodes and penalizing bad ones.
 Bitcloud will be in charge of automatically distribute files along the
 network, and check all money transactions.
 
-Bitcloud works on a variation of proof of stake known as proof of bandwidth. The nodes in this system are similar to the miners in the Bitcoin protocol in that they mine cloudshares by providing bandwidth to the network. Instead of using a proof of work system where miners are looking for the solution to a complex mathematical equation, the nodes in Bitcloud are rewarded based on their share of the total amount of bandwidth used in the Bitcloud network. Each block reward is distributed among the nodes based on their share of the overall amount of bandwidth needed by the Bitcloud users.
- 
+Bitcloud works on a variation of proof of stake known as proof of
+bandwidth. The nodes in this system are similar to the miners in the Bitcoin
+protocol in that they have to maintain a reputation  by providing bandwidth to the
+network. Instead of using a proof of work system where miners are looking for
+the solution to a complex mathematical equation, the nodes in Bitcloud are
+rewarded based on their share of the total amount of bandwidth used in the
+Bitcloud network.
+
 Publishers and authors will have the opportunity to have a voice without
 having to compete against big giants. Our search engine will be globally
 available and content cannot be deleted by a central authority. We don't
