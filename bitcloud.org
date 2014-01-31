@@ -4,96 +4,96 @@
 #+STARTUP: align fold hidestars
 #+OPTIONS: H:7 num:t toc:t \n:nil stat:nil timestamp:nil html-postamble:nil inline-images:t
 
-* Warning, please read first
+* Please read first
 
-The reason why we have published this before it is finished is because we want
-to be really open in all regards.
+This paper is not yet finished! The reason why we have published this before it 
+has been completed is because we want the Bitcloud project to be OpenSource in 
+all aspects from ideas to execution.
 
-We want to attract *thinkers* to discuss all the flaws we may encounter
-in the hard road to make this incredible and big project to success.
+We are looking for *thinkers* to discuss any flaws we may encounter in the steps 
+and processes we have already laid out. The project we have set out to complete
+is an extremely difficult one with a very large scope and we would like to invite anyone
+and everyone willing to contribute to do so in order to see it to it's completion.
 
 Please contact us at http://talk.bitcloudproject.org
+
+
 * TO-IMPROVE Introduction
 
-Bitcloud is a new protocol based on the ideas of Bitcoin, Mediaglobin, and
-Tor.
+Bitcloud is a new protocol based on the ideas of cryptocurrencys such as Bitcoin, and other
+networks such as Mediaglobin, and Tor.
 
-Users adhering to this protocol will be able to:
+Users adhering to this protocol would be able to:
 
-- Become an author and upload any file to the Bitcloud net and make it available to anyone.
-- Download and stream the content from other users and publishers.
-- Select which publisher s/he want to use.
-- Authors may earn money from paid content. Free content is possible.
+    - Become an author and upload any file to the Bitcloud net and make it available to anyone.
+    - Download and stream the content from other users and publishers.
+    - Select which publisher s/he want to use.
+    - Authors may earn money from paid content. Free content is possible.
 
 Nodes adhering to this protocol will be able to:
 
-- Generate and earn profitable income in relation to the bandwidth
+    - Generate and earn profitable income in relation to the bandwidth
     they share.
-- Select what content they cache and serve by selecting publishers.
-- Be paid for guaranteed storage.
-- Store non-guaranteed content based on popular acceptance.
-- Be part of the government of the entire net.
-- Receive a commission for inserting ads in the content.
-- Rent itself to a publisher.
+    - Select what content they cache and serve by selecting publishers.
+    - Be paid for guaranteed storage.
+    - Store non-guaranteed content based on popular acceptance.
+    - Be part of the government of the entire net.
+    - Receive a commission for inserting ads in the content.
+    - Rent itself to a publisher.
 
 Publishers adhering to this protocol will be able to:
 
-- Approve and categorize user content.
-- Sell paid content and receive a commission.
-- Trade with nodes for storage and bandwidth.
-- Earn profitable income throughout advertising.
-- Accept free content at will.
-- Sell storage for the nodes and receive a commission.
+    - Approve and categorize user content.
+    - Sell paid content and receive a commission.
+    - Trade with nodes for storage and bandwidth.
+    - Earn profitable income throughout advertising.
+    - Accept free content at will.
+    - Sell storage for the nodes and receive a commission.
 
 Any person can become a *user*, a *node* and/or a *publisher* at any time. In
-addition to this, there will be client applications which serve as an
-interface to the general protocol named Bitcloud. We are presenting Wetube as
+addition to this, there will be client applications which will serve as an
+interface to the general protocol named Bitcloud. We are presenting "Wetube" as
 the primary interface for our first version, but programmers can make any kind
 of interface, providing that they follow the rules described in this protocol.
 
-The Bitcloud blockchain can be independently accessed for money transactions,
-so external wallets without using the main interface are perfectly feasible.
+The Bitcloud blockchain can be independently accessed for money transactions.
+This means that using external wallets without using the main interface is perfectly feasible.
 
-Bitcloud works by following a special set of premises referred as /laws/
-(BCL). The laws in the software ensure that the system is running smooth
-without spammers and selfish serving, so everybody can trust the system. These
+Bitcloud works by following a special set of premises referred to as /laws/
+(BCL). The laws in the software ensure that the system is running smoothly
+preventing spammers and selfish serving, meaning everyone can trust the system. These
 laws are initially imposed by the programmers and can dynamically change over
 versions.
-  
-** We plan to go mainstream
 
-Our original idea is to make Bitcloud available for general use without
-requiring special tools or software. The first interface for Bitcloud will be
-Wetube, which is a collection of scripts running in the browser.
+** When BitCloud Goes Mainstream
 
-In addition, bandwidth is free for users.
+Were going to make Bitcloud available for general use without requiring any special
+tools or software. The first interface for Bitcloud will be "Wetube", which is a 
+collection of scripts running in the browser. Wetube will replace popular video uploading
+websites like Youtube and Vimeo for the Bitcloud network.
 
-This will allow a whole new possibilities for mainstream adoption not possible
-with actual p2p protocols. Just to cite some:
+In addition to not requiring any special software, bandwidth will be free to all users.
 
-- Embeddable in webpages by the insertion of a JS script acting as a very thin
-  layer between users and nodes.
-- Accessible from external languages, and  easy integration with any kind of
-  program.
-- Mobile applications that work out of the box without wasting bandwidth and
-  resources.
-- Rapid access without having to earn rights like in kademlia and
-  bittorrent.
+This will allow a whole new set of possibilities that will help with mainstream adoption 
+that has not been possible with any previous p2p protocols. A few examples of the things that
+will help BitCloud achieve Mainstream Adoption:
 
-** Content and participant protection
+    - Bitcloud will be embeddable in webpages with the simple insertion of a JS script acting as a very thin layer between users and nodes.
+    - Bitcloud will be accessible from external languages, and we will implement easy integration with any kind of program.
+    - Mobile applications that work out of the box without wasting bandwidth or resources.
+    - Rapid access without having to earn rights like in Kademlia or Bittorrent.
+
+** Content and Participant Protection
 
 Bitcloud separates the layer of selecting material from the storage itself,
-and allows nodes to select which publishers to adhere.
-
-Because nodes are totally free to choose publishers, determining who is
-storing the content in the long term becomes a very fuzzy thing.
+and allows nodes to select which publishers to use.
 
 In addition, a node can also include protected content (the source and
-destination cannot be determined) which they can serve at the same time than
-unprotected content, so only direct access to the node can conclude into
-liability. But because source and destination cannot be determined, finding
-such a node becomes extremely difficult. This improves protection compared to
-Tor.
+destination cannot be determined) which can be served at the same time as
+unprotected content, so only direct access to the node can determine
+liability. Because source and destination cannot be determined, finding
+such a node becomes extremely difficult. This improves protection from any 
+other p2p protocal including Tor.
 
 ** TO-THINK Modules and plugins
 
@@ -108,16 +108,12 @@ module (the first and most important one) the publishers create a sub-net with
 only the content moderated by them. Collaboration between publishers is
 possible.
 
-Examples:
+Examples of possible Plugins:
 
-- A social plugin, like Facebook, Twitter, and G+. Any publisher will have an
-  independent social sub-net, so it is possible to create different social
-  nets each one specialized under the rules of the particular publisher.
-- A wiki plugin. Each publisher will have and moderate its own wiki.
-- A forum plugin. Each publisher will moderate and establish the rules of his
-  own forum.
-- A market plugin. Each publisher will be in charge of one store or collection
-  of stores and will moderate sellers and customers.
+    - A social plugin, like Facebook, Twitter, and G+. Any publisher will have an independent social sub-net, so it is possible to create different social nets each one specialized under the rules of the particular publisher.
+    - A wiki plugin. Each publisher will have and moderate its own wiki.
+    - A forum plugin. Each publisher will moderate and establish the rules of his own forum.
+    - A market plugin. Each publisher will be in charge of one store or collection of stores and will moderate sellers and customers.
 
 The possibilities are endless. We can virtually replace every single major
 layer of the actual Internet in a decentralized way.
