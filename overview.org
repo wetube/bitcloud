@@ -47,7 +47,7 @@ A Tahoe-LAFS filesystem with the following modifications baked in:
 - Gateways shall maintain certificate revocation lists to exclude malfunctioning or malicious nodes and gateways that would otherwise be associated with their grid.
 - Nodes shall be required to associate with one or more affiliated gateways to be present on a grid.
 
-Gateways will also be required for collections of users who do not wish to fulfil the requisites to act as CAs in their own right.
+Gateways will also be required for collections of users who do not wish to fulfill the requisites to act as CAs in their own right.
 
 ** Advantages:
 
@@ -58,7 +58,7 @@ Gateways will also be required for collections of users who do not wish to fulfi
 - With a k-of-N encryption scheme, nodes will not actually possess any content that may be problematic in their jurisdiction, as each node is restricted to one slice which is not possible to use to gain access to the content without k other slices
 - Clusters of nodes tied to affiliated publishers may act towards a common interest, providing specialized content, making the job of those moderators who direct users to content much easier
 - Expiring content hosting guarantees provide continuous income streams to nodes, thus attracting more nodes
-- Multiple coextant grids provide redundancy of operations in the event that some portion of nodes and/or gateways are unable to operate; nodes or gateways may affiliate with other grids in order to resume operations
+- Multiple coexistent grids provide redundancy of operations in the event that some portion of nodes and/or gateways are unable to operate; nodes or gateways may affiliate with other grids in order to resume operations
 - QoS measurements based on actual traffic provide historical trends for individual nodes. Nodes that attempt to game the system by means of Sibyls grabbing their hosted content, assuming they find a means of determining what that content is, will be 'buying' their improved rating due to having to gain the services of other, non-sibyled nodes. 
 - Reliability of content retrieval is vastly increased due to the nature of k-of-N storage schemes, similar to how a RAID works
 - Retrieval speed may be positively affected, similar to how bittorrent allows for vastly increased download speeds due to concurrently accessing slices of content spread across multiple users
