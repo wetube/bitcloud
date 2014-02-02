@@ -1,26 +1,37 @@
 #+STARTUP: align fold hidestars indent
 
+* Structure
 
-* Fixed filesystem
+# #+BEGIN_SRC plantuml :file "img/structure.png"
+# node NodeGrid1 {
+# node Gateway1
+# node Gateway2
+# database "Storage Nodes" as storage1 {
+# node Node1
+# node Node2
+# node Node3
+# node Node4
+# }
+# Gateway1 <-> storage1
+# Gateway2 <-> storage1
+# }
+# node Publisher
+# Publisher <-down-> NodeGrid1 : Escrow
 
-Every node selects a list of publishers and the content from those publisers
-is stored directly encripted in the disk of the server.
+# :User1:     <-> Gateway1
+# :User1:     <-> Gateway2
 
-** Advantages
-- Don't have to worry about distributing content. Content is stored directly
-  in the nodes.
-- Very easy to implement.
-- Politically is better because the entire Bitcloud cannot be accused of
-  storing illegal content, only some nodes.
-  
-** Disavantages
-- Less optimized storage.
-- Small nodes couldn't store the content of major publishers.
-  
-* Distributed filesystem
-** Tahoe-LAFS like filesystem
+# :User1:    <-> Publisher : DAO
 
-*** Distributed-option-1
+# #+END_SRC
+
+#+RESULTS:
+[[file:img/structure.png]]
+
+
+* Tahoe-LAFS like filesystem
+
+** Modifications
 
 A Tahoe-LAFS filesystem with the following modifications baked in:
 
@@ -61,3 +72,4 @@ Gateways will also be required for collections of users who do not wish to fulfi
 - Prospective scam nodes may be able to 'take the money and run' when issued content, taking payment for hosting and then disassociating from the grid. 
 
 (N.B. that the "shall" and "may" used in the description section are according to RFC standards: SHALL and SHALL NOT are mandatory; MAY is optional)
+

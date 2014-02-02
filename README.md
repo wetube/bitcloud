@@ -1,28 +1,18 @@
 # Bitcloud Objectives
 
-Read the non technical paper here:
-https://github.com/wetube/bitcloud/blob/master/Bitcloud%20Nontechnical%20White%20Paper.md
+For a technical overview, read
+[overview.org](https://github.com/wetube/bitcloud/blob/master/overview.org).
 
-In essence, we want to construct a Peer to Peer system with economic
+In essence, we want to construct a Peer to Peer cloud with economic
 incentives, a decentralized market for information, in which everybody will be
 able to upload, download and publish content, and install a node.
 
-We offer the oportunity for nodes to be present in a global market easy to
-use, and offer their services of bandwidth and storage, so we are going to
-program a system able to check those ends. Publishers and users can pay the
-nodes and Bitcloud will be an automatic escrow system that checks that the
-work has been correctly done, rewarding good nodes and penalizing bad ones.
+Authors have an opportunity to offer their content without restriction or
+imposition, by selecting a publisher or become one by themselves. Their
+content will be immediately available for the rest of the world.
 
 Bitcloud will be in charge of automatically distribute files along the
 network, and check all money transactions.
-
-Bitcloud works on a variation of proof of stake known as proof of
-bandwidth. The nodes in this system are similar to the miners in the Bitcoin
-protocol in that they have to maintain a reputation  by providing bandwidth to the
-network. Instead of using a proof of work system where miners are looking for
-the solution to a complex mathematical equation, the nodes in Bitcloud are
-rewarded based on their share of the total amount of bandwidth used in the
-Bitcloud network.
 
 Publishers and authors will have the opportunity to have a voice without
 having to compete against big giants. Our search engine will be globally
@@ -34,10 +24,6 @@ the content.
 At the same time, we offer the opportunity of optional moderation throughout
 publishers. Publishers will have the important role of manual filtering of the
 content and provide great quality. Everyone can become a publisher.
-
-Authors have an opportunity to offer their content without restriction or
-imposition, by selecting a publisher or become one by themselves. Their
-content will be immediately available for the rest of the world.
 
 
 
