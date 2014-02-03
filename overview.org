@@ -1,1 +1,75 @@
-bitcloud.org
+#+STARTUP: align fold hidestars indent
+
+* Structure
+
+# #+BEGIN_SRC plantuml :file "img/structure.png"
+# node NodeGrid1 {
+# node Gateway1
+# node Gateway2
+# database "Storage Nodes" as storage1 {
+# node Node1
+# node Node2
+# node Node3
+# node Node4
+# }
+# Gateway1 <-> storage1
+# Gateway2 <-> storage1
+# }
+# node Publisher
+# Publisher <-down-> NodeGrid1 : Escrow
+
+# :User1:     <-> Gateway1
+# :User1:     <-> Gateway2
+
+# :User1:    <-> Publisher : DAO
+
+# #+END_SRC
+
+#+RESULTS:
+[[file:img/structure.png]]
+
+
+* Tahoe-LAFS like filesystem
+
+** Modifications
+
+A Tahoe-LAFS filesystem with the following modifications baked in:
+
+- A superset to the networking layer, where a mesh topology may be allowed.  Each storage node shall have a dedicated tunnel to an affiliated gateway.
+- Each grid shall be defined by one or more gateways, which shall be certified in the overall bitcloud as certificate authorities
+- Certificate authorities shall have the capability to merge their authorities by signing each others' certificates, thus providing redundancy of operations in case of one gateway going down
+- Storage nodes may submit bids upon polling by a gateway for content slice hosting
+- Content shall be stored in nodes with k-of-N encryption, based on the number of nodes required to effectively host the content of that size.
+- Gateways shall mediate transactions between prospective content depositors and nodes, polling their associated nodes to determine the minimum price the grid can offer for the content storage for the guaranteed time period.
+- Node QoS guarantees shall be adjudicated based on a node's contributions to a public grid, for which every CA shall be a valid gateway. This will require that nodes present a portion of their storage to the public grid. Public grid storage will have no particular guarantee beyond the node's desire to present good QoS figures.
+- Gateways will account for and verify user downloads of content slices, reporting to the nodepool which nodes had successfully completed their obligations.
+- Gateways will act as escrow agents to render payment credits to parties who have earned payments, if any.
+- Gateways shall maintain certificate revocation lists to exclude malfunctioning or malicious nodes and gateways that would otherwise be associated with their grid.
+- Nodes shall be required to associate with one or more affiliated gateways to be present on a grid.
+
+Gateways will also be required for collections of users who do not wish to fulfill the requisites to act as CAs in their own right.
+
+** Advantages:
+
+- Measurement of a node's capability to serve content will be continuous and ongoing
+- Free publication of content will be possible to allow underserved communities to be heard
+- Publishers may solicit competing bids for hosting to allow market forces to provide guaranteed hosting according to expense of hosting
+- Individual nodes will have no access to their served content, meaning sensitive or valuable information may be stored without worries it will be leaked or pirated.  
+- With a k-of-N encryption scheme, nodes will not actually possess any content that may be problematic in their jurisdiction, as each node is restricted to one slice which is not possible to use to gain access to the content without k other slices
+- Clusters of nodes tied to affiliated publishers may act towards a common interest, providing specialized content, making the job of those moderators who direct users to content much easier
+- Expiring content hosting guarantees provide continuous income streams to nodes, thus attracting more nodes
+- Multiple coexistent grids provide redundancy of operations in the event that some portion of nodes and/or gateways are unable to operate; nodes or gateways may affiliate with other grids in order to resume operations
+- QoS measurements based on actual traffic provide historical trends for individual nodes. Nodes that attempt to game the system by means of Sibyls grabbing their hosted content, assuming they find a means of determining what that content is, will be 'buying' their improved rating due to having to gain the services of other, non-sibyled nodes. 
+- Reliability of content retrieval is vastly increased due to the nature of k-of-N storage schemes, similar to how a RAID works
+- Retrieval speed may be positively affected, similar to how bittorrent allows for vastly increased download speeds due to concurrently accessing slices of content spread across multiple users
+- Accounting for individual downloads of content means charging for content becomes trivial to implement
+
+** Disadvantages
+
+- Controversial, harmful (malware) and illegal content will be posted on the public grid--though the source as far as the CA that authorized the user in question to post it will be determinable.
+- Distributed CA registration will need to be difficult enough to make registration of a new CA expensive enough to encourage careful management of nodes and/or users
+- Mesh topologies may suffer from reduced speed when tunneled through another content-serving node. Unexpected topological effects may result.
+- Prospective scam nodes may be able to 'take the money and run' when issued content, taking payment for hosting and then disassociating from the grid. 
+
+(N.B. that the "shall" and "may" used in the description section are according to RFC standards: SHALL and SHALL NOT are mandatory; MAY is optional)
+
