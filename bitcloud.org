@@ -1,6 +1,41 @@
 #+STARTUP: align fold hidestars indent
 
-* Structure
+* Introduction
+Bitcloud provides a method for storing data in a distributed collection of
+nodes or meshnetwork and is comprised of these main components:
+
+1. A method to reliably distribute data across connected nodes using Bitcloud,
+   with the potential to scale up to millions of nodes.
+2. Hot plug-in/plug-out of nodes.
+3. Safeguard of the data, such as given N number of nodes, only N/3 of them
+   are needed to provide the complete file.
+4. Fast parallel reconstruction of files.
+5. QoS measurement of individual nodes and node grids, with statistics stored
+   in a node pool file.
+6. Automatic Certificate Authorities (CA) management, for secure reliable
+   connections.
+7. Each node and user is associated with a CA managed by a gateway or publisher.
+8. Difficult generation and global acceptance of CAs encouraged by a
+   reputation system.
+9. Secure encrypted storage in such a way that individual nodes cannot know
+   what they are storing by simple prospecting into the data.
+10. Arrangement of the nodes in grids, each grid providing specialized content
+    storage for contract publishers.
+11. Both public and private grids can coexist.
+12. The public grid is the collection of all the nodes in the entire Bitcloud
+    and its content cannot be censored.
+13. Private grids are managed by publishers, in charge of curating the content.
+
+
+This document defines the Bitcloud organization and methodology and is a work
+in progress. We ask you for your help and comments. You can submit your
+inquiries:
+
+https://github.com/wetube/bitcloud/issues?state=open
+http://talk.bitcloudproject.org/index.php?board=1.0
+
+
+* Structure graph
 
 # #+BEGIN_SRC plantuml :file "img/structure.png"
 # node NodeGrid1 {
@@ -30,6 +65,8 @@
 
 
 * Tahoe-LAFS like filesystem
+
+https://tahoe-lafs.org/trac/tahoe-lafs/browser/trunk/docs/architecture.rst
 
 ** Modifications
 
