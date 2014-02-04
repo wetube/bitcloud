@@ -3,39 +3,45 @@
 For a technical overview, read
 [overview.org](https://github.com/wetube/bitcloud/blob/master/overview.org).
 
-In essence, we want to construct a Peer to Peer cloud with economic
-incentives, a decentralized market for information, in which everybody will be
-able to upload, download and publish content, and install a node.
+In essence, what we want to do is construct a Peer to Peer cloud with economic
+incentives, and a decentralized market for information in which everybody will have the
+ability to upload, download, and publish content. All users will also have the 
+ability to install a node.
 
-Authors have an opportunity to offer their content without restriction or
-imposition, by selecting a publisher or become one by themselves. Their
-content will be immediately available for the rest of the world.
+Authors have an opportunity to offer their content without any restriction or
+imposition, by selecting a publisher or becoming one themselves. Their
+content will be immediately available the rest of the world via Bitcloud.
 
-Bitcloud will be in charge of automatically distribute files along the
-network, and check all money transactions.
+Bitcloud will be in charge of automatically distributing files around and along the
+network, and checking all monetary transactions.
 
 Publishers and authors will have the opportunity to have a voice without
-having to compete against big giants. Our search engine will be globally
+having to compete against giant corporations. Our search engine will be globally
 available and content cannot be deleted by a central authority. We don't
-impose any kind of censorship nor central moderation system. We also offer
-optional easy integration with Tor, protecting both the origin and the end of
-the content.
+impose any kind of censorship nor do we impose any sort of central moderation 
+system. We also offer optional, easy integration with Tor, protecting both the 
+"origin" and the "destination" of the content.
 
-At the same time, we offer the opportunity of optional moderation throughout
-publishers. Publishers will have the important role of manual filtering of the
-content and provide great quality. Everyone can become a publisher.
+At the same time, we offer the opportunity of optional moderation for any
+publisher. Publishers will have the important role of manually filtering all of their
+content and providing great quality. Anyone can become a publisher if that is what they desire.
 
 
 
 # Help Work With Us
 
 We want to make the process of creating Bitcloud *extremely* open,
-allowing anyone who wants to participate to share his or her opinion and help with the project.
+allowing anyone who wants to participate to share their opinion and help with the project.
 
 
 # Spread the Word
 
-We are contacting developers and thinkers only now, as we don't want this project to become mainstream until we have something to really work in and a good bunch of developers. This being said, we are looking to expand the development side of the project. So, please, spread the word between developers, marketers, thinkers, and other similar people who might help. There is no way that this big project can be completed by 1, 2 or 5 people. We must work together.
+We are currently contacting developers and thinkers only as we don't want this project to 
+become too mainstream until we have something to really work in and a good bunch of developers. 
+This being said, we are looking to expand the development side of the project. So, please, spread 
+the word between developers, marketers, thinkers, and other similar people who might help. There
+is no way that this enormous, ambitious project can be completed by a small number of people. We 
+must work together in order to complete the project.
 
 
 # Watch Us
