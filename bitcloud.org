@@ -114,7 +114,7 @@ Gateways will also be required for collections of users who do not wish to fulfi
 * Certificate Authorities
 
 Certificate authorities (CAs) certifies the ownership of public keys to relay
-upon assertions to define trust/untrust relationships between components of
+upon assertions to define trust/distrust relationships between components of
 the system. The main uses are:
 
 - To certify that a storage node is assigned to a gateway.
@@ -127,7 +127,7 @@ the system. The main uses are:
 
 ** CA creation
 
-Bitcloud do not use a classical centralized scheme in which only a few of CAs
+Bitcloud does not use a classical centralized scheme in which only a few of CAs
 are widely trusted. In contrast, every gateway and publisher is in charge of
 generating its own CA and maintain a reputation in order to be accepted by the
 community.
@@ -142,8 +142,8 @@ at the expense of human resources to verify identity.
 Bitcloud is an automatic decentralized storage system that intents to avoid
 centralization, and relay in other means to verify correctness:
 
-- By making expensive to generate new acceptable CAs, a new gateway or
-  publisher must "mine" their CA by soliciting a CPU/memory hard problem to
+- By making it expensive to generate new acceptable CAs, a new gateway or
+  publisher must "mine" their CA by soliciting a CPU/memory intensive problem to
   resolve and provide the solution associated with the CA generated.
 - By maintaining a reputation of good QoS as promised.
 - By staying online with good reputation, meaning that after a period of time
@@ -153,7 +153,7 @@ centralization, and relay in other means to verify correctness:
   
 ** CA trust/revocation
 
-To encourage the accomplish of the obligations, Bitcloud maintains a general
+To encourage the accomplishment of the obligations, Bitcloud maintains a general
 synced file called the Node Pool, with statistics associated with each precise
 CA. Every node is in charge to publicly/privately trust or revoke other CAs
 based on such statistics.
