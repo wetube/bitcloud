@@ -45,17 +45,8 @@ from
 [censorship, high costs, and proprietary software](https://github.com/wetube/bitcloud/wiki/Why-Do-We-Need-Bitcloud%3F).
 
 Bitcloud can be the base for decentralized applications that require data
-storage and bandwidth. Whether you're watching videos from YouTube or
-listening to music on Soundcloud, you're getting all of your content through
-one centralized source. That centralized source could decide to delete certain
-content or be forced to delete controversial content by a local
-government. The core principles behind decentralized applications built on top
-of Bitcloud are decentralization, complete autonomy, open source, and the
-choice of anonymity.
+storage and bandwidth.
 
-In addition to providing private storage grids for decentralized applications,
-there is also a public grid in Bitcloud that can be used by anyone. This grid
-is completely unmoderated.
 
 ![Bitcloud Distributed Cloud Storage System](img/structure.png)
 
