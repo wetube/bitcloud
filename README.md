@@ -5,7 +5,7 @@ hark disk", capable of storing data encrypted and signed across all connected
 nodes, protecting privacy and guarantying quality of service (QoS).
 
 The easiest way to understand Bitcloud is thinking about it as a virtual
-storage device in your computer, like this:
+storage device, whose content is in fact in Internet in a distributed fashion, like this:
 
 ![File Manager](img/bitcloud-fm.png)
 
