@@ -2,7 +2,7 @@
 
 Bitcloud is a universal protocol aiming to provide a massive distributed filesystem, or "virtual
 hark disk", capable of storing data encrypted and signed across all connected
-nodes, protecting privacy and guarantying quality of service (QoS).
+nodes, protecting privacy and guaranteeing quality of service (QoS).
 
 The easiest way to understand Bitcloud is thinking about it as a virtual
 storage device, whose content is in fact in Internet in a distributed fashion, like this:
@@ -20,8 +20,8 @@ Bitcloud is *coin agnostic*, meaning that it only pretends to be the base for
 the storage needs of future DAs. Bitcloud can use the escrow capabilities of
 Bitcoin and/or the contracts of Ethereum. Bitcloud pretends to substitute the
 way in which servers interconnect today and make much easier, secure and
-private for users, publishers and DAs to share files, and will be the
-*fundamental* base for the upcoming DAs.
+private for users, publishers and DAs to share files, and will be *fundamental*
+for the upcoming DAs.
 
 
 Whether you're watching videos from YouTube or listening to music on
@@ -59,7 +59,7 @@ Storage nodes are the nodes on the Bitcloud network that are actually storing
 all the data. They get paid by publishers for storing the data and sharing it
 to users. As long as they deliver the correct content to the user, they are
 paid for their work. All of the data they store is encrypted, which means they
-don't what they are storing. Storage nodes also only have a portion of the
+don't know what are they storing. Storage nodes also only have a portion of the
 entire file requested by a user.
 
 II. Gateways
