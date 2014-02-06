@@ -1,52 +1,43 @@
-# Bitcloud Objectives
+# Introduction
+
+Bitcloud is a universal protocol aiming to provide a massive distributed filesystem, or "virtual
+hark disk", capable of storing data encrypted and signed across all connected
+nodes, protecting privacy and guarantying quality of service (QoS).
+
+The easiest way to understand Bitcloud is thinking about it as a virtual
+storage device in your computer, like this:
+
+![File Manager](img/bitcloud-fm.png)
+
+
+The first thing you notice is that the main "folders" are the
+publishers. There are many private publishers, each one associated with normal
+companies or Distributed Applications (DAs) like Wetube. There is also a
+*Public grid*, in which everybody is free to publish without
+censorship.
+
+Bitcloud is *coin agnostic*, meaning that it only pretends to be the base for
+the storage needs of future DAs. Bitcloud can use the escrow capabilities of
+Bitcoin and/or the contracts of Ethereum. Bitcloud pretends to substitute the
+way in which servers interconnect today and make much easier, secure and
+private for users, publishers and DAs to share files, and will be the
+*fundamental* base for the upcoming DAs.
 
 For a technical overview, read
-[overview.org](https://github.com/wetube/bitcloud/blob/master/overview.org).
-
-In essence, what we want to do is construct a Peer to Peer cloud with economic
-incentives, and a decentralized market for information in which everybody will have the
-ability to upload, download, and publish content. All users will also have the 
-ability to install a node.
-
-Authors have an opportunity to offer their content without any restriction or
-imposition, by selecting a publisher or becoming one themselves. Their
-content will be immediately available the rest of the world via Bitcloud.
-
-Bitcloud will be in charge of automatically distributing files around and along the
-network, and checking all monetary transactions.
-
-Publishers and authors will have the opportunity to have a voice without
-having to compete against giant corporations. Our search engine will be globally
-available and content cannot be deleted by a central authority. We don't
-impose any kind of censorship nor do we impose any sort of central moderation 
-system. We also offer optional, easy integration with Tor, protecting both the 
-"origin" and the "destination" of the content.
-
-At the same time, we offer the opportunity of optional moderation for any
-publisher. Publishers will have the important role of manually filtering all of their
-content and providing great quality. Anyone can become a publisher if that is what they desire.
-
+[bitcloud.org](https://github.com/wetube/bitcloud/blob/master/bitcloud.org).
 
 
 # Help Work With Us
 
-We want to make the process of creating Bitcloud *extremely* open,
-allowing anyone who wants to participate to share their opinion and help with the project.
-
-
-# Spread the Word
-
-We are currently contacting developers and thinkers only as we don't want this project to 
-become too mainstream until we have something to really work in and a good bunch of developers. 
-This being said, we are looking to expand the development side of the project. So, please, spread 
-the word between developers, marketers, thinkers, and other similar people who might help. There
-is no way that this enormous, ambitious project can be completed by a small number of people. We 
-must work together in order to complete the project.
+We want to make the process of creating Bitcloud *extremely* open, allowing
+anyone who wants to participate to share their opinion and help with the
+project.
 
 
 # Watch Us
 
-Please subscribe to the "issues" section in GitHub to watch us and please submit your questions and ideas there.
+Please subscribe to the "issues" section in GitHub to watch us and submit your
+questions and ideas there.
 
 
 # Contact Us
