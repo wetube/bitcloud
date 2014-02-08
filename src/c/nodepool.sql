@@ -20,13 +20,28 @@ CREATE TABLE grids (
 
 CREATE TABLE publishers (
  CA TEXT PRIMARY KEY NOT NULL,
- address TEXT COLLATE NOCASE
+ address TEXT COLLATE NOCASE,
+ nickname TEXT
+);
+
+
+CREATE TABLE folders (
+ uuid NOT NULL PRIMARY KEY, -- randomly generated
+ upfolder REFERENCES folders(uuid),
+ name TEXT
 );
 
 CREATE TABLE users (
  public_key TEXT PRIMARY KEY NOT NULL,
  registrant TEXT NOT NULL REFERENCES publishers(CA),
- address TEXT COLLATE NOCASE
+ registrant_signature,
+ address TEXT COLLATE NOCASE,
+ -- users can have a root folder that must sign:
+ rootfolder REFERENCES folders(uuid),
+ root_folder_sig
+ storage_quota INTEGER DEFAULT 0,
+ bandwidth_quote INTEGER DEFAULT 0,
+ folder_quota INTEGER DEFAULT 0
 );
 
 CREATE TABLE publisher_grid_contracts (
@@ -49,3 +64,16 @@ CREATE TABLE grid_node_contrats ();
 CREATE TABLE auditions ();
 
 
+CREATE TABLE contents (
+ hash TEXT NOT NULL PRIMARY KEY,
+ type_id INTEGER REFERENCES conten_types(id),
+ len INTEGER,
+ user TEXT NOT NULL REFERENCES users(public_key),
+ signature TEXT NOT NULL
+);
+
+CREATE TABLE content_types (
+ id INTEGER PRIMARY KEY,
+ mime TEXT,
+ encoding TEXT
+);
