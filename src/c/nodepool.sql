@@ -63,7 +63,7 @@ CREATE TABLE publishers (
 
 CREATE TABLE publisher_trusts (
  from_publisher NOT NULL REFERENCES publishers(public_key),
- to_publisher NOT NULL REFERENCES publishers(public_key),
+ to_publisher REFERENCES publishers(public_key),
  trust BOOLEAN NOT NULL,
  signature NOT NULL, -- from signature
  reason REFERENCES reason(id) NOT NULL
@@ -108,7 +108,7 @@ CREATE TABLE publisher_grid_contracts (
 );
 
 
-CREATE TABLE coins {
+CREATE TABLE coins (
  id INTEGER PRIMARY KEY,
  name TEXT NOT NULL,
  has_escrow BOOLEAN NOT NULL
@@ -131,24 +131,45 @@ CREATE TABLE auditions ();
 
 
 CREATE TABLE folders (
- id BLOB(16) NOT NULL PRIMARY KEY, 
+ id BLOB(16) NOT NULL PRIMARY KEY,
+ parent REFERENCES folders(id),
  name TEXT,
+ permissions REFERENCES permissions(id)
 );
+
 
 CREATE TABLE files (
  hash TEXT NOT NULL PRIMARY KEY,
- type_id INTEGER REFERENCES conten_types(id),
+ name TEXT,
+ type_id INTEGER REFERENCES content_types(id),
  content BLOB,
  folder NOT NULL REFERENCES folders(id),
  user_sig NOT NULL,
- publisher_sig  -- NULL for the public grid
+ publisher_sig,  -- NULL for the public grid
+ permissions REFERENCES permissions(id)
 );
+
 
 CREATE TABLE content_types (
  id INTEGER PRIMARY KEY,
  mime TEXT,
  encoding TEXT
 );
+
+CREATE TABLE permissions (
+ id BLOB(16),
+ user REFERENCES users(public_key),
+ publisher REFERENCES publishers(public_key),
+ -- NULL user/publisher means permissions for everyone
+ read BOOLEAN,
+ read_quota INTEGER,
+ write BOOLEAN,
+ write_quota INTEGER,
+ create BOOLEAN,
+ remove BOOLEAN
+);
+ 
+
 
 CREATE TABLE grid_node_contrats (
  id BLOB(16) PRIMARY KEY NOT NULL,
