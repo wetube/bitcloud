@@ -1,62 +1,91 @@
-
 CREATE TABLE nodes (
- CA TEXT PRIMARY KEY NOT NULL,
+ public_key PRIMARY KEY NOT NULL,
+ signature,  -- self certificate of the public key
+ creation_date DATE
+ proof_of_creation, -- see CA generation in the protocol spec
  address TEXT COLLATE NOCASE,
- grid TEXT COLLATE NOCASE,
- last_online DATE NOT NULL,
- storage_reputation INTEGER NOT NULL DEFAULT 0,
- bandwidth_reputation INTEGER NOT NULL DEFAULT 0
+ main_grid REFERENCES grids(public_key) COLLATE NOCASE,
+ last_online DATE,
+ storage_capacity INTEGER DEFAULT 0,
+ bandwidth_capacity INTEGER DEFAULT 0,
+ storage_reputation INTEGER DEFAULT 0,
+ bandwidth_reputation INTEGER DEFAULT 0,
+ service_reputation INTEGER DEFAULT 0,
+ in_grid_reputation INTEGER DEFAULT 0,
+ availability INTEGER DEFAULT 0
 );
 
 -- A grid is a collection of nodes associated that can sell
 -- space and bandwidth to a publisher
 CREATE TABLE grids (
- CA TEXT PRIMARY KEY NOT NULL,
+ public_key PRIMARY KEY NOT NULL,
  storage_capacity INTEGER DEFAULT 0,
  bandwidth_capacity INTEGER DEFAULT 0,
  storage_reputation INTEGER DEFAULT 0,
- bandwidth_reputation INTEGER DEFAULT 0
+ bandwidth_reputation INTEGER DEFAULT 0,
+ service_reputation INTEGER DEFAULT 0,
+ availability INTEGER DEFAULT 0
 );
 
+CREATE TABLE gateways (
+ public_key REFERENCES node(public_key),
+ grid NOT NULL REFERENCES grids(public_key),
+ grid_sig,
+ node_sig
+);
+
+
 CREATE TABLE publishers (
- CA TEXT PRIMARY KEY NOT NULL,
+ public_key PRIMARY KEY NOT NULL,
  address TEXT COLLATE NOCASE,
+ creation_date DATE NOT NULL,
+ proof_of_creation, -- see CA generation in the protocol spec
  nickname TEXT,
  -- is information about the content of this publisher public?:
  public_metadata BOOLEAN DEFAULT FALSE,
- public_content BOOLEAN DEFAULT FALSE
+ public_files BOOLEAN DEFAULT FALSE,
+ -- trust all other publisher users by default? If not, only trust
+ -- those in the publisher_trusts with positive trust. If yes, trust
+ -- all except those with negative trust.
+ trust_all_users BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE publisher_trusts (
- CA NOT NULL REFERENCES publishers(CA),
- relation NOT NULL REFERENCES publishers(CA),
+ from_publisher NOT NULL REFERENCES publishers(public_key),
+ to_publisher NOT NULL REFERENCES publishers(public_key),
  trust BOOLEAN NOT NULL,
- signature NOT NULL
+ signature NOT NULL, -- from signature
+ reason REFERENCES reason(id) NOT NULL
 );
 
+CREATE TABLE reasons (
+ id,
+ description
+);
 
 CREATE TABLE folders (
- uuid NOT NULL PRIMARY KEY, -- randomly generated
- upfolder REFERENCES folders(uuid),
- name TEXT
+ id BLOB(16) NOT NULL PRIMARY KEY, 
+ name TEXT,
 );
 
 CREATE TABLE users (
- public_key TEXT PRIMARY KEY NOT NULL,
- registrant TEXT NOT NULL REFERENCES publishers(CA),
- registrant_signature,
+ public_key PRIMARY KEY NOT NULL,
+ publisher NOT NULL REFERENCES publishers(public_key),
+ publisher_signature,
  address TEXT COLLATE NOCASE,
- -- users can have a root folder that must sign:
- rootfolder REFERENCES folders(uuid),
- root_folder_sig
+ fixed_address BOOLEAN DEFAULT TRUE,
+ revocation_date DATE,
  storage_quota INTEGER DEFAULT 0,
  bandwidth_quota INTEGER DEFAULT 0,
- folder_quota INTEGER DEFAULT 0
+ files_quota INTEGER DEFAULT 0, -- how many files can upload
+ folder_quota INTEGER DEFAULT 0, -- how many folders allowed
+ root_folder REFERENCES folders(id)
 );
 
 CREATE TABLE publisher_grid_contracts (
- publisher TEXT NOT NULL REFERENCES publishers(CA), 
- grid TEXT NOT NULL REFERENCES grids(CA),
+ id BLOB(16) PRIMARY KEY NOT NULL,
+ publisher TEXT NOT NULL REFERENCES publishers(public_key), 
+ grid TEXT NOT NULL REFERENCES grids(public_key),
  -- Signatures of this contract:
  publisher_sig TEXT NOT NULL,
  grid_sig TEXT NOT NULL,
@@ -66,7 +95,25 @@ CREATE TABLE publisher_grid_contracts (
  start_date DATE NOT NULL,
  end_date DATE NOT NULL,
  availability INTEGER NOT NULL, -- % of time online
- ping_average INTEGER DEFAULT 0
+ ping_average INTEGER DEFAULT 0,
+ -- Coin terms
+ coin REFERENCES coins(id),
+);
+
+
+CREATE TABLE coins {
+ id INTEGER PRIMARY KEY,
+ name TEXT NOT NULL,
+ has_escrow BOOLEAN NOT NULL
+);
+
+CREATE TABLE accepted_coins (
+);
+
+CREATE TABLE shamir_keys (
+ contract_id TEXT,
+ node_id TEXT,
+ part TEXT
 );
 
 CREATE TABLE grid_node_contrats ();
@@ -74,12 +121,13 @@ CREATE TABLE grid_node_contrats ();
 CREATE TABLE auditions ();
 
 
-CREATE TABLE contents (
+CREATE TABLE files (
  hash TEXT NOT NULL PRIMARY KEY,
  type_id INTEGER REFERENCES conten_types(id),
- len INTEGER,
- user TEXT NOT NULL REFERENCES users(public_key),
- signature TEXT NOT NULL
+ content BLOB,
+ folder NOT NULL REFERENCES folders(id),
+ user_sig NOT NULL,
+ publisher_sig  -- NULL for the public grid
 );
 
 CREATE TABLE content_types (
@@ -88,12 +136,32 @@ CREATE TABLE content_types (
  encoding TEXT
 );
 
+
+
 ---------------------
 -- private tables
 
--- Notation: all private tables start with 'p'
-
-CREATE TABLE pCAs (
+CREATE TABLE CAs (
  public_key PRIMARY KEY NOT NULL,
  private_key NOT NULL,
+);
+
+
+----------------------
+-- internal grid tables
+
+CREATE TABLE grid_node_contrats (
+ id BLOB(16) PRIMARY KEY NOT NULL,
+ grid REFERENCES grids(public_key),
+ mode NOT NULL REFERENCES nodes(public_key),
+ grid_sig,
+ node_sig,
+ min_storage INTEGER NOT NULL,
+ min_bandwidth INTEGER NOT NULL,
+ start_date DATE NOT NULL,
+ elapsed_time INTEGER, -- only the grid can modify this
+ -- Coin terms
+ coin REFERENCES coins(id),
+ block_paid__size DEFAULT 100000000,  
+ price_per_block
 );
