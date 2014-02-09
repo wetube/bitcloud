@@ -21,7 +21,17 @@ CREATE TABLE grids (
 CREATE TABLE publishers (
  CA TEXT PRIMARY KEY NOT NULL,
  address TEXT COLLATE NOCASE,
- nickname TEXT
+ nickname TEXT,
+ -- is information about the content of this publisher public?:
+ public_metadata BOOLEAN DEFAULT FALSE,
+ public_content BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE publisher_trusts (
+ CA NOT NULL REFERENCES publishers(CA),
+ relation NOT NULL REFERENCES publishers(CA),
+ trust BOOLEAN NOT NULL,
+ signature NOT NULL
 );
 
 
@@ -40,7 +50,7 @@ CREATE TABLE users (
  rootfolder REFERENCES folders(uuid),
  root_folder_sig
  storage_quota INTEGER DEFAULT 0,
- bandwidth_quote INTEGER DEFAULT 0,
+ bandwidth_quota INTEGER DEFAULT 0,
  folder_quota INTEGER DEFAULT 0
 );
 
@@ -76,4 +86,14 @@ CREATE TABLE content_types (
  id INTEGER PRIMARY KEY,
  mime TEXT,
  encoding TEXT
+);
+
+---------------------
+-- private tables
+
+-- Notation: all private tables start with 'p'
+
+CREATE TABLE pCAs (
+ public_key PRIMARY KEY NOT NULL,
+ private_key NOT NULL,
 );
