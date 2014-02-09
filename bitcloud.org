@@ -1,6 +1,57 @@
 #+STARTUP: align fold hidestars indent
+#+OPTIONS: H:7 num:t toc:t \n:nil stat:nil timestamp:nil html-postamble:nil inline-images:t
 
-* Introduction
+* Abstract
+
+Bitcloud is a universal protocol aiming to provide a massive distributed
+filesystem, or "virtual hark disk", capable of storing data encrypted and
+signed across all connected nodes, protecting privacy and guaranteeing quality
+of service (QoS).
+
+The easiest way to understand Bitcloud is thinking about it as a virtual
+storage device, whose content is in the Internet in a distributed fashion, and
+globally available with only the restrictions that the different participants
+impose over the content they upload.
+
+But not only that, Bitcloud differs from actual solutions like i2p, Freenet or
+Maidsafe in some important factors:
+
+1. We intentionally provide the base for future Distributed Applications with
+   economic incentives based con cryptocoins, with facilities to do escrow
+   transactions and contract services.
+2. We do measurements of QoS, like for example bandwidth, storage and
+   availability. The statistics are stored in a database in every node
+   and synced and signed by consensus.
+3. Bitcloud structures the storage of content in node grids, which are
+   constituted by groups of nodes with a shared economical or social interest.
+4. All the data is stored encrypted and sliced in small chunks, in such a way
+   that individual nodes do not know what they are storing.
+5. Data is stored redundantly is such a way that if 7/3 of the nodes switch
+   off, still the data is retrievable by the users.
+6. Gateways in Bitcloud transform the content stored and distributed across
+   all nodes in something that users can view with standard tools. For
+   example, a user can be accesing the Bitcloud with his/her browser without
+   even noticing that the content comes in fact from Bitcloud.
+7. Bitcloud introduces the concept of publishers. They freely choose and pay
+   the node grids for storing all of the content they approve. They also
+   have the final say on whether or not the correct data has been sent to the
+   user. Once the publisher confirms that the user has received the correct
+   data, the escrow payment can be released. 
+8. Bitcloud also enables a special node grid called the "public grid", at
+   which every node is free to be attached. This grid is non-censurable but
+   separated from moderated grids to clearly improve the quality of those who
+   pay.
+   
+
+In addition to all of that, Bitcloud is over all a free protocol under the MIT
+license. In addition to the design of the protocol, we provide an
+implementation that intends to be very lightweight and able to run both in
+small devices and big clusters of nodes.
+
+
+
+* Technical introduction
+
 Bitcloud provides a method for storing data in a distributed collection of
 nodes or meshnetwork and is comprised of these main components:
 
@@ -25,6 +76,8 @@ nodes or meshnetwork and is comprised of these main components:
 12. The public grid is the collection of all the nodes in the entire Bitcloud
     and its content cannot be censored.
 13. Private grids are managed by publishers, in charge of curating the content.
+14. An escrow system to allow the payment and verification of contracts based
+    on QoS measurements, automatically performed by the Bitcloud network.
 
 
 This document defines the Bitcloud organization and methodology and is a work
@@ -65,11 +118,11 @@ http://talk.bitcloudproject.org/index.php?board=1.0
 [[file:img/structure.png]]
 
 
-* Tahoe-LAFS like filesystem
+* Storage of the content
 
 https://tahoe-lafs.org/trac/tahoe-lafs/browser/trunk/docs/architecture.rst
 
-** Modifications
+** Base
 
 A Tahoe-LAFS filesystem with the following modifications baked in:
 
@@ -164,3 +217,16 @@ to the gateway or publisher.
 
 When a gateway is offered to work for the public grid, private revocations
 are not to be considered.
+
+* Nodepool
+
+The Nodepool is the relational synced by consensus database in which all the
+statistics, information and contracts are stored.
+
+For now, please watch the following SQL specification:
+
+https://github.com/wetube/bitcloud/blob/master/src/c/nodepool.sql
+
+** Sync process
+
+TODO
