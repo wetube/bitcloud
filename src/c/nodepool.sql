@@ -1,3 +1,9 @@
+-- general nodepool --
+----------------------
+
+-- The contents of the general nodepool are synced
+-- across all the nodes in the Bitcloud.
+
 CREATE TABLE nodes (
  public_key PRIMARY KEY NOT NULL,
  signature,  -- self certificate of the public key
@@ -27,9 +33,14 @@ CREATE TABLE grids (
  availability INTEGER DEFAULT 0
 );
 
+-- Gateways convert reconstruct data from the storage nodes and
+-- present it to the users/publishers. Multiple gateways per grid
+-- are possible.
 CREATE TABLE gateways (
- public_key REFERENCES node(public_key),
+ node REFERENCES node(public_key),
  grid NOT NULL REFERENCES grids(public_key),
+ priority, --larger means more priority, in case of the gateway
+           --to have more than one grid associated.
  grid_sig,
  node_sig
 );
@@ -63,10 +74,6 @@ CREATE TABLE reasons (
  description
 );
 
-CREATE TABLE folders (
- id BLOB(16) NOT NULL PRIMARY KEY, 
- name TEXT,
-);
 
 CREATE TABLE users (
  public_key PRIMARY KEY NOT NULL,
@@ -116,10 +123,17 @@ CREATE TABLE shamir_keys (
  part TEXT
 );
 
-CREATE TABLE grid_node_contrats ();
-
 CREATE TABLE auditions ();
 
+
+-- internal grid tables --
+--------------------------
+
+
+CREATE TABLE folders (
+ id BLOB(16) NOT NULL PRIMARY KEY, 
+ name TEXT,
+);
 
 CREATE TABLE files (
  hash TEXT NOT NULL PRIMARY KEY,
@@ -136,20 +150,6 @@ CREATE TABLE content_types (
  encoding TEXT
 );
 
-
-
----------------------
--- private tables
-
-CREATE TABLE CAs (
- public_key PRIMARY KEY NOT NULL,
- private_key NOT NULL,
-);
-
-
-----------------------
--- internal grid tables
-
 CREATE TABLE grid_node_contrats (
  id BLOB(16) PRIMARY KEY NOT NULL,
  grid REFERENCES grids(public_key),
@@ -159,9 +159,27 @@ CREATE TABLE grid_node_contrats (
  min_storage INTEGER NOT NULL,
  min_bandwidth INTEGER NOT NULL,
  start_date DATE NOT NULL,
- elapsed_time INTEGER, -- only the grid can modify this
+ working_time INTEGER, -- only the grid can modify this
  -- Coin terms
  coin REFERENCES coins(id),
- block_paid__size DEFAULT 100000000,  
- price_per_block
+ bandwidth_block_size DEFAULT 100000000,  
+ price_per_block DEFAULT 0
 );
+
+
+
+-- private tables --
+--------------------
+
+CREATE TABLE CAs (
+ public_key PRIMARY KEY NOT NULL,
+ private_key NOT NULL,
+ proof_of_generation,
+ ssl_extra TEXT
+);
+
+CREATE TABLE config (
+ var
+ val
+);
+
