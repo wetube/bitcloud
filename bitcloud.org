@@ -8,16 +8,16 @@ filesystem, or "virtual hark disk", capable of storing data encrypted and
 signed across all connected nodes, protecting privacy and guaranteeing quality
 of service (QoS).
 
-The easiest way to understand Bitcloud is thinking about it as a virtual
-storage device, whose content is in the Internet in a distributed fashion, and
-globally available with only the restrictions that the different participants
+The easiest way to understand Bitcloud is to think about it as a virtual
+storage device, whose content is on the Internet in a distributed fashion,
+and globally available with only the restrictions that the different participants
 impose over the content they upload.
 
-But not only that, Bitcloud differs from actual solutions like i2p, Freenet or
+But not only that, Bitcloud differs from similar solutions like i2p, Freenet or
 Maidsafe in some important factors:
 
 1. We intentionally provide the base for future Distributed Applications with
-   economic incentives based con cryptocoins, with facilities to do escrow
+   economic incentives based on cryptocoins, with facilities to do escrow
    transactions and contract services.
 2. We do measurements of QoS, like for example bandwidth, storage and
    availability. The statistics are stored in a database in every node
@@ -26,27 +26,27 @@ Maidsafe in some important factors:
    constituted by groups of nodes with a shared economical or social interest.
 4. All the data is stored encrypted and sliced in small chunks, in such a way
    that individual nodes do not know what they are storing.
-5. Data is stored redundantly is such a way that if 7/3 of the nodes switch
+5. Data is stored redundantly is such a way that if 70% of the nodes switch
    off, still the data is retrievable by the users.
 6. Gateways in Bitcloud transform the content stored and distributed across
-   all nodes in something that users can view with standard tools. For
-   example, a user can be accesing the Bitcloud with his/her browser without
-   even noticing that the content comes in fact from Bitcloud.
+   all nodes into something that users can view with existing tools. For
+   example, a user can be accesing the Bitcloud with his/her web browser without
+   even noticing that in fact the content comes from Bitcloud.
 7. Bitcloud introduces the concept of publishers. They freely choose and pay
    the node grids for storing all of the content they approve. They also
    have the final say on whether or not the correct data has been sent to the
    user. Once the publisher confirms that the user has received the correct
-   data, the escrow payment can be released. 
-8. Bitcloud also enables a special node grid called the "public grid", at
-   which every node is free to be attached. This grid is non-censurable but
-   separated from moderated grids to clearly improve the quality of those who
-   pay.
+   data, the escrow payment can be released.
+8. Bitcloud also enables a special node grid called the "public grid", to
+   which every node is free to take part in. This grid is censorship-resistant
+   but separated from moderated grids to clearly improve the quality of those 
+   who pay.
    
 
-In addition to all of that, Bitcloud is over all a free protocol under the MIT
-license. In addition to the design of the protocol, we provide an
-implementation that intends to be very lightweight and able to run both in
-small devices and big clusters of nodes.
+In addition to all of that, Bitcloud is overall a free protocol. In addition to
+the design of the protocol, we provide a reference implementation under the
+terms of the MIT License that intends to be very lightweight and is able to
+run both on small devices and big clusters of nodes.
 
 
 
