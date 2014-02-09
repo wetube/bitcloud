@@ -5,7 +5,7 @@ hark disk", capable of storing data encrypted and signed across all connected
 nodes, protecting privacy and guaranteeing quality of service (QoS).
 
 The easiest way to understand Bitcloud is thinking about it as a virtual
-storage device, whose content is in fact in Internet in a distributed fashion, like this:
+storage device, whose content is in the Internet in a distributed fashion, like this:
 
 ![File Manager](img/bitcloud-fm.png)
 
@@ -59,7 +59,7 @@ Storage nodes are the nodes on the Bitcloud network that are actually storing
 all the data. They get paid by publishers for storing the data and sharing it
 to users. As long as they deliver the correct content to the user, they are
 paid for their work. All of the data they store is encrypted, which means they
-don't know what are they storing. Storage nodes also only have a portion of the
+don't know what they are storing. Storage nodes also only have a portion of the
 entire file requested by a user.
 
 II. Gateways
