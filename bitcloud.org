@@ -16,12 +16,12 @@ impose over the content they upload.
 But not only that, Bitcloud differs from similar solutions like i2p, Freenet or
 Maidsafe in some important factors:
 
-1. We intentionally provide the base for future Distributed Applications with
-   economic incentives based on cryptocoins, with facilities to do escrow
-   transactions and contract services.
-2. We do measurements of QoS, like for example bandwidth, storage and
-   availability. The statistics are stored in a database in every node
-   and synced and signed by consensus.
+1. Bitcloud intentionally provides the base for future Distributed
+   Applications with economic incentives based on cryptocoins, with facilities
+   to do escrow transactions and contract services.
+2. Bitcloud do measurements of QoS, like for example bandwidth, storage and
+   availability. The statistics are stored in a database in every node and
+   synced and signed by consensus.
 3. Bitcloud structures the storage of content in node grids, which are
    constituted by groups of nodes with a shared economical or social interest.
 4. All the data is stored encrypted and sliced in small chunks, in such a way
@@ -50,47 +50,17 @@ run both on small devices and big clusters of nodes.
 
 
 
-* Technical introduction
+* Introduction
 
-Bitcloud provides a method for storing data in a distributed collection of
-nodes or meshnetwork and is comprised of these main components:
+** Main participants
 
-1. A method to reliably distribute data across connected nodes using Bitcloud,
-   with the potential to scale up to millions of nodes.
-2. Hot plug-in/plug-out of nodes.
-3. Safeguard of the data, such as given N number of nodes, only N/3 of them
-   are needed to provide the complete file.
-4. Fast parallel reconstruction of files.
-5. QoS measurement of individual nodes and node grids, with statistics stored
-   in a node pool file.
-6. Automatic Certificate Authorities (CA) management, for secure reliable
-   connections.
-7. Each node and user is associated with a CA managed by a gateway or publisher.
-8. Difficult generation and global acceptance of CAs encouraged by a
-   reputation system.
-9. Secure encrypted storage in such a way that individual nodes cannot know
-   what they are storing by simple prospecting into the data.
-10. Arrangement of the nodes in grids, each grid providing specialized content
-    storage for contract publishers.
-11. Both public and private grids can coexist.
-12. The public grid is the collection of all the nodes in the entire Bitcloud
-    and its content cannot be censored.
-13. Private grids are managed by publishers, in charge of curating the content.
-14. An escrow system to allow the payment and verification of contracts based
-    on QoS measurements, automatically performed by the Bitcloud network.
-
-
-This document defines the Bitcloud organization and methodology and is a work
-in progress. We ask you for your help and comments. You can submit your
-inquiries:
-
-https://github.com/wetube/bitcloud/issues?state=open
-
-http://talk.bitcloudproject.org/index.php?board=1.0
-
-
-* Structure graph
-
+- Storage nodes
+- Node grids
+- Gateway nodes
+- Publishers
+- Users
+    
+** The routing process
 # #+BEGIN_SRC plantuml :file "img/structure.png"
 # node NodeGrid1 {
 # node Gateway1
@@ -220,10 +190,39 @@ are not to be considered.
 
 * Nodepool
 
-The Nodepool is the relational synced by consensus database in which all the
+The Nodepool is a relational database, synced by consensus, in which all the
 statistics, information and contracts are stored.
 
-For now, please watch the following SQL specification:
+[[http://www.sqlite.org/about.html][SQLite]] is the base for the following general reasons:
+
+- It is lightweight.
+- It can be embedded in mostly any language.
+- It is free.
+- It is secure.
+- It is available in many platforms and devices, including small ones.
+
+In addition to that, it has specific features very convenient:
+
+- [[http://www.sqlite.org/capi3ref.html#sqlite3_set_authorizer][Compile-Time Authorization Callbacks]], that will allow to authorize or deny the
+  execution of SQL code in the Sync process.
+- [[http://www.sqlite.org/capi3ref.html#sqlite3_create_function][Custom creation/redefinition of SQL functions]], that will allow to base the
+  Bitcloud language in SQL. For example, it will allow to insert functions to
+  verify signatures in real time.
+- File-based database for easy relocation of nodes.
+- [[http://www.sqlite.org/capi3ref.html#sqlite3_blob_open][Incremental read/write of binaries in the database]], that will allow to store
+  sliced contents directly in a single file database.
+
+** Language
+
+We use standard SQL language as defined in the [[http://www.sqlite.org/lang.html][SQLite documentation]], with some
+extensions.
+TODO: define extensions.
+
+Reference: [[http://www.sqlite.org/books.html][The Definitive Guide to SQLite]] explains how to implement extensions.
+
+** Database structure
+
+TODO: For now, please watch the following SQL specification:
 
 https://github.com/wetube/bitcloud/blob/master/src/c/nodepool.sql
 

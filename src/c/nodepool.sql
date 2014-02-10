@@ -1,3 +1,6 @@
+
+PRAGMA foreign_keys = ON;
+
 -- general nodepool --
 ----------------------
 
@@ -5,13 +8,12 @@
 -- across all the nodes in the Bitcloud.
 
 CREATE TABLE nodes (
- public_key PRIMARY KEY NOT NULL,
+ public_key BLOB PRIMARY KEY NOT NULL,
  signature,  -- self certificate of the public key
- creation_date DATE
+ creation_date DATE DEFAULT CURRENT_TIMESTAMP,
  proof_of_creation, -- see CA generation in the protocol spec
- address TEXT COLLATE NOCASE,
- main_grid REFERENCES grids(public_key) COLLATE NOCASE,
- last_online DATE,
+ address TEXT ,
+ last_online DATE DEFAULT CURRENT_TIMESTAMP,
  storage_capacity INTEGER DEFAULT 0,
  bandwidth_capacity INTEGER DEFAULT 0,
  storage_reputation INTEGER DEFAULT 0,
@@ -37,7 +39,7 @@ CREATE TABLE grids (
 -- present it to the users/publishers. Multiple gateways per grid
 -- are possible.
 CREATE TABLE gateways (
- node REFERENCES node(public_key),
+ node PRIMARY KEY REFERENCES node(public_key),
  grid NOT NULL REFERENCES grids(public_key),
  priority, --larger means more priority, in case of the gateway
            --to have more than one grid associated.
@@ -48,8 +50,8 @@ CREATE TABLE gateways (
 
 CREATE TABLE publishers (
  public_key PRIMARY KEY NOT NULL,
- address TEXT COLLATE NOCASE,
- creation_date DATE NOT NULL,
+ address TEXT ,
+ creation_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
  proof_of_creation, -- see CA generation in the protocol spec
  nickname TEXT,
  -- is information about the content of this publisher public?:
@@ -79,9 +81,10 @@ CREATE TABLE users (
  public_key PRIMARY KEY NOT NULL,
  publisher NOT NULL REFERENCES publishers(public_key),
  publisher_signature,
- address TEXT COLLATE NOCASE,
+ address TEXT,
+ nick TEXT COLLATE NOCASE,
  fixed_address BOOLEAN DEFAULT TRUE,
- revocation_date DATE,
+ revocation_date DATE DEFAULT CURRENT_TIMESTAMP,
  storage_quota INTEGER DEFAULT 0,
  bandwidth_quota INTEGER DEFAULT 0,
  files_quota INTEGER DEFAULT 0, -- how many files can upload
@@ -99,8 +102,8 @@ CREATE TABLE publisher_grid_contracts (
  -- Terms:
  min_storage INTEGER NOT NULL,
  min_bandwidth INTEGER NOT NULL,
- start_date DATE NOT NULL,
- end_date DATE NOT NULL,
+ start_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+ end_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
  availability INTEGER NOT NULL, -- % of time online
  ping_average INTEGER DEFAULT 0,
  -- Coin terms
@@ -179,7 +182,7 @@ CREATE TABLE grid_node_contrats (
  node_sig,
  min_storage INTEGER NOT NULL,
  min_bandwidth INTEGER NOT NULL,
- start_date DATE NOT NULL,
+ start_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
  working_time INTEGER, -- only the grid can modify this
  -- Coin terms
  coin REFERENCES coins(id),
@@ -204,3 +207,11 @@ CREATE TABLE config (
  val
 );
 
+-- logs --
+----------
+
+CREATE TABLE logs (
+ num  INTEGER AUTOINCREMENT PRIMARY KEY,
+ category TEXT,
+ log TEXT
+);
