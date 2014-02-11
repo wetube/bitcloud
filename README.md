@@ -92,7 +92,10 @@ project.
 
 # Watch Us
 
-Please subscribe to the "issues" section in GitHub to watch us and submit your
+Subscribe to the mailing list here:
+https://lists.sourceforge.net/lists/listinfo/bitcloud-developers
+
+Please also subscribe to the "issues" section in GitHub to watch us and submit your
 questions and ideas there.
 
 
