@@ -59,6 +59,56 @@ run both on small devices and big clusters of nodes.
 - Gateway nodes
 - Publishers
 - Users
+
+With the following rules for users/publishers:
+
+- The publishers grant access to users. Each publishers may have their
+  own mechanisms to register users. Every user is attached to a publisher without
+  exception. There cannot be users without publishers, so users must find a way
+  to register into a publisher or become one. Anonymous users can be generated
+  automatically in the publisher interface.
+- Users can become publishers at any time, and should be as easy as soliciting
+  an upgrade to the system and mine the CA.
+- Users unconditionally must own a pair of keys (priv/public), and they
+  are certificated by the publishers. This way, it is easy to discriminate
+  between users of different publishers. For example, in the actual internet,
+  users must register into different web services (forums, stores, email...),
+  the same for Bitcloud. This provides a major step forward in scalability.
+- Files and folders do always have a user owner. Permissions to access
+  those files are imposed by the publisher in the first instance, and the
+  users after that. For example, if a publisher grant full access for all
+  the files of a certain user, then the user is able to grant read/write
+  accesst o his files for other users/publishers.
+- Publishers may impose a quota for the users for space, bandwidth,
+  number of folders/files and other variables we can discuss.
+- Publishers may or may not grant access to the user files for other
+  publishers' users. They do so by trusting/revoking other publishers.
+- Users don't have to know any of all the above mechanisms. Users interfaces
+  and DAs will be in charge of providing a good user experience. Bitcloud is
+  not in charge of that.
+
+With the following rules for node grids:
+
+- There is an owner for every node grid. The owner must be a CA corresponding
+  to a running node.
+- There are gateways, in charge of transforming the data from the bitcloud to
+  something useful for the users, like http or ftp. Each node grid may have
+  several gateways, at least one is required.
+- Publishers negotiate contracts personally with node grid owners.  Bitcloud
+  check the QoS of the grids and is in charge of escrow refunds/releases.
+
+Taking in count both of the above group of rules, Publishers must run a
+publisher client, in charge of registering users, find node grids to rent,
+release escrows, etc. This publisher client can be run in the same machine as
+a node, but it is independant of it. Publishers may also own an entry point
+like a webpage or a place in a DA.
+
+There is a special exception called the public grid. The public grid has NULL
+as the publisher and QoS is not considered/checked. Every node is free to
+attach or not to the public grid. The only incentive to maintain this public
+grid is the content itself, which is free of censorship. But usually, the
+quality is lower because it has no economic incentives.
+
     
 ** The routing process
 # #+BEGIN_SRC plantuml :file "img/structure.png"
@@ -218,7 +268,7 @@ We use standard SQL language as defined in the [[http://www.sqlite.org/lang.html
 extensions.
 TODO: define extensions.
 
-Reference: [[http://www.sqlite.org/books.html][The Definitive Guide to SQLite]] explains how to implement extensions.
+Reference: [[http://evalenzu.mat.utfsm.cl/Docencia/2012/SQLite.pdf][The Definitive Guide to SQLite]] explains how to implement extensions.
 
 ** Database structure
 
