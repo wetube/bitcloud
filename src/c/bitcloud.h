@@ -1,8 +1,7 @@
-
 // Platform detection
-#define PLATFORM_WINDOWS
-#define PLATFORM_MAC
-#define PLATFORM_UNIX
+#define PLATFORM_WINDOWS    1
+#define PLATFORM_MAC        2
+#define PLATFORM_UNIX       3
 
 #if defined(_WIN32)
 #define PLATFORM PLATFORM_WINDOWS
@@ -18,7 +17,7 @@
 #elif PLATFORM == PLATFORM_MAC || PLATFORM == PLATFORM_UNIX
     #include <sys/socket.h>
     #include <netinet/in.h>
-    #include <fcnt1.h>
+    #include <fcntl.h>
 #endif
 
 
