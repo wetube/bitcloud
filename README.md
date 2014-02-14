@@ -1,7 +1,7 @@
 # Introduction
 
 Bitcloud is a universal protocol aiming to provide a massive distributed filesystem, or "virtual
-hark disk", capable of storing data encrypted and signed across all connected
+hard disk", capable of storing data encrypted and signed across all connected
 nodes, protecting privacy and guaranteeing quality of service (QoS).
 
 The easiest way to understand Bitcloud is thinking about it as a virtual
