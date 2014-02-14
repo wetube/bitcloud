@@ -140,27 +140,27 @@ quality is lower because it has no economic incentives.
 - A node grid is composed by the sum of the storage and gateway nodes. Each grid
   has only one owner, associated with the CA of a node.
 - Each storage node has a dedicated tunnel to an affiliated gateway. Normally,
-  a storage node negotiate prices with the node grid owner, asking to become
-  participant in the grid. The node interface should facilitate searching for
+  a storage node negotiates prices with the node grid owner, asking to become
+  a participant in the grid. The node interface should facilitate searching for
   possible node grids demanding storage.
 - A gateway collects the slices from all the storage nodes in the grid from
   the files requested by the users, and transforms the data into something
   that the users can process directly, for example, HTTP.
 - Gateways can merge their authorities by signing each others' certificates,
-  thus providing redundancy of operations in case of some gateways going down.
+  thus providing redundancy of operations in case of some gateways go down.
 - Users can select gateways depending on location or availability of the
   gateways.
 - Content is stored in nodes with [[https://tahoe-lafs.org/trac/tahoe-lafs/browser/trunk/docs/architecture.rst][k-of-n encryption]] based on the number of
   nodes required to effectively host the content of that size.
 - Grids and publishers can make contracts. Several variables are in the
-  contracts, like the mininum storage and minimum bandwidth rate to provide.
+  contracts, like the minimum storage and minimum bandwidth rate to provide.
 - Publishers send cryptocoins to grids using the [[https://en.bitcoin.it/wiki/Contracts][escrow capabilities of the
   coin used]], being Bitcloud the "oracle" or escrow agent.
-- Bitcloud checks QoS and releases or refund the contract depending on the
+- Bitcloud checks QoS and releases or refunds the contract depending on the
   statistics stored in the nodepool database.
-- Publishers are in charge to register users. Each publisher must select the
-  method he prefers to do so. For example, registering by mail, registering by
-  introducing a captcha, etc. Publishers may generate anonymous users for read
+- Publishers are in charge of registering users. All publishers are free to decide
+  on their method of registration. For example, registering by mail, registering
+  by introducing a CAPTCHA, etc. Publishers may generate anonymous users for read
   only access at their discretion.
 - The public grid is an exception. This grid has no publisher, and every node
   can be a gateway.
@@ -233,34 +233,32 @@ centralization, and relay in other means to verify correctness:
 
 ** CA mining
 
-Bitcloud introduces the concept of Proof of CA Generation, aimed to avoid
+Bitcloud introduces the concept of Proof of CA Generation, intended to deter
 Sybil attacks.
-It is imaginable that if a node or publisher can generate millions of CAs and
-then try to register into the system, the whole Bitcloud would collapse trying
-to allocate space in the database for them.
+It is designed to limit the chances for a node or publisher to generate and register
+millions of CAs on Bitcloud, causing excessive load on the network.
 
-The way to avoid that is to impose the working on a hard to resolve problem
-that takes hours or days in current computers, and irrevocably associate that
-with the CA being registered. Any node or publisher unable to provide the
-proof of work resolving the problem, will be rejected by the net.
+CA mining consists of a computationally instensive problem provided by the network
+that takes hours or days to solve on current computers. Once a CA is mined it gets
+registered on the network. Any node or publisher unable to provide the
+proof of work resolving the problem will be rejected by the network.
 
-When a new node is created, the interface advises the owner, asks the Bitcloud
-for a problem, and resolves it. Once the network approves the node, it doesn't
-need to repeat the process anymore, except if it fails to provide a minimum
-average rate or 500Kps for the past 3 days to the public grid.
+Once the network approves the node, it doesn't need to repeat the process anymore,
+except when it fails to provide a minimum bit-rate for the past 3 days to the public
+grid, the minimum bit-rate is determined by the network by consensus.
 
 ** CA trust/revocation
 
 To encourage the accomplishment of the obligations, Bitcloud maintains a general
-synced file called the Node Pool, with statistics associated with each precise
-CA. Every node is in charge to publicly/privately trust or revoke other CAs
-based on such statistics.
+synced file called the Node Pool, with statistics associated with each CA.
+Every node is free to publicly/privately trust or revoke other CAs based on such
+statistics.
 
 Revocations based on poor QoS are publicly published in the node pool. Private
 decisions based on private concerns not associated with QoS are kept private
 to the gateway or publisher.
 
-When a gateway is offered to work for the public grid, private revocations
+When a gateway is offered to work for the public grid private revocations
 are not to be considered.
 
 * Nodepool
