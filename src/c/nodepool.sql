@@ -1,7 +1,7 @@
-
 PRAGMA foreign_keys = ON;
 
 -- general nodepool --
+-- Nodepool Team --
 ----------------------
 
 -- The contents of the general nodepool are synced
@@ -170,6 +170,7 @@ CREATE TABLE permissions (
  write_quota INTEGER,
  create BOOLEAN,
  remove BOOLEAN
+ set_perm BOOLEAN -- Meaning someone can have permissions to set permissions in UI term
 );
  
 
@@ -214,4 +215,5 @@ CREATE TABLE logs (
  num  INTEGER AUTOINCREMENT PRIMARY KEY,
  category TEXT,
  log TEXT
+ timestamp TEXT -- Timestamp of when the log occured
 );
