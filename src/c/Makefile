@@ -1,4 +1,7 @@
-CC=gcc -Wall -lsqlite3
+CFLAGS=-Wall
+LDLIBS=-lsqlite3
 
-bitcloud: bitcloud.h main.c
-	$(CC) main.c -o bitcloud
+bitcloud: main.o
+	$(CC) -o $@ $^ $(LDLIBS)
+main.o: main.c bitcloud.h
+	$(CC) $(CFLAGS) -c $<
