@@ -13,8 +13,7 @@ storage device, whose content is on the Internet in a distributed fashion,
 and globally available with only the restrictions that the different participants
 impose over the content they upload.
 
-But not only that, Bitcloud differs from similar solutions like i2p, Freenet or
-Maidsafe in some important factors:
+Main characteristics:
 
 1. Bitcloud intentionally provides the base for future Distributed
    Applications with economic incentives based on cryptocoins, with facilities
@@ -47,6 +46,24 @@ In addition to all of that, Bitcloud is overall a free protocol. In addition to
 the design of the protocol, we provide a reference implementation under the
 terms of the MIT License that intends to be very lightweight and is able to
 run both on small devices and big clusters of nodes.
+
+** Similarity with other projects
+
+Bitcloud doesn't compete against i2p and Tor because it is a storage
+system. Bitcloud is intended to be close to the OSI 5 level with some escrow
+capabilities, while i2p and Tor are more close to OSI 4.
+
+In fact, Bitcloud will be compatible with Tor and DAs on top of Bitcloud can
+make possible to route Bitcloud data thought Tor instead of using plain IP.
+
+Bitcloud will work very well with future protocols like meshnetworking
+protocols.
+
+The more similar project to Bitcloud is Tahoe-LAFS. In fact we can consider
+Bitcloud a great improvement over Tahoe, making it universally available and
+scalable up to millions of connections. Most importantly, we provide the
+mechanisms for participants to trade bandwidth and storage, guarantying
+quality of service.
 
 
 
@@ -182,14 +199,6 @@ quality is lower because it has no economic incentives.
 - Retrieval speed may be positively affected, similar to how bittorrent allows for vastly increased download speeds due to concurrently accessing slices of content spread across multiple users.
 - Accounting for individual downloads of content means charging for content becomes trivial to implement.
 
-**** Disadvantages
-
-- Controversial, harmful (malware) and illegal content will be posted on the public grid--though the source as far as the CA that authorized the user in question to post it will be determinable.
-- Distributed CA registration will need to be difficult enough to make registration of a new CA expensive enough to encourage careful management of nodes and/or users
-- Mesh topologies may suffer from reduced speed when tunneled through another content-serving node. Unexpected topological effects may result.
-- Prospective scam nodes may be able to 'take the money and run' when issued content, taking payment for hosting and then disassociating from the grid. 
-
-(N.B. that the "shall" and "may" used in the description section are according to RFC standards: SHALL and SHALL NOT are mandatory; MAY is optional)
 
 * Certificate Authorities
 
@@ -244,7 +253,7 @@ registered on the network. Any node or publisher unable to provide the
 proof of work resolving the problem will be rejected by the network.
 
 Once the network approves the node, it doesn't need to repeat the process anymore,
-except when it fails to provide a minimum bit-rate for the past 3 days to the public
+except when it fails to provide a minimum bit-rate for the past 3 days to the any
 grid, the minimum bit-rate is determined by the network by consensus.
 
 ** CA trust/revocation
@@ -300,5 +309,100 @@ TODO: For now, please watch the following SQL specification:
 https://github.com/wetube/bitcloud/blob/master/src/c/nodepool.sql
 
 ** Sync process
+
+TODO
+
+* QoS measurement and escrow.
+
+Bitcloud measures traffic that is happening between users and gateways, and
+between gateways and storage nodes. These statistics are stored in the node
+pool. They are used by the escrow algorithms, and serve the purpose of
+ensuring an easy ramp to profitability, an incentive to keep availability, and
+a short cutoff for reputation so grids and nodes have interest in offering
+good quality of service.
+
+The conditions are:
+
+- Publisher request a contract to a grid (or vice versa). Contract can be paid
+  or free.
+- Nodes request a contract to the grids (or vice versa). Contract can be paid
+  or free.
+- The conditions of the contracts can be: availability, minimum bandwidth
+  rate, minimum storage capacity and max ping time, for a determined period of
+  time.
+- No QoS is measured if there is no contract. An example is the public
+  grid. Another example is a  private organization that owns all the machines
+  in a private grid and is not interested in measuring QoS.
+
+The process is:
+
+- The user is certified by a publisher (see "Publisher and daemon interface
+  for more information).
+- The user request a connection to a gateway.
+- The gateway grants permission only if the user is certified by a publisher
+  that has an ongoing contract with it.
+- For every chunk of data (example, 1M), the user sends its signature to the
+  gateway with statistics associated, such as correctness of the content,
+  bandwidth rate, and ping. The gateway stores the signature for future
+  reference.
+- If the user don't send the signatures or the statistics are incorrect, the
+  gateway may deny access.
+- Publisher has the right to request statistics to the gateways.
+- The publisher has the right to request the user to send it the signatures at
+  the same time, that they can then be compared with whatever is received from the
+  gateway. Publisher can renounce to this right if it feels it can trust the
+  grid.
+- If the gateway denies access or drop the connection, the user can inform the
+  publisher.
+- The gateway stores the signatures upon finalization of the contract.
+- The grid or the publisher can finalize contracts at any moment. If the
+  contract is finalized by the gateway, money in escrow comes back to the
+  publisher. If the publisher finalize the contract, money is going to the grid.
+- When the contract is finished, both parts have a time to decide if the work
+  was done right.
+- In case of conflict and the contract is not free, retrieved data is sent to
+  third party randomly select auditors like described below.
+
+*** Auditions
+
+TODO
+
+
+
+* Publisher daemon and interface
+
+Using the analogy of grids being servers, and publishers webmasters, users in
+Bitcloud are registered individually by the rules and policies that every
+publisher (webmaster) requires.
+
+Bitcloud provides a user interface for publishers that allows these things:
+
+- Certificate new users requesting access to its content. The user generate a
+  pair of keys and ask the publisher (using whatever interface is provided,
+  like mail registration or a web captcha) to certificate them.
+- Create new temporally anonymous users. This is useful to grant read only
+  access for external people using a web browser, so they don't need to
+  register in order to see the content. In this case, the private and public
+  key of the user are both in possession of the publisher and also in the
+  hands of the user, probably in the form of a cookie in the browser.
+- Revoke users access or put a due-date.
+- Searching for grids offering services, the interface shows a list of them.
+- Making contracts with grids.
+- Associate with an external coin wallet to setup escrow.
+- Requesting proof of quality to the grids, as stated in the escrow section.
+
+In addition, there is a daemon that the publisher can run in any computer that
+is connected to the internet. This daemon is in charge to grant access to
+temporally anynonymous users automatically, and also registering full users by
+other means, applying the rules that the publisher requires. The traffic for
+that is ussually low, unless the certification of millions of users per day is
+required.
+
+Bitcloud offers the option to send already-certified anonymous users to a
+gateway so the publisher doesn't need to stay connected. This option is only
+recommended when the publisher trusts the gateway, or the machine is owned by
+the same person/organization.
+
+* Node daemon and interface
 
 TODO
