@@ -34,3 +34,5 @@ int auth (void *user_data
           const char *db_name,
           const char *trigger);
 
+
+int bc_open_nodepool (const char* filename);

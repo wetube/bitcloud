@@ -5,16 +5,8 @@
 
 int main (int argc, char **argv)
 {
-  sqlite3 *np; /* the nodepool db */
-  int rc;
-  
-  rc = sqlite3_open ("nodepool", &np);
-  if (rc) {
-    fprintf(stderr, "Can't open nodepool: %s\n", sqlite3_errmsg(np));
-    sqlite3_close (np);
-    exit (1);
-  }
 
+  if (bc_open_nodepool("nodepool")) return 1;
   
   return 0;
 }

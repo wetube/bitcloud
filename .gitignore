@@ -8,6 +8,10 @@ src/python/*
 *~
 *.DS_Store
 .*.kate-swp
+*.o
+src/nodepool
+src/nodepool_sql.h
+src/bitcloud
 
 /build/
 /support/

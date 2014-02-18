@@ -1,3 +1,4 @@
+
 PRAGMA foreign_keys = ON;
 
 -- general nodepool --
@@ -12,6 +13,7 @@ CREATE TABLE nodes (
  signature,  -- self certificate of the public key
  creation_date DATE DEFAULT CURRENT_TIMESTAMP,
  proof_of_creation, -- see CA generation in the protocol spec
+ net_protocol INTEGER DEFAULT 1, -- 1 IP, 2 Tor
  address TEXT ,
  last_online DATE DEFAULT CURRENT_TIMESTAMP,
  storage_capacity INTEGER DEFAULT 0,
@@ -46,7 +48,21 @@ CREATE TABLE gateways (
  grid_sig,
  node_sig
 );
+CREATE TABLE coins (
+ id INTEGER PRIMARY KEY,
+ name TEXT NOT NULL,
+ has_escrow BOOLEAN NOT NULL
+);
 
+
+CREATE TABLE shamir_keys (
+ contract_id TEXT,
+ node_id TEXT,
+ part TEXT
+);
+
+-- internal publishers tables --
+--------------------------------
 
 CREATE TABLE publishers (
  public_key PRIMARY KEY NOT NULL,
@@ -92,6 +108,12 @@ CREATE TABLE users (
  root_folder REFERENCES folders(id)
 );
 
+
+
+
+-- internal grid tables --
+--------------------------
+
 CREATE TABLE publisher_grid_contracts (
  id BLOB(16) PRIMARY KEY NOT NULL,
  publisher TEXT NOT NULL REFERENCES publishers(public_key), 
@@ -107,30 +129,20 @@ CREATE TABLE publisher_grid_contracts (
  availability INTEGER NOT NULL, -- % of time online
  ping_average INTEGER DEFAULT 0,
  -- Coin terms
- coin REFERENCES coins(id),
+ coin REFERENCES coins(id)
+);
+
+CREATE TABLE auditions (
+ id BLOB PRIMARY KEY NOT NULL,
+ user_sig BLOB,
+ publisher_sig BLOB,
+ grid_sig BLOB,
+ bandwidth INTEGER,
+ time REAL,
+ ok BOOLEAN
 );
 
 
-CREATE TABLE coins (
- id INTEGER PRIMARY KEY,
- name TEXT NOT NULL,
- has_escrow BOOLEAN NOT NULL
-);
-
-CREATE TABLE accepted_coins (
-);
-
-CREATE TABLE shamir_keys (
- contract_id TEXT,
- node_id TEXT,
- part TEXT
-);
-
-CREATE TABLE auditions ();
-
-
--- internal grid tables --
---------------------------
 
 
 CREATE TABLE folders (
@@ -146,6 +158,7 @@ CREATE TABLE files (
  name TEXT,
  type_id INTEGER REFERENCES content_types(id),
  content BLOB,
+ rate INTEGER DEFAULT 0, --bandwidth rate at what must be served
  folder NOT NULL REFERENCES folders(id),
  user_sig NOT NULL,
  publisher_sig,  -- NULL for the public grid
@@ -168,8 +181,8 @@ CREATE TABLE permissions (
  read_quota INTEGER,
  write BOOLEAN,
  write_quota INTEGER,
- create BOOLEAN,
- remove BOOLEAN
+ create_new BOOLEAN,
+ remove BOOLEAN,
  set_perm BOOLEAN -- Meaning someone can have permissions to set permissions in UI term
 );
  
@@ -212,8 +225,9 @@ CREATE TABLE config (
 ----------
 
 CREATE TABLE logs (
- num  INTEGER AUTOINCREMENT PRIMARY KEY,
+ num  INTEGER PRIMARY KEY AUTOINCREMENT,
  category TEXT,
  log TEXT
  timestamp TEXT -- Timestamp of when the log occured
 );
+
