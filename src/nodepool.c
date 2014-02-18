@@ -3,6 +3,13 @@
 
 #include "nodepool_sql.h"
 
+/*
+ Opens the nodepool db.
+ If it doesn't exist, it creates all the necessary tables.
+
+ Returns 1 in case of error, 0 if ok.
+*/
+
 int bc_open_nodepool (const char* filename)
 {
   sqlite3 *np; /* the nodepool db */
@@ -30,5 +37,28 @@ int bc_open_nodepool (const char* filename)
     fprintf(stderr, "DONE.\n");
   }
 
+  return 0;
+}
+
+
+
+/* general authorization callback function for stlite */
+
+int bc_auth (void *user_data,
+          int event_code,
+          const char *event_spec,
+          const char *event_spec2,
+          const char *db_name,
+          const char *trigger)
+{
+  switch (event_code) {
+    default:
+      return SQLITE_DENY;
+    }
+  return SQLITE_DENY;
+}
+
+int bc_register_node (BCNode *node)
+{
   return 0;
 }

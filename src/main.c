@@ -10,18 +10,3 @@ int main (int argc, char **argv)
   
   return 0;
 }
-
-
-int auth (void *user_data
-          ,int event_code,
-          const char *event_spec,
-          const char *event_spec2,
-          const char *db_name,
-          const char *trigger)
-{
-  switch (event_code) {
-    default:
-      return SQLITE_DENY;
-    }
-  return SQLITE_DENY;
-}
