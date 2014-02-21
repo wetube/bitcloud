@@ -61,8 +61,11 @@ CREATE TABLE shamir_keys (
  part TEXT
 );
 
--- internal publishers tables --
+-- internal publishers/grid tables --
 --------------------------------
+
+-- these tables are shared by the publishers and the grids
+
 
 CREATE TABLE publishers (
  public_key PRIMARY KEY NOT NULL,
@@ -108,15 +111,69 @@ CREATE TABLE users (
  root_folder REFERENCES folders(id)
 );
 
+-- User requests sent to the grids, for example, creating
+-- a folder or uploading/downloading a file
+CREATE TABLE user_requests (
+ id BLOB(16) PRIMARY KEY NOT NULL,
+ user BLOB NOT NULL REFERENCES users(public_key),
+ signature BLOB NOT NULL,
+ grid TEXT NOT NULL REFERENCES grids(public_key),
+ action INTEGER REFERENCES user_actions(id),
+ -- every type of action will have a different param values
+ param1,
+ param2
+);
 
+-- define some constants, this table is inmutable for bitcloud
+-- but can be expanded by DAs.
+CREATE TABLE user_actions (
+ id INTEGER PRIMARY KEY NOT NULL,
+ description TEXT,
+ CHECK (id > 0 and id<=13)
+);
 
+INSERT INTO user_actions VALUES (1, 'Download file');
+-- bandwidth rate is not important
+-- param1: file id; param2: offset
 
--- internal grid tables --
---------------------------
+INSERT INTO user_actions VALUES (2, 'Stream file');
+-- bandwidth rate is important
+-- param1: file id; param2: offset
 
+INSERT INTO user_actions VALUES (3, 'Upload file');
+-- param1: file id; param2: folder id;
+
+INSERT INTO user_actions VALUES (4, 'Create folder');
+-- param1: folder id;
+
+INSERT INTO user_actions VALUES (5, 'Remove folder');
+-- param1: folder id;
+
+INSERT INTO user_actions VALUES (6, 'Rename folder');
+-- param1: folder id; param2: new name;
+
+INSERT INTO user_actions VALUES (7, 'Move file');
+-- param1: origin folder id; param2: final folder id;
+
+INSERT INTO user_actions VALUES (8, 'Rename file');
+-- param1: file id; param2: new name;
+
+INSERT INTO user_actions VALUES (9, 'Delete file');
+-- param1: file id;
+
+INSERT INTO user_actions VALUES (10, 'User permisions');
+-- param1: user public_key; param2: boolean grant or deny
+
+INSERT INTO user_actions VALUES (11, 'Folder permissions');
+-- param1: user public_key; param2: boolean grant or deny
+
+INSERT INTO user_actions VALUES (12, 'Set user quota');
+-- param1: user public_key; param2: amount
+
+ 
 CREATE TABLE publisher_grid_contracts (
  id BLOB(16) PRIMARY KEY NOT NULL,
- publisher TEXT NOT NULL REFERENCES publishers(public_key), 
+ publisher BLOB NOT NULL REFERENCES publishers(public_key), 
  grid TEXT NOT NULL REFERENCES grids(public_key),
  -- Signatures of this contract:
  publisher_sig TEXT NOT NULL,
@@ -142,9 +199,6 @@ CREATE TABLE auditions (
  ok BOOLEAN
 );
 
-
-
-
 CREATE TABLE folders (
  id BLOB(16) NOT NULL PRIMARY KEY,
  parent REFERENCES folders(id),
@@ -152,19 +206,16 @@ CREATE TABLE folders (
  permissions REFERENCES permissions(id)
 );
 
-
 CREATE TABLE files (
  hash TEXT NOT NULL PRIMARY KEY,
  name TEXT,
  type_id INTEGER REFERENCES content_types(id),
  content BLOB,
- rate INTEGER DEFAULT 0, --bandwidth rate at what must be served
+ rate INTEGER DEFAULT 0, --bandwidth rate at what must be streamed
  folder NOT NULL REFERENCES folders(id),
  user_sig NOT NULL,
- publisher_sig,  -- NULL for the public grid
  permissions REFERENCES permissions(id)
 );
-
 
 CREATE TABLE content_types (
  id INTEGER PRIMARY KEY,
@@ -186,6 +237,9 @@ CREATE TABLE permissions (
  set_perm BOOLEAN -- Meaning someone can have permissions to set permissions in UI term
 );
  
+
+-- internal grid tables --
+--------------------------
 
 
 CREATE TABLE grid_node_contrats (
@@ -230,4 +284,3 @@ CREATE TABLE logs (
  log TEXT
  timestamp TEXT -- Timestamp of when the log occured
 );
-

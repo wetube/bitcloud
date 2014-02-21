@@ -32,6 +32,7 @@ int bc_open_nodepool (const char* filename)
       fprintf (stderr, "FATAl: %s.\n", err);
       sqlite3_free (err);
       sqlite3_close (np);
+      remove (filename);
       return (1);
     }  
     fprintf(stderr, "DONE.\n");
