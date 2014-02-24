@@ -61,5 +61,8 @@ int bc_auth (void *user_data,
 
 int bc_register_node (BCNode *node)
 {
+  if (!node) return BC_BAD_DATA;
+  
+  
   return 0;
 }
