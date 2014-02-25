@@ -12,12 +12,12 @@
 #define BC_SERVER_ERROR 5
 
 
-typedef uint32_t Key[8]; /* 256bits for keys */
+typedef uint32_t BCKey[8]; /* 256bits for keys */
 typedef int Bool;
 typedef time_t Time;
-typedef int32_t Integer;
-typedef int64_t Size;
-typedef int Error;
+typedef int32_t BCInteger;
+typedef int64_t BCSize;
+typedef int BCError;
 
 
 /*
@@ -28,7 +28,7 @@ typedef int Error;
 int bc_open_nodepool (const char* filename);
 
 /* general authorization callback function for stlite: */
-Error bc_auth (void *user_data,
+BCError bc_auth (void *user_data,
                int even_code,
                const char *event_spec,
                const char *event_spec2,
@@ -36,26 +36,26 @@ Error bc_auth (void *user_data,
                const char *trigger);
 
 typedef struct BCNode {
-  Key public_key;
-  Key signature;
+  BCKey public_key;
+  BCKey signature;
   Time creation_date;
-  Key proof_of_creation;
-  Integer net_protocol;
+  BCKey proof_of_creation;
+  BCInteger net_protocol;
   Time last_online;
-  Size storage_capacity;
-  Integer storage_reputation;
-  Integer bandwidth_reputation;
-  Integer service_reputation;
-  Integer availability;
+  BCSize storage_capacity;
+  BCInteger storage_reputation;
+  BCInteger bandwidth_reputation;
+  BCInteger service_reputation;
+  BCInteger availability;
   char address[0]; /* null terminated */
 } BCNode;
 
-Error bc_register_node (BCNode *node);
-Error bc_get_node (BCNode *dest, Key public_key);
-Error bc_update_node (BCNode *node);
+BCError bc_register_node (BCNode *node);
+BCError bc_get_node (BCNode *dest, BCKey public_key);
+BCError bc_update_node (BCNode *node);
 
-Error bc_check_node_ca (BCNode *node);
-Error bc_check_node_creation (BCNode *node);
+BCError bc_check_node_ca (BCNode *node);
+BCError bc_check_node_creation (BCNode *node);
 
 
 
@@ -64,20 +64,20 @@ Error bc_check_node_creation (BCNode *node);
   ------------------------------------
 */
 
-Error bc_prepare_sockets (void);
+BCError bc_prepare_sockets (void);
 
 typedef struct BCConnection {
   BCNode node;
-  Integer bandwidth_quality;
-  Integer ping;
-  Integer storage_quality;
-  Integer availability;
-  Integer service_quality;
+  BCInteger bandwidth_quality;
+  BCInteger ping;
+  BCInteger storage_quality;
+  BCInteger availability;
+  BCInteger service_quality;
   char address[0]; /* null terminated */
 } BCConnection;
 
 extern BCConnection *bc_Connections;
 extern int n_Connections;
 
-Error bc_node_connect (BCConnection *con, Key public_key);
+BCError bc_node_connect (BCConnection *con, BCKey public_key);
 

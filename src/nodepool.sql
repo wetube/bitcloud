@@ -17,12 +17,7 @@ CREATE TABLE nodes (
  address TEXT ,
  last_online DATE DEFAULT CURRENT_TIMESTAMP,
  storage_capacity INTEGER DEFAULT 0,
- bandwidth_capacity INTEGER DEFAULT 0,
- storage_reputation INTEGER DEFAULT 0,
- bandwidth_reputation INTEGER DEFAULT 0,
- service_reputation INTEGER DEFAULT 0,
- in_grid_reputation INTEGER DEFAULT 0,
- availability INTEGER DEFAULT 0
+ bandwidth_capacity INTEGER DEFAULT 0
 );
 
 -- A grid is a collection of nodes associated that can sell
