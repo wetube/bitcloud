@@ -45,12 +45,12 @@ int bc_open_nodepool (const char* filename)
 
 /* general authorization callback function for stlite */
 
-int bc_auth (void *user_data,
-          int event_code,
-          const char *event_spec,
-          const char *event_spec2,
-          const char *db_name,
-          const char *trigger)
+BCError bc_auth (void *user_data,
+                 int event_code,
+                 const char *event_spec,
+                 const char *event_spec2,
+                 const char *db_name,
+                 const char *trigger)
 {
   switch (event_code) {
     default:
@@ -59,7 +59,7 @@ int bc_auth (void *user_data,
   return SQLITE_DENY;
 }
 
-int bc_register_node (BCNode *node)
+BCError bc_register_node (BCNode *node)
 {
   if (!node) return BC_BAD_DATA;
   
