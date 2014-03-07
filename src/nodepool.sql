@@ -8,22 +8,91 @@ PRAGMA foreign_keys = ON;
 -- The contents of the general nodepool are synced
 -- across all the nodes in the Bitcloud.
 
+
+/*
+
+ nodes table: it is updated every time a new node registers. In order
+ to register, the node do a very complex computation (like Bitcoin mining)
+ in order to be accepted.
+
+ The node must sign the entire row (except the signature itself) with its
+ own public key.
+
+ The node must provide a new signature of its row every 3 days maximum. Otherwise
+ it is deleted from the nodepool and connections refused.
+
+*/
+
 CREATE TABLE nodes (
- public_key BLOB PRIMARY KEY NOT NULL,
- signature,  -- self certificate of the public key
- creation_date DATE DEFAULT CURRENT_TIMESTAMP,
- proof_of_creation, -- see CA generation in the protocol spec
+ id BLOB(20) PRIMARY KEY NOT NULL, -- kademlia ID
+ public_key BLOB(32) NOT NULL, -- 256 bits ECDSA key
+ signature BLOB(80) NOT NULL,  -- self certificate of this row
+ -- Creation date must be in the current period when the node is registered.
+ -- Consistance is checked by ensuring that nobody tries to register in other
+ -- period that is not the actual:
+ creation_date INTEGER NOT NULL,
+ proof_of_creation BLOB, -- see CA generation in the protocol spec
  net_protocol INTEGER DEFAULT 1, -- 1 IP, 2 Tor
- address TEXT ,
- last_online DATE DEFAULT CURRENT_TIMESTAMP,
- storage_capacity INTEGER DEFAULT 0,
+ address TEXT NOT NULL, -- IP or onion address
+ storage_capacity INTEGER DEFAULT 0,  -- declared
  bandwidth_capacity INTEGER DEFAULT 0
 );
+
+
+/*
+
+ node_audit table: things in this table are only inserted after a node failed
+ to provide a correct check. Every single row in this table is deleted after
+ every check period, and the new content based on the last one, so it can
+ ensure continuation of the measurements and save space at the same time.
+
+ For example, if a node fails to be available for some periods, there is no
+ need that the nodes doing the check have to insert new rows, they just reuse
+ the rows from the previous perirods, and sign the row. The limit is 16 rows per
+ node.
+
+ Auditors are random.
+
+ Nodes doing everything perfect are never present in this table except when issued
+ by malicious nodes. The majority of the net must be malicious in order to have
+ consecuences for those nodes.
+
+ Bitcloud do not count reputation, but just measures possible incorrections of the
+ nodes. DAs on top could implement a system of reputation based on this table and
+ other tables they provide.
+
+*/
+
+CREATE TABLE node_audits (
+ id BLOB(20) PRIMARY KEY REFERENCES nodes(id),
+ auditor BLOB(20) NOT NULL REFERENCES nodes(id),
+ signature BLOB(80) NOT NULL, -- auditors signature
+ periods INTEGER DEFAULT 1, -- number of periods this audis is applicable for
+ reason INTEGER REFERENCES reasons(id)
+);
+
+
+CREATE TABLE reasons ( -- inmutable table
+ id INTEGER PRIMARY KEY,
+ description TEXT,
+ CHECK (id > 0 and id<=6)
+);
+
+INSERT INTO reasons values (1, "Ping timeout.");
+INSERT INTO reasons values (2, "Incorrect signature.");
+INSERT INTO reasons values (3, "Incorrect audition.");
+INSERT INTO reasons values (4, "Too slow connection.");
+INSERT INTO reasons values (5, "Denial of service.");
+INSERT INTO reasons values (6, "Corrupt data.");
+
+
+
 
 -- A grid is a collection of nodes associated that can sell
 -- space and bandwidth to a publisher
 CREATE TABLE grids (
- public_key PRIMARY KEY NOT NULL,
+ id BLOB(20) PRIMARY KEY NOT NULL, --kademlia ID of the owner
+ signature BLOB(80) NOT NULL, -- signature of the owner
  storage_capacity INTEGER DEFAULT 0,
  bandwidth_capacity INTEGER DEFAULT 0,
  storage_reputation INTEGER DEFAULT 0,
@@ -85,10 +154,7 @@ CREATE TABLE publisher_trusts (
  reason REFERENCES reason(id) NOT NULL
 );
 
-CREATE TABLE reasons (
- id,
- description
-);
+
 
 
 CREATE TABLE users (
