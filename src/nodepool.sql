@@ -64,7 +64,7 @@ CREATE TABLE nodes (
 */
 
 CREATE TABLE node_audits (
- id BLOB(20) PRIMARY KEY REFERENCES nodes(id),
+ node BLOB(20) REFERENCES nodes(id),
  auditor BLOB(20) NOT NULL REFERENCES nodes(id),
  signature BLOB(80) NOT NULL, -- auditors signature
  periods INTEGER DEFAULT 1, -- number of periods this audis is applicable for
@@ -153,8 +153,6 @@ CREATE TABLE publisher_trusts (
  signature NOT NULL, -- from signature
  reason REFERENCES reason(id) NOT NULL
 );
-
-
 
 
 CREATE TABLE users (
@@ -250,15 +248,31 @@ CREATE TABLE publisher_grid_contracts (
  coin REFERENCES coins(id)
 );
 
-CREATE TABLE auditions (
- id BLOB PRIMARY KEY NOT NULL,
- user_sig BLOB,
- publisher_sig BLOB,
- grid_sig BLOB,
- bandwidth INTEGER,
- time REAL,
- ok BOOLEAN
+
+-- Table used for publishers instructing orders to contracted grids:
+CREATE TABLE publisher_requests (
+ grid_sig BLOB(80) NOT NULL,
+ publisher_sig BLOB(80), 
+ action INTEGER NOT NULL references publisher_grid_actions(id),
+ param1,
+ param2,
+ ok BOOLEAN NOT NULL
 );
+
+-- Inmutable table
+CREATE TABLE  publisher_actions (
+ id INTEGER PRIMARY KEY NOT NULL,
+ description TEXT
+);
+
+INSERT INTO publisher_grid_actions VALUES (1, 'Accept user');
+-- param1: userID; param2: due-time
+
+-- TODO: more actions to be defined 
+ 
+
+
+
 
 CREATE TABLE folders (
  id BLOB(16) NOT NULL PRIMARY KEY,
