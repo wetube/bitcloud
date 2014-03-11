@@ -120,10 +120,42 @@ CREATE TABLE coins (
 
 
 CREATE TABLE shamir_keys (
- contract_id TEXT,
- node_id TEXT,
- part TEXT
+ contract_id ,
+ node_id TEXT 
 );
+
+
+/*
+ Every table, including deriving DAs tables, need to meet certain rules,
+ imposed here.
+*/
+CREATE TABLE table_rules (
+ -- name of the table to apply these rules:
+ name TEXT PRIMARY KEY,
+
+ -- exposure of the table in the nodepool
+ -- 0=private;  1=grid;  2=participants only; 3=full global (careful);
+ exposure INTEGER DEFAULT 0,
+
+ -- how data is synced?
+ -- 0=nosync, 1=kademlia, 2=random, 3=manual
+ type INTEGER DEFAULT 0,
+
+ -- how offten to check consistency? (this is different than actually syncing)
+ -- in seconds, 0=nocheck
+ check_every INTEGER DEFAULT 600,
+
+ -- check function: this is a C function that checks the consistency of the
+ -- last block across the nodes affected (from exposure).
+ check_function TEXT DEFAULT "bc_check"
+
+ -- sync functions: this C functions take a table and a row from argument and try
+ -- to modify the local DB if tests are passed:
+ insert_function TEXT default "bc_insert",
+ delete_function TEXT default "bc_delete",
+ update_function TEXT default "bc_update"
+); 
+
 
 -- internal publishers/grid tables --
 --------------------------------
