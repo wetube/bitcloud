@@ -27,6 +27,7 @@ int bc_open_nodepool (const char* filename)
       return (1);
     }
     /* Create all the tables in the nodepool.sql file: */
+    nodepool_sql[nodepool_sql_len] = 0; /* <- because xxd doesn't end the string in NULL */
     rc = sqlite3_exec (np,(const char*)nodepool_sql,NULL,NULL,&err);
     if (rc != SQLITE_OK) {
       fprintf (stderr, "FATAl: %s.\n", err);

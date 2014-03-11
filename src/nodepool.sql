@@ -130,16 +130,21 @@ CREATE TABLE shamir_keys (
  imposed here.
 */
 CREATE TABLE table_rules (
- -- name of the table to apply these rules:
- name TEXT PRIMARY KEY,
+ table_name TEXT PRIMARY KEY,
 
  -- exposure of the table in the nodepool
  -- 0=private;  1=grid;  2=participants only; 3=full global (careful);
  exposure INTEGER DEFAULT 0,
 
+ -- participants (OR checked)
+ -- 1=node; 2=grid owner; 4=gateways; 8=publishers; 16=users
+ paticipants INTEGER DEFAULT 0,
+
  -- how data is synced?
  -- 0=nosync, 1=kademlia, 2=random, 3=manual
- type INTEGER DEFAULT 0,
+ sync_type INTEGER DEFAULT 0,
+ nodes_to_sync INTEGER DEFAULT 16,
+ proximity_nodes INTEGER DEFAULT 12, 
 
  -- how offten to check consistency? (this is different than actually syncing)
  -- in seconds, 0=nocheck
@@ -147,13 +152,20 @@ CREATE TABLE table_rules (
 
  -- check function: this is a C function that checks the consistency of the
  -- last block across the nodes affected (from exposure).
- check_function TEXT DEFAULT "bc_check"
+ check_function TEXT DEFAULT "bc_check",
 
  -- sync functions: this C functions take a table and a row from argument and try
  -- to modify the local DB if tests are passed:
  insert_function TEXT default "bc_insert",
  delete_function TEXT default "bc_delete",
- update_function TEXT default "bc_update"
+ update_function TEXT default "bc_update",
+
+ -- maximum general number of transactions per check period and participant:
+ max_transactions INTEGER DEFAULT 1,
+ -- if max number of transaction must be specified per participant to avoid excess
+ -- of flood or DDOS attacks:
+ check_flood_function TEXT DEFAULT "bc_check_flood"
+
 ); 
 
 
@@ -181,7 +193,8 @@ CREATE TABLE publishers (
 CREATE TABLE publisher_trusts (
  from_publisher NOT NULL REFERENCES publishers(public_key),
  to_publisher REFERENCES publishers(public_key),
- trust BOOLEAN NOT NULL,
+ trust_users BOOLEAN NOT NULL,
+ trust_powers BOOLEAN NOT NULL, -- like baning users or moderate files
  signature NOT NULL, -- from signature
  reason REFERENCES reason(id) NOT NULL
 );
@@ -217,6 +230,7 @@ CREATE TABLE user_requests (
 
 -- define some constants, this table is inmutable for bitcloud
 -- but can be expanded by DAs.
+
 CREATE TABLE user_actions (
  id INTEGER PRIMARY KEY NOT NULL,
  description TEXT,
@@ -285,7 +299,7 @@ CREATE TABLE publisher_grid_contracts (
 CREATE TABLE publisher_requests (
  grid_sig BLOB(80) NOT NULL,
  publisher_sig BLOB(80), 
- action INTEGER NOT NULL references publisher_grid_actions(id),
+ action INTEGER NOT NULL references publisher_actions(id),
  param1,
  param2,
  ok BOOLEAN NOT NULL
@@ -297,7 +311,7 @@ CREATE TABLE  publisher_actions (
  description TEXT
 );
 
-INSERT INTO publisher_grid_actions VALUES (1, 'Accept user');
+INSERT INTO publisher_actions VALUES (1, 'Accept user');
 -- param1: userID; param2: due-time
 
 -- TODO: more actions to be defined 
@@ -391,3 +405,10 @@ CREATE TABLE logs (
  log TEXT
  timestamp TEXT -- Timestamp of when the log occured
 );
+
+
+
+
+
+
+-- end
