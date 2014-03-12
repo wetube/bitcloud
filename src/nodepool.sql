@@ -68,23 +68,18 @@ CREATE TABLE node_audits (
  auditor BLOB(20) NOT NULL REFERENCES nodes(id),
  signature BLOB(80) NOT NULL, -- auditors signature
  periods INTEGER DEFAULT 1, -- number of periods this audis is applicable for
- reason INTEGER REFERENCES reasons(id)
+ reason INTEGER NOT NULL,
+ /*
+ 1: Ping timeout.
+ 2: Incorrect signature.
+ 3: Incorrect audition.
+ 4: Too slow connection.
+ 5: Denial of service.
+ 6: Corrupt data.
+ 7: ... to be continued
+ */
+ CHECK (reason>=1 and reason <=6)
 );
-
-
-CREATE TABLE reasons ( -- inmutable table
- id INTEGER PRIMARY KEY,
- description TEXT,
- CHECK (id > 0 and id<=6)
-);
-
-INSERT INTO reasons values (1, "Ping timeout.");
-INSERT INTO reasons values (2, "Incorrect signature.");
-INSERT INTO reasons values (3, "Incorrect audition.");
-INSERT INTO reasons values (4, "Too slow connection.");
-INSERT INTO reasons values (5, "Denial of service.");
-INSERT INTO reasons values (6, "Corrupt data.");
-
 
 
 
@@ -112,17 +107,7 @@ CREATE TABLE gateways (
  grid_sig,
  node_sig
 );
-CREATE TABLE coins (
- id INTEGER PRIMARY KEY,
- name TEXT NOT NULL,
- has_escrow BOOLEAN NOT NULL
-);
 
-
-CREATE TABLE shamir_keys (
- contract_id ,
- node_id TEXT 
-);
 
 
 /*
@@ -164,7 +149,11 @@ CREATE TABLE table_rules (
  max_transactions INTEGER DEFAULT 1,
  -- if max number of transaction must be specified per participant to avoid excess
  -- of flood or DDOS attacks:
- check_flood_function TEXT DEFAULT "bc_check_flood"
+ check_flood_function TEXT DEFAULT "bc_check_flood",
+
+ -- filename of the plugin, without the .dll or .so extension, it must be in the
+ -- path of bitcloud DA plugins:
+ plugin_file_name TEXT DEFAULT NULL
 
 ); 
 
@@ -222,58 +211,28 @@ CREATE TABLE user_requests (
  user BLOB NOT NULL REFERENCES users(public_key),
  signature BLOB NOT NULL,
  grid TEXT NOT NULL REFERENCES grids(public_key),
- action INTEGER REFERENCES user_actions(id),
+ action INTEGER NOT NULL,
  -- every type of action will have a different param values
  param1,
- param2
+ param2,
+ /*
+ 1: Download file: param1=fileID, param2=offset
+ 2: Stream file: param1=fileID, param2=offset
+ 3: Upload file: param1=fileID, param2=folderID
+ 4: Create folder: param1=folderID
+ 5: Remove folder: param1=folderID
+ 6: Rename folder: param1=folderID
+ 7: Move file: param1=origin_foldeID, param2=final_folderID
+ 8: Rename file: param1=fileID, param2=new_name
+ 9: Delete file: param1=fileID
+ 10: Update file owner: param1=fileID, param2=userID
+ 11: Update file permissions: param1=fileID, param2=flags
+ 11: Grant user file access: param1=fileID, param2=userID
+ 12: Grant user folder acccess: param1=folderID, param2=userID
+ 13: ... to be continued
+ */
+ CHECK (action > 0 and action<=12)
 );
-
--- define some constants, this table is inmutable for bitcloud
--- but can be expanded by DAs.
-
-CREATE TABLE user_actions (
- id INTEGER PRIMARY KEY NOT NULL,
- description TEXT,
- CHECK (id > 0 and id<=13)
-);
-
-INSERT INTO user_actions VALUES (1, 'Download file');
--- bandwidth rate is not important
--- param1: file id; param2: offset
-
-INSERT INTO user_actions VALUES (2, 'Stream file');
--- bandwidth rate is important
--- param1: file id; param2: offset
-
-INSERT INTO user_actions VALUES (3, 'Upload file');
--- param1: file id; param2: folder id;
-
-INSERT INTO user_actions VALUES (4, 'Create folder');
--- param1: folder id;
-
-INSERT INTO user_actions VALUES (5, 'Remove folder');
--- param1: folder id;
-
-INSERT INTO user_actions VALUES (6, 'Rename folder');
--- param1: folder id; param2: new name;
-
-INSERT INTO user_actions VALUES (7, 'Move file');
--- param1: origin folder id; param2: final folder id;
-
-INSERT INTO user_actions VALUES (8, 'Rename file');
--- param1: file id; param2: new name;
-
-INSERT INTO user_actions VALUES (9, 'Delete file');
--- param1: file id;
-
-INSERT INTO user_actions VALUES (10, 'User permisions');
--- param1: user public_key; param2: boolean grant or deny
-
-INSERT INTO user_actions VALUES (11, 'Folder permissions');
--- param1: user public_key; param2: boolean grant or deny
-
-INSERT INTO user_actions VALUES (12, 'Set user quota');
--- param1: user public_key; param2: amount
 
  
 CREATE TABLE publisher_grid_contracts (
@@ -291,7 +250,7 @@ CREATE TABLE publisher_grid_contracts (
  availability INTEGER NOT NULL, -- % of time online
  ping_average INTEGER DEFAULT 0,
  -- Coin terms
- coin REFERENCES coins(id)
+ coin TEXT(4) /* ie: BTC */
 );
 
 
@@ -299,25 +258,28 @@ CREATE TABLE publisher_grid_contracts (
 CREATE TABLE publisher_requests (
  grid_sig BLOB(80) NOT NULL,
  publisher_sig BLOB(80), 
- action INTEGER NOT NULL references publisher_actions(id),
+ action INTEGER NOT NULL,
  param1,
  param2,
- ok BOOLEAN NOT NULL
+ /* possible actions:
+ 1: Accept user: param1=userID, param2=due-time
+ 2: Revoke user: param1=userID
+ 3: Remove file: param1=fileID
+ 4: Remove folder: param1=folderID
+ 5: Set user files quota: param1=userID, param2=quota
+ 6: Set user storage quota: param1=userID, param2=quota
+ 7: Set user folders quota: param1=userID, param2=quota
+ 8: Set file permisions: param1=fileID, param2=flags
+ 9: Update file owner: param1=fileID, param2=userID
+ 10: Update folder owner: param1=fileID, param2=userID
+ 11: Register nickname: param1=userID, param2=nickname
+ 12: Delete nickname: param1=nickname
+ 13: .... to be continued
+ */
+
+ ok BOOLEAN NOT NULL,
+ CHECK (action>=1 and action<=12)
 );
-
--- Inmutable table
-CREATE TABLE  publisher_actions (
- id INTEGER PRIMARY KEY NOT NULL,
- description TEXT
-);
-
-INSERT INTO publisher_actions VALUES (1, 'Accept user');
--- param1: userID; param2: due-time
-
--- TODO: more actions to be defined 
- 
-
-
 
 
 CREATE TABLE folders (
@@ -330,7 +292,7 @@ CREATE TABLE folders (
 CREATE TABLE files (
  hash TEXT NOT NULL PRIMARY KEY,
  name TEXT,
- type_id INTEGER REFERENCES content_types(id),
+ mime_type TEXT,
  content BLOB,
  rate INTEGER DEFAULT 0, --bandwidth rate at what must be streamed
  folder NOT NULL REFERENCES folders(id),
@@ -338,11 +300,6 @@ CREATE TABLE files (
  permissions REFERENCES permissions(id)
 );
 
-CREATE TABLE content_types (
- id INTEGER PRIMARY KEY,
- mime TEXT,
- encoding TEXT
-);
 
 CREATE TABLE permissions (
  id BLOB(16),
@@ -374,7 +331,7 @@ CREATE TABLE grid_node_contrats (
  start_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
  working_time INTEGER, -- only the grid can modify this
  -- Coin terms
- coin REFERENCES coins(id),
+ coin TEXT(4), -- ie: BTC
  bandwidth_block_size DEFAULT 100000000,  
  price_per_block DEFAULT 0
 );
@@ -392,7 +349,7 @@ CREATE TABLE CAs (
 );
 
 CREATE TABLE config (
- var
+ var,
  val
 );
 
@@ -402,7 +359,7 @@ CREATE TABLE config (
 CREATE TABLE logs (
  num  INTEGER PRIMARY KEY AUTOINCREMENT,
  category TEXT,
- log TEXT
+ log TEXT,
  timestamp TEXT -- Timestamp of when the log occured
 );
 
