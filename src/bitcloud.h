@@ -1,4 +1,10 @@
+#ifndef _BITCLOUD_H
+#define _BITCLOUD_H
+
+#include <libuv.h>
+#include <nss.h>
 #include <sqlite3.h>
+
 #include <stdint.h>
 #include <stdarg.h>
 #include <time.h>
@@ -59,3 +65,4 @@ typedef struct BCConnection {
 extern BCConnection *bc_Connections;
 extern int n_Connections;
 
+#endif /* _BITCLOUD_H */
