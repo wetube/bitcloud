@@ -253,6 +253,17 @@ CREATE TABLE publisher_grid_contracts (
 );
 
 
+-- Table for owner requests of its grid nodes
+-- request may be codified with various optional elements, like "STORE=100000;UPTIME=99.9;BANDWIDTH=100;"
+-- request_def structure to be set by grids and Dapps later
+
+CREATE TABLE grid_owner_requests (
+ node_sig BLOB(80) NOT NULL,
+ grid_sig BLOB(80),
+ request_def BLOB(160), /* this is the extensible field for codified request -e.g., bandwidth, storage, routing, etc.*/
+ ok BOOLEAN NOT NULL
+);
+
 -- Table used for publishers instructing orders to contracted grids:
 CREATE TABLE publisher_requests (
  grid_sig BLOB(80) NOT NULL,
