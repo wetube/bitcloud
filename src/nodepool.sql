@@ -1,4 +1,3 @@
-
 PRAGMA foreign_keys = ON;
 
 -- general nodepool --
@@ -320,7 +319,7 @@ CREATE TABLE permissions (
 --------------------------
 
 
-CREATE TABLE grid_node_contrats (
+CREATE TABLE grid_node_contratcs (
  id BLOB(16) PRIMARY KEY NOT NULL,
  grid REFERENCES grids(public_key),
  mode NOT NULL REFERENCES nodes(public_key),
