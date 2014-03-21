@@ -1,23 +1,37 @@
+-- For more verbose documentation, see Bitcloud.org wiki --
+-- All below SQL should be generic SQL --
+
+/* Nodepool.sql Database
+
+Rules:
+
+ - Every record is owned by its creator, as enforced via synchronization verifying signature.
+ - Every record may only be modified/deleted by its owner, but may be removed by anyone via "garbage collection"
+   if its owner has been banned.
+ - 
+ 
+ */
+
 PRAGMA foreign_keys = ON;
 
--- general nodepool --
--- Nodepool Team --
+----------------------
+-- Bitcloud Nodepool Team --
 ----------------------
 
--- The contents of the general nodepool are synced
--- across all the nodes in the Bitcloud.
-
+-- general nodepool --
+-- The contents of the general nodepool are synced globally across every nodes in the Bitcloud network.
 
 /*
+ nodes table
 
- nodes table: it is updated every time a new node registers. In order
- to register, the node do a very complex computation (like Bitcoin mining)
- in order to be accepted.
-
- The node must sign the entire row (except the signature itself) with its
+ Contains: records of all nodes on the Bitcloud nework (up to 1.8e19)
+ 
+ Rules:
+ 
+ - Each node must sign its own entire row (except the signature field itself) using its
  own public key.
-
- The node must provide a new signature of its row every 3 days maximum. Otherwise
+ 
+ - The node must provide a new signature of its row every 3 days maximum. Otherwise
  it is deleted from the nodepool and connections refused.
 
 */
