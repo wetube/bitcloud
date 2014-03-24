@@ -1,5 +1,5 @@
 CFLAGS=-Wall
-LDLIBS=-lsqlite3
+LDLIBS=-lsqlite3 -luv
 
 bitcloud: main.o nodepool.o
 	$(CC) -o $@ $^ $(LDLIBS)

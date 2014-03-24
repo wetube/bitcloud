@@ -15,7 +15,7 @@ int bc_open_nodepool (const char* filename)
   sqlite3 *np; /* the nodepool db */
   int rc;
   char *err;
-  
+
   rc = sqlite3_open_v2(filename, &np, SQLITE_OPEN_READWRITE, NULL);
   if (rc) { /* file doesn't exist yet or is readonly */
     sqlite3_close (np);
@@ -35,7 +35,7 @@ int bc_open_nodepool (const char* filename)
       sqlite3_close (np);
       remove (filename);
       return (1);
-    }  
+    }
     fprintf(stderr, "DONE.\n");
   }
 
@@ -44,7 +44,7 @@ int bc_open_nodepool (const char* filename)
 
 
 
-/* general authorization callback function for stlite */
+/* general authorization callback function for sqlite */
 
 BCError bc_auth (void *user_data,
                  int event_code,
@@ -63,7 +63,7 @@ BCError bc_auth (void *user_data,
 BCError bc_register_node (BCNode *node)
 {
   if (!node) return BC_BAD_DATA;
-  
-  
+
+
   return 0;
 }
