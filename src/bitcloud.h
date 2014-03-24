@@ -95,4 +95,25 @@ typedef struct BCKBucket {
   double k_max_range;
 } BCKBucket;
 
+typedef struct BCKTable {
+  BCKBucket *bucket;
+  BCNode *queue;
+} BCKTable;
+
+typedef void bc_dht_callback(void *closure, BCKMessage event,
+                             unsigned char *info_hash,
+                             void *data, BCInteger data_len);
+
+BCKTable bc_dht_init(BCInteger s, BCID *id);
+int bc_dht_bootstrap(BCKTable *table);
+int bc_dht_free(BCKTable *table);
+
+int bc_dht_search(BCKey *key, BCID *id, bc_dht_callback *cb);
+int bc_dht_insert(BCKey *key, BCID *id, char *buf, BCInteger size);
+
+int bc_dht_insert_node(BCID *id);
+int bc_dht_ping_node(BCID *id);
+
+BCNode bc_dht_get_nodes(BCKTable *table);
+
 #endif /* _BITCLOUD_H */
