@@ -26,6 +26,7 @@ typedef enum BCError {
 } BCError;
 
 typedef uint32_t BCKey[8]; /* 256bits for keys */
+typedef uint32_t BCID[5]; /* 160bits for the node Id */
 typedef int Bool;
 typedef time_t BCTime;
 typedef int32_t BCInteger;
@@ -37,6 +38,9 @@ typedef int64_t BCSize;
 */
 
 int bc_open_nodepool (const char* filename);
+
+int bc_create_id (BCID * dest);
+int bc_find_proximity (BCID * dest);
 
 /* general authorization callback function for stlite: */
 BCError bc_auth (void *user_data,
