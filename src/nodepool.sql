@@ -78,18 +78,6 @@ CREATE TABLE publishers (
 );
 
 
--- Gateways convert reconstruct data from the storage nodes and
--- present it to the users/publishers. Multiple gateways per grid
--- are possible.
-CREATE TABLE gateways (
- node PRIMARY KEY REFERENCES node(public_key),
- grid NOT NULL REFERENCES grids(id),
- priority, --larger means more priority, in case of the gateway
-           --to have more than one grid associated.
- grid_sig,
- node_sig
-);
-
 
 --------------------------------
 --------------------------------
@@ -301,6 +289,18 @@ CREATE TABLE publisher_requests (
 
  ok BOOLEAN NOT NULL,
  CHECK (action>=1 and action<=12)
+);
+
+-- Gateways convert reconstruct data from the storage nodes and
+-- present it to the users/publishers. Multiple gateways per grid
+-- are possible.
+CREATE TABLE gateways (
+ node PRIMARY KEY REFERENCES node(public_key),
+ grid NOT NULL REFERENCES grids(id),
+ priority, --larger means more priority, in case of the gateway
+           --to have more than one grid associated.
+ grid_sig,
+ node_sig
 );
 
 
