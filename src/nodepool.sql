@@ -60,12 +60,29 @@ CREATE TABLE grids (
  
 );
 
+
+CREATE TABLE publishers (
+ public_key PRIMARY KEY NOT NULL,
+ address TEXT ,
+ creation_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+ proof_of_creation, -- see CA generation in the protocol spec
+ nickname TEXT,
+ -- is information about the content of this publisher public?:
+ public_metadata BOOLEAN DEFAULT FALSE,
+ public_files BOOLEAN DEFAULT FALSE,
+ -- trust all other publisher users by default? If not, only trust
+ -- those in the publisher_trusts with positive trust. If yes, trust
+ -- all except those with negative trust.
+ trust_all_users BOOLEAN DEFAULT TRUE
+);
+
+
 -- Gateways convert reconstruct data from the storage nodes and
 -- present it to the users/publishers. Multiple gateways per grid
 -- are possible.
 CREATE TABLE gateways (
  node PRIMARY KEY REFERENCES node(public_key),
- grid NOT NULL REFERENCES grids(public_key),
+ grid NOT NULL REFERENCES grids(id),
  priority, --larger means more priority, in case of the gateway
            --to have more than one grid associated.
  grid_sig,
@@ -172,21 +189,6 @@ CREATE TABLE node_audits (
  CHECK (reason>=1 and reason <=6)
 );
 
-
-CREATE TABLE publishers (
- public_key PRIMARY KEY NOT NULL,
- address TEXT ,
- creation_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
- proof_of_creation, -- see CA generation in the protocol spec
- nickname TEXT,
- -- is information about the content of this publisher public?:
- public_metadata BOOLEAN DEFAULT FALSE,
- public_files BOOLEAN DEFAULT FALSE,
- -- trust all other publisher users by default? If not, only trust
- -- those in the publisher_trusts with positive trust. If yes, trust
- -- all except those with negative trust.
- trust_all_users BOOLEAN DEFAULT TRUE
-);
 
 CREATE TABLE publisher_trusts (
  from_publisher NOT NULL REFERENCES publishers(public_key),
