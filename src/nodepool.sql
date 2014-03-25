@@ -51,61 +51,13 @@ CREATE TABLE nodes (
 );
 
 
-/*
-
- node_audit table: things in this table are only inserted after a node failed
- to provide a correct check. Every single row in this table is deleted after
- every check period, and the new content based on the last one, so it can
- ensure continuation of the measurements and save space at the same time.
-
- For example, if a node fails to be available for some periods, there is no
- need that the nodes doing the check have to insert new rows, they just reuse
- the rows from the previous perirods, and sign the row. The limit is 16 rows per
- node.
-
- Auditors are random.
-
- Nodes doing everything perfect are never present in this table except when issued
- by malicious nodes. The majority of the net must be malicious in order to have
- consecuences for those nodes.
-
- Bitcloud do not count reputation, but just measures possible incorrections of the
- nodes. DAs on top could implement a system of reputation based on this table and
- other tables they provide.
-
-*/
-
-CREATE TABLE node_audits (
- node BLOB(20) REFERENCES nodes(id),
- auditor BLOB(20) NOT NULL REFERENCES nodes(id),
- signature BLOB(80) NOT NULL, -- auditors signature
- periods INTEGER DEFAULT 1, -- number of periods this audis is applicable for
- reason INTEGER NOT NULL,
- /*
- 1: Ping timeout.
- 2: Incorrect signature.
- 3: Incorrect audition.
- 4: Too slow connection.
- 5: Denial of service.
- 6: Corrupt data.
- 7: ... to be continued
- */
- CHECK (reason>=1 and reason <=6)
-);
-
-
-
 -- A grid is a collection of nodes associated that can sell
 -- space and bandwidth to a publisher
 CREATE TABLE grids (
  id BLOB(20) PRIMARY KEY NOT NULL, --kademlia ID of the owner
+ owner_id BLOB(20) NOT NULL,
  signature BLOB(80) NOT NULL, -- signature of the owner
- storage_capacity INTEGER DEFAULT 0,
- bandwidth_capacity INTEGER DEFAULT 0,
- storage_reputation INTEGER DEFAULT 0,
- bandwidth_reputation INTEGER DEFAULT 0,
- service_reputation INTEGER DEFAULT 0,
- availability INTEGER DEFAULT 0
+ 
 );
 
 -- Gateways convert reconstruct data from the storage nodes and
@@ -120,6 +72,14 @@ CREATE TABLE gateways (
  node_sig
 );
 
+
+--------------------------------
+--------------------------------
+-- internal publishers/grid tables --
+--------------------------------
+--------------------------------
+-- these tables are shared between associations (e.g., between publishers and grids, or grids and nodes, etc.)
+--------------------------------
 
 
 /*
@@ -170,10 +130,47 @@ CREATE TABLE table_rules (
 ); 
 
 
--- internal publishers/grid tables --
---------------------------------
+/*
 
--- these tables are shared by the publishers and the grids
+ node_audit table: things in this table are only inserted after a node failed
+ to provide a correct check. Every single row in this table is deleted after
+ every check period, and the new content based on the last one, so it can
+ ensure continuation of the measurements and save space at the same time.
+
+ For example, if a node fails to be available for some periods, there is no
+ need that the nodes doing the check have to insert new rows, they just reuse
+ the rows from the previous perirods, and sign the row. The limit is 16 rows per
+ node.
+
+ Auditors are random.
+
+ Nodes doing everything perfect are never present in this table except when issued
+ by malicious nodes. The majority of the net must be malicious in order to have
+ consecuences for those nodes.
+
+ Bitcloud do not count reputation, but just measures possible incorrections of the
+ nodes. DAs on top could implement a system of reputation based on this table and
+ other tables they provide.
+
+*/
+
+CREATE TABLE node_audits (
+ node BLOB(20) REFERENCES nodes(id),
+ auditor BLOB(20) NOT NULL REFERENCES nodes(id),
+ signature BLOB(80) NOT NULL, -- auditors signature
+ periods INTEGER DEFAULT 1, -- number of periods this audis is applicable for
+ reason INTEGER NOT NULL,
+ /*
+ 1: Ping timeout.
+ 2: Incorrect signature.
+ 3: Incorrect audition.
+ 4: Too slow connection.
+ 5: Denial of service.
+ 6: Corrupt data.
+ 7: ... to be continued
+ */
+ CHECK (reason>=1 and reason <=6)
+);
 
 
 CREATE TABLE publishers (
