@@ -6,8 +6,9 @@
 Rules:
 
  - Every record is owned by its creator, as enforced via synchronization verifying signature.
- - Every record may only be modified/deleted by its owner, but may be removed by anyone via "garbage collection"
-   if its owner has been banned.
+ - The only exception to the above is in the case of user files, which are owned by both the user and Publisher.
+ - Every record may only be modified/deleted by its owner(s), but may be removed by anyone via "garbage collection"
+   if its owner(s) have been banned.
  - SQLite supports DB functions/stored procedures written in C.  Those functions, therefore, will only be referenced 
    hereing documentation provided in the sync and interface code elsewhere.
  
