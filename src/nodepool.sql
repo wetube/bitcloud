@@ -48,8 +48,6 @@ CREATE TABLE nodes (
  proof_of_creation BLOB, -- see CA generation in the protocol spec
  net_protocol INTEGER DEFAULT 1, -- 1 IP, 2 Tor
  address TEXT NOT NULL, -- IP or onion address
- storage_capacity INTEGER DEFAULT 0,  -- declared
- bandwidth_capacity INTEGER DEFAULT 0
 );
 
 
@@ -257,7 +255,6 @@ CREATE TABLE publisher_grid_contracts (
  publisher_sig TEXT NOT NULL,
  grid_sig TEXT NOT NULL,
  -- Terms:
- min_storage INTEGER NOT NULL,
  min_bandwidth INTEGER NOT NULL,
  start_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
  end_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
