@@ -37,10 +37,7 @@ typedef int64_t BCSize;
   Nodepool database structures and functions
 */
 
-int bc_open_nodepool (const char* filename);
-
-int bc_create_id (BCID * dest);
-int bc_find_proximity (BCID * dest);
+BCError  bc_open_nodepool (const char* filename);
 
 /* general authorization callback function for sqlite: */
 BCError bc_auth (void *user_data,
@@ -49,6 +46,11 @@ BCError bc_auth (void *user_data,
                  const char *event_spec2,
                  const char *db_name,
                  const char *trigger);
+
+BCError bc_insert (int table, void **cells);
+BCError bc_update (int table, void *row_id, void **new_cells);
+BCError bc_delete (int table, void *row_id);
+
 
 /*
   Connections structures and functions
@@ -75,6 +77,8 @@ typedef struct BCConnection {
 
 extern BCConnection *bc_Connections;
 extern int n_Connections;
+
+int bc_find_proximity (BCID * dest);
 
 /*
   Kademlia structures and functions

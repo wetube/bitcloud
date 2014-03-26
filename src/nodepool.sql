@@ -1,51 +1,63 @@
 -- For more verbose documentation, see Bitcloud.org wiki --
+-- http://bitcloudproject.org/w/Nodepool.sql_Database_Design --
 -- All below SQL should be generic SQL --
 
 /* Nodepool.sql Database
 
 Rules:
 
- - Every record is owned by its creator, as enforced via synchronization verifying signature.
- - The only exception to the above is in the case of user files, which are owned by both the user and Publisher.
- - Every record may only be modified/deleted by its owner(s), but may be removed by anyone via "garbage collection"
-   if its owner(s) have been banned.
- - SQLite supports DB functions/stored procedures written in C.  Those functions, therefore, will only be referenced 
-   hereing documentation provided in the sync and interface code elsewhere.
- 
+ - Every record is owned by its creator, as enforced via synchronization
+   verifying signature.
+
+ - The only exception to the above is in the case of user files, which are
+   owned by both the user and Publisher.
+
+ - Every record may only be modified/deleted by its owner(s), but may be
+   removed by anyone via "garbage collection" if its owner(s) have been
+   banned.
+
+ - SQLite supports DB functions/stored procedures written in C.  Those
+   functions, therefore, will only be referenced hereing documentation
+   provided in the sync and interface code elsewhere.
+
  */
 
 PRAGMA foreign_keys = ON;
 
-----------------------
+----------------------------
 -- Bitcloud Nodepool Team --
-----------------------
+----------------------------
 
 -- general nodepool --
--- The contents of the general nodepool are synced globally across every nodes in the Bitcloud network.
+
+-- The contents of the general nodepool are synced globally across every nodes
+-- in the Bitcloud network.
 
 /*
  nodes table
 
  Contains: records of all nodes on the Bitcloud nework (up to 1.8e19)
- 
+
  Rules:
- 
- - Each node must sign its own entire row (except the signature field itself) using its
- own public key.
- 
- - The node must provide a new signature of its row every 3 days maximum. Otherwise
- it is deleted from the nodepool and connections refused.
- 
- - creation_date must be within the same synchronization period that the node is registered for node registration
- be valid.
- - Consistancy is checked by ensuring that nobody tries to register in other period that is not the actual:
+
+ - Each node must sign its own entire row (except the signature field itself)
+ using its own public key.
+
+ - The node must provide a new signature of its row every 3 days
+ maximum. Otherwise it is deleted from the nodepool and connections refused.
+
+ - creation_date must be within the same synchronization period that the node
+ is registered for node registration be valid.
+
+ - Consistancy is checked by ensuring that nobody tries to register in other
+   period that is not the actual:
 
 */
 
 CREATE TABLE nodes (
- id BLOB(20) PRIMARY KEY NOT NULL, -- kademlia ID
- public_key BLOB(32) NOT NULL, -- 256 bits ECDSA key
- signature BLOB(80) NOT NULL,  -- self certificate of this row
+ public_key BLOB PRIMARY KEY NOT NULL, -- ID
+ proximity BLOB NOT NULL, -- DHT (kademlia-like) map coordinates
+ signature BLOB NOT NULL,  -- self certificate of this row
  creation_date INTEGER NOT NULL,
  proof_of_creation BLOB, -- see CA generation in the protocol spec
  net_protocol INTEGER DEFAULT 1, -- 1 IP, 2 Tor
@@ -56,10 +68,9 @@ CREATE TABLE nodes (
 -- A grid is a collection of nodes associated that can sell
 -- space and bandwidth to a publisher
 CREATE TABLE grids (
- id BLOB(20) PRIMARY KEY NOT NULL, --kademlia ID of the owner
- owner_id BLOB(20) NOT NULL,
- signature BLOB(80) NOT NULL, -- signature of the owner
- 
+ id BLOB PRIMARY KEY NOT NULL, -- random number
+ owner_id BLOB NOT NULL REFERENCES nodes(public_key),
+ signature BLOB NOT NULL, -- signature of the owner
 );
 
 
@@ -80,61 +91,12 @@ CREATE TABLE publishers (
 
 
 
---------------------------------
---------------------------------
+-------------------------------------
 -- internal publishers/grid tables --
---------------------------------
---------------------------------
--- these tables are shared between associations (e.g., between publishers and grids, or grids and nodes, etc.)
---------------------------------
+-------------------------------------
 
-/*
- Every table, including deriving DAs tables, need to meet certain rules,
- imposed here.
-*/
-CREATE TABLE table_rules (
- table_name TEXT PRIMARY KEY,
-
- -- exposure of the table in the nodepool
- -- 0=private;  1=grid;  2=participants only; 3=full global (careful);
- exposure INTEGER DEFAULT 0,
-
- -- participants (OR checked)
- -- 1=node; 2=grid owner; 4=gateways; 8=publishers; 16=users
- paticipants INTEGER DEFAULT 0,
-
- -- how data is synced?
- -- 0=nosync, 1=kademlia, 2=random, 3=manual
- sync_type INTEGER DEFAULT 0,
- nodes_to_sync INTEGER DEFAULT 16,
- proximity_nodes INTEGER DEFAULT 12, 
-
- -- how offten to check consistency? (this is different than actually syncing)
- -- in seconds, 0=nocheck
- check_every INTEGER DEFAULT 600,
-
- -- check function: this is a C function that checks the consistency of the
- -- last block across the nodes affected (from exposure).
- check_function TEXT DEFAULT "bc_check",
-
- -- sync functions: this C functions take a table and a row from argument and try
- -- to modify the local DB if tests are passed:
- insert_function TEXT default "bc_insert",
- delete_function TEXT default "bc_delete",
- update_function TEXT default "bc_update",
-
- -- maximum general number of transactions per check period and participant:
- max_transactions INTEGER DEFAULT 1,
- -- if max number of transaction must be specified per participant to avoid excess
- -- of flood or DDOS attacks:
- check_flood_function TEXT DEFAULT "bc_check_flood",
-
- -- filename of the plugin, without the .dll or .so extension, it must be in the
- -- path of bitcloud DA plugins:
- plugin_file_name TEXT DEFAULT NULL
-
-); 
-
+-- these tables are shared between associations (e.g., between publishers and
+-- grids, or grids and nodes, etc.)
 
 /*
 
@@ -145,38 +107,20 @@ CREATE TABLE table_rules (
 
  For example, if a node fails to be available for some periods, there is no
  need that the nodes doing the check have to insert new rows, they just reuse
- the rows from the previous perirods, and sign the row. The limit is 16 rows per
- node.
+ the rows from the previous perirods, and sign the row. The limit is 16 rows
+ per node.
 
  Auditors are random.
 
- Nodes doing everything perfect are never present in this table except when issued
- by malicious nodes. The majority of the net must be malicious in order to have
- consecuences for those nodes.
+ Nodes doing everything perfect are never present in this table except when
+ issued by malicious nodes. The majority of the net must be malicious in order
+ to have consecuences for those nodes.
 
- Bitcloud do not count reputation, but just measures possible incorrections of the
- nodes. DAs on top could implement a system of reputation based on this table and
- other tables they provide.
+ Bitcloud do not count reputation, but just measures possible incorrections of
+ the nodes. DAs on top could implement a system of reputation based on this
+ table and other tables they provide.
 
 */
-
-CREATE TABLE node_audits (
- node BLOB(20) REFERENCES nodes(id),
- auditor BLOB(20) NOT NULL REFERENCES nodes(id),
- signature BLOB(80) NOT NULL, -- auditors signature
- periods INTEGER DEFAULT 1, -- number of periods this audis is applicable for
- reason INTEGER NOT NULL,
- /*
- 1: Ping timeout.
- 2: Incorrect signature.
- 3: Incorrect audition.
- 4: Too slow connection.
- 5: Denial of service.
- 6: Corrupt data.
- 7: ... to be continued
- */
- CHECK (reason>=1 and reason <=6)
-);
 
 
 CREATE TABLE publisher_trusts (
@@ -207,7 +151,7 @@ CREATE TABLE users (
 -- User requests sent to the grids, for example, creating
 -- a folder or uploading/downloading a file
 CREATE TABLE user_requests (
- id BLOB(16) PRIMARY KEY NOT NULL,
+ id BLOB PRIMARY KEY NOT NULL,
  user BLOB NOT NULL REFERENCES users(public_key),
  signature BLOB NOT NULL,
  grid TEXT NOT NULL REFERENCES grids(public_key),
@@ -234,10 +178,10 @@ CREATE TABLE user_requests (
  CHECK (action > 0 and action<=12)
 );
 
- 
+
 CREATE TABLE publisher_grid_contracts (
- id BLOB(16) PRIMARY KEY NOT NULL,
- publisher BLOB NOT NULL REFERENCES publishers(public_key), 
+ id BLOB PRIMARY KEY NOT NULL,
+ publisher BLOB NOT NULL REFERENCES publishers(public_key),
  grid TEXT NOT NULL REFERENCES grids(public_key),
  -- Signatures of this contract:
  publisher_sig TEXT NOT NULL,
@@ -254,20 +198,25 @@ CREATE TABLE publisher_grid_contracts (
 
 
 -- Table for owner requests of its grid nodes
--- request may be codified with various optional elements, like "STORE=100000;UPTIME=99.9;BANDWIDTH=100;"
--- request_def structure to be set by grids and Dapps later
-
 CREATE TABLE grid_owner_requests (
- node_sig BLOB(80) NOT NULL,
- grid_sig BLOB(80),
- request_def BLOB(160), /* this is the extensible field for codified request -e.g., bandwidth, storage, routing, etc.*/
- ok BOOLEAN NOT NULL
+ grid BLOB PRIMARY KEY REFERENCES grids(id),
+ owner_sig BLOB NOT NULL,
+ action INTEGER NOT NULL,
+ param1,
+ param2,
+ /* possible actions
+ 1: Assign storage node: param1=nodeID, param2=gatewayID
+ 2: Upgrade storage node to gateway: param1=nodeID
+ 3: Set minimum bandwidth: param1=nodeID, param2=rate
+ 4: Revoke node: param1=nodeID
+ 5: ... to be continued
+ */
 );
 
 -- Table used for publishers instructing orders to contracted grids:
 CREATE TABLE publisher_requests (
- grid_sig BLOB(80) NOT NULL,
- publisher_sig BLOB(80), 
+ grid_sig BLOB NOT NULL,
+ publisher_sig BLOB,
  action INTEGER NOT NULL,
  param1,
  param2,
@@ -286,8 +235,6 @@ CREATE TABLE publisher_requests (
  12: Delete nickname: param1=nickname
  13: .... to be continued
  */
-
- ok BOOLEAN NOT NULL,
  CHECK (action>=1 and action<=12)
 );
 
@@ -303,9 +250,49 @@ CREATE TABLE gateways (
  node_sig
 );
 
+CREATE TABLE grid_node_contracts (
+ id BLOB PRIMARY KEY NOT NULL,
+ grid REFERENCES grids(public_key),
+ mode NOT NULL REFERENCES nodes(public_key),
+ grid_sig,
+ node_sig,
+ min_storage INTEGER NOT NULL,
+ min_bandwidth INTEGER NOT NULL,
+ start_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+ working_time INTEGER, -- only the grid can modify this
+ -- Coin terms
+ coin TEXT(4), -- ie: BTC
+ bandwidth_block_size DEFAULT 100000000,
+ price_per_block DEFAULT 0
+);
+
+CREATE TABLE node_audits (
+ node BLOB REFERENCES nodes(public_key),
+ auditor BLOB NOT NULL REFERENCES nodes(public_key),
+ signature BLOB NOT NULL, -- auditors signature
+ periods INTEGER DEFAULT 1, -- number of periods this audis is applicable for
+ reason INTEGER NOT NULL,
+ /*
+ 1: Ping timeout.
+ 2: Incorrect signature.
+ 3: Incorrect audition.
+ 4: Too slow connection.
+ 5: Denial of service.
+ 6: Corrupt data.
+ 7: ... to be continued
+ */
+ CHECK (reason>=1 and reason <=6)
+);
+
+
+--------------------
+-- files and folders
+--------------------
+
+-- synced between publishers/grids/users but not globally.
 
 CREATE TABLE folders (
- id BLOB(16) NOT NULL PRIMARY KEY,
+ id BLOB NOT NULL PRIMARY KEY,
  parent REFERENCES folders(id),
  name TEXT,
  permissions REFERENCES permissions(id)
@@ -324,7 +311,7 @@ CREATE TABLE files (
 
 
 CREATE TABLE permissions (
- id BLOB(16),
+ id BLOB,
  user REFERENCES users(public_key),
  publisher REFERENCES publishers(public_key),
  -- NULL user/publisher means permissions for everyone
@@ -338,26 +325,13 @@ CREATE TABLE permissions (
 );
 
 
-CREATE TABLE grid_node_contracts (
- id BLOB(16) PRIMARY KEY NOT NULL,
- grid REFERENCES grids(public_key),
- mode NOT NULL REFERENCES nodes(public_key),
- grid_sig,
- node_sig,
- min_storage INTEGER NOT NULL,
- min_bandwidth INTEGER NOT NULL,
- start_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
- working_time INTEGER, -- only the grid can modify this
- -- Coin terms
- coin TEXT(4), -- ie: BTC
- bandwidth_block_size DEFAULT 100000000,  
- price_per_block DEFAULT 0
-);
 
 
-
+--------------------
 -- private tables --
 --------------------
+
+-- Tables not synced. Mostly internal configuration and convenient tables.
 
 CREATE TABLE CAs (
  public_key PRIMARY KEY NOT NULL,
@@ -382,6 +356,59 @@ CREATE TABLE logs (
 );
 
 
+/*
+
+ Every table, including deriving DAs tables, need to meet certain rules. This
+ table is just a configuration table never synced. It is created at the time
+ of node creation and updated when the software is updated.
+
+ When a Dapp is addded to the node, this table is updated with the information
+ of the new tables.
+
+*/
+
+CREATE TABLE table_rules (
+ table_name TEXT PRIMARY KEY,
+
+ -- exposure of the table in the nodepool
+ -- 0=private;  1=grid;  2=participants only; 3=full global (careful);
+ exposure INTEGER DEFAULT 0,
+
+ -- participants (OR checked)
+ -- 1=node; 2=grid owner; 4=gateways; 8=publishers; 16=users
+ paticipants INTEGER DEFAULT 0,
+
+ -- how data is synced?
+ -- 0=nosync, 1=kademlia, 2=random, 3=manual
+ sync_type INTEGER DEFAULT 0,
+ nodes_to_sync INTEGER DEFAULT 16,
+ proximity_nodes INTEGER DEFAULT 12,
+
+ -- how offten to check consistency? (this is different than actually syncing)
+ -- in seconds, 0=nocheck
+ check_every INTEGER DEFAULT 600,
+
+ -- check function: this is a C function that checks the consistency of the
+ -- last block across the nodes affected (from exposure).
+ check_function TEXT DEFAULT "bc_check",
+
+ -- sync functions: this C functions take a table and a row from argument and try
+ -- to modify the local DB if tests are passed:
+ insert_function TEXT default "bc_insert",
+ delete_function TEXT default "bc_delete",
+ update_function TEXT default "bc_update",
+
+ -- maximum general number of transactions per check period and participant:
+ max_transactions INTEGER DEFAULT 1,
+ -- if max number of transaction must be specified per participant to avoid excess
+ -- of flood or DDOS attacks:
+ check_flood_function TEXT DEFAULT "bc_check_flood",
+
+ -- filename of the plugin, without the .dll or .so extension, it must be in the
+ -- path of bitcloud DA plugins:
+ plugin_file_name TEXT DEFAULT NULL
+
+);
 
 
 
