@@ -88,7 +88,6 @@ CREATE TABLE publishers (
 -- these tables are shared between associations (e.g., between publishers and grids, or grids and nodes, etc.)
 --------------------------------
 
-
 /*
  Every table, including deriving DAs tables, need to meet certain rules,
  imposed here.
@@ -337,13 +336,9 @@ CREATE TABLE permissions (
  remove BOOLEAN,
  set_perm BOOLEAN -- Meaning someone can have permissions to set permissions in UI term
 );
- 
-
--- internal grid tables --
---------------------------
 
 
-CREATE TABLE grid_node_contratcs (
+CREATE TABLE grid_node_contracts (
  id BLOB(16) PRIMARY KEY NOT NULL,
  grid REFERENCES grids(public_key),
  mode NOT NULL REFERENCES nodes(public_key),
