@@ -36,7 +36,8 @@ PRAGMA foreign_keys = ON;
  - The node must provide a new signature of its row every 3 days maximum. Otherwise
  it is deleted from the nodepool and connections refused.
  
- - Creation date must be in the current period when the node is registered.
+ - creation_date must be within the same synchronization period that the node is registered for node registration
+ be valid.
  - Consistancy is checked by ensuring that nobody tries to register in other period that is not the actual:
 
 */
