@@ -115,5 +115,10 @@ int bc_dht_insert_node(BCID *id);
 int bc_dht_ping_node(BCID *id);
 
 BCNode bc_dht_get_nodes(BCKTable *table);
+/*
+ * The value returned by this function estimates the expense of a message
+ * sent from sender to receiver and must be calculates without time delay.
+ */
+int bc_cost(BCID *sender, BCID *receiver);
 
 #endif /* _BITCLOUD_H */
