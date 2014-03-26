@@ -379,7 +379,7 @@ CREATE TABLE table_rules (
  paticipants INTEGER DEFAULT 0,
 
  -- how data is synced?
- -- 0=nosync, 1=kademlia, 2=random, 3=manual
+ -- 0=nosync, 1=proximity, 2=random, 3=manual, 4=owner
  sync_type INTEGER DEFAULT 0,
  nodes_to_sync INTEGER DEFAULT 16,
  proximity_nodes INTEGER DEFAULT 12,
