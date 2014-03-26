@@ -35,6 +35,9 @@ PRAGMA foreign_keys = ON;
  
  - The node must provide a new signature of its row every 3 days maximum. Otherwise
  it is deleted from the nodepool and connections refused.
+ 
+ - Creation date must be in the current period when the node is registered.
+ - Consistancy is checked by ensuring that nobody tries to register in other period that is not the actual:
 
 */
 
@@ -42,9 +45,6 @@ CREATE TABLE nodes (
  id BLOB(20) PRIMARY KEY NOT NULL, -- kademlia ID
  public_key BLOB(32) NOT NULL, -- 256 bits ECDSA key
  signature BLOB(80) NOT NULL,  -- self certificate of this row
- -- Creation date must be in the current period when the node is registered.
- -- Consistance is checked by ensuring that nobody tries to register in other
- -- period that is not the actual:
  creation_date INTEGER NOT NULL,
  proof_of_creation BLOB, -- see CA generation in the protocol spec
  net_protocol INTEGER DEFAULT 1, -- 1 IP, 2 Tor
