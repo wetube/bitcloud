@@ -1,8 +1,8 @@
 #ifndef _BITCLOUD_H
 #define _BITCLOUD_H
 
-#include <uv.h>
-#include <nss.h>
+/* #include "libuv/include/uv.h"*/
+/* #include <nss.h> */
 #include <sqlite3.h>
 
 #include <stdint.h>
@@ -80,49 +80,6 @@ extern int n_Connections;
 
 int bc_find_proximity (BCID * dest);
 
-/*
-  Kademlia structures and functions
-*/
 
-typedef enum BCKMessage {
-  BC_DHT_PING=0,
-  BC_DHT_STORE,
-  BC_DHT_FIND_NODE,
-  BC_DHT_FIND_VALUE
-} BCKMessage;
-
-typedef struct BCKBucket {
-  BCNode *nodes;             /* list of nodes for this bucket */
-  struct BCKBucket *next;    /* next kbucket */
-  BCInteger total_nodes;
-  double k_min_range;
-  double k_max_range;
-} BCKBucket;
-
-typedef struct BCKTable {
-  BCKBucket *bucket;
-  BCNode *queue;
-} BCKTable;
-
-typedef void bc_dht_callback(void *closure, BCKMessage event,
-                             unsigned char *info_hash,
-                             void *data, BCInteger data_len);
-
-BCKTable bc_dht_init(BCInteger s, BCID *id);
-int bc_dht_bootstrap(BCKTable *table);
-int bc_dht_free(BCKTable *table);
-
-int bc_dht_search(BCKey *key, BCID *id, bc_dht_callback *cb);
-int bc_dht_insert(BCKey *key, BCID *id, char *buf, BCInteger size);
-
-int bc_dht_insert_node(BCID *id);
-int bc_dht_ping_node(BCID *id);
-
-BCNode bc_dht_get_nodes(BCKTable *table);
-/*
- * The value returned by this function estimates the expense of a message
- * sent from sender to receiver and must be calculates without time delay.
- */
-int bc_cost(BCID *sender, BCID *receiver);
 
 #endif /* _BITCLOUD_H */

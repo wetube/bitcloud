@@ -10,7 +10,7 @@
  Returns 1 in case of error, 0 if ok.
 */
 
-int bc_open_nodepool (const char* filename)
+BCError bc_open_nodepool (const char* filename)
 {
   sqlite3 *np; /* the nodepool db */
   int rc;

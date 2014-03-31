@@ -61,7 +61,7 @@ CREATE TABLE nodes (
  creation_date INTEGER NOT NULL,
  proof_of_creation BLOB, -- see CA generation in the protocol spec
  net_protocol INTEGER DEFAULT 1, -- 1 IP, 2 Tor
- address TEXT NOT NULL, -- IP or onion address
+ address TEXT NOT NULL -- IP or onion address
 );
 
 
@@ -70,7 +70,7 @@ CREATE TABLE nodes (
 CREATE TABLE grids (
  id BLOB PRIMARY KEY NOT NULL, -- random number
  owner_id BLOB NOT NULL REFERENCES nodes(public_key),
- signature BLOB NOT NULL, -- signature of the owner
+ signature BLOB NOT NULL -- signature of the owner
 );
 
 
@@ -193,7 +193,7 @@ CREATE TABLE publisher_grid_contracts (
  availability INTEGER NOT NULL, -- % of time online
  ping_average INTEGER DEFAULT 0,
  -- Coin terms
- coin TEXT(4) /* ie: BTC */
+ coin TEXT /* ie: BTC */
 );
 
 
@@ -203,7 +203,7 @@ CREATE TABLE grid_owner_requests (
  owner_sig BLOB NOT NULL,
  action INTEGER NOT NULL,
  param1,
- param2,
+ param2
  /* possible actions
  1: Assign storage node: param1=nodeID, param2=gatewayID
  2: Upgrade storage node to gateway: param1=nodeID
