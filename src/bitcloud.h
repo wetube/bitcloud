@@ -22,7 +22,13 @@ typedef enum BCError {
   BC_BAD_DNS,
   BC_BAD_ROUTE,
   BC_UNEXPECTED_END,
-  BC_CORRUPT_DATA
+  BC_CORRUPT_DATA,
+  /* DApps errors: */
+  BC_DAPP_BAD_LIBRARY,
+  BC_DAPP_NOT_INSTALLED,
+  BC_DAPP_BAD_TABLE_RULES,
+  BC_DAPP_ID_CONFLICT,
+  BC_DAPP_BAD_REPOSITORY_SIGNATURE
 } BCError;
 
 typedef uint32_t BCKey[8]; /* 256bits for keys */
@@ -59,25 +65,36 @@ BCError bc_delete (BCInt table_id, void *row_id);
 
 
 /*
-  DApps functions
+  Dapps functions
   ===============
 */
 
+/* Run all the Dapps that are specified in "Dapps" table with the "run"
+   attribute set to true. Dynamic libraries for the Dapps must be in the
+   "dapps" directory, except if they are compiled static. */
+BCError bc_run_all_dapps (void);
 
-/* Load all the Dapps that are specified in "table_rules". Dynamic libraries
-   for the Dapps must be in the "dapps" directory, except if they are compiled
-   static. */
-BCError load_all_dapps (void);
+/* load in memory and run or stop a specific Dapp defined in the DApps
+   table: */
+BCError bc_run_dapp (BCInt id);
+BCError bc_stop_dapp (BCInt id);
 
+BCError bc_update_repositories (BCInt id);
 
-/* load a particual Dapp, as specified in the sqlfile. That sqlfile will
-   define a new row in "DApps" table, plus all the tables needed for the Dapp
-   with their respective "table_rules" row, plus all dynamic libraries needed
-   that must be present in the "dapps" directory previus to the load */
-BCError load_dapp (char *sqlfile);
+/* this downloads the DApp from the repository referenced by its ID, which is
+   a ZIP file that contains the shared libraries, the sql file and auxiliary
+   files specific to the DApp: */
+BCError bc_download_app (BCInt id);
 
-/* unload the Dapp specified by the id */
-BCError unload_dapp (BCInt id);
+/* install a particual Dapp. The DApp will contain a sqlfile with an INSERT
+   command for a new row in "DApps" table, plus all the tables needed for the
+   Dapp with their respective "table_rules" row, plus all dynamic libraries
+   needed all in a bundled zip file. */
+BCError bc_install_dapp (char *zipfile);
+
+/* stops the Dapp specified by the id and delete all the tables owned by the
+   DApp */
+BCError bc_uninstall_dapp (BCInt id);
 
 
 
@@ -108,7 +125,7 @@ typedef struct BCConnection {
 extern BCConnection *bc_Connections;
 extern int n_Connections;
 
-int bc_find_proximity (BCID * dest);
+BCError bc_find_proximity (BCID * dest);
 
 
 

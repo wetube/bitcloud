@@ -411,18 +411,88 @@ CREATE TABLE table_rules (
 );
 
 
+-- Table for registering DApps using repositories
 CREATE TABLE DApps (
  id INTEGER PRIMARY KEY NOT NULL, -- the ID must be unique and assigned by the repository
- name TEXT NOT NULL,
+ name TEXT NOT NULL UNIQUE,
+ description TEXT,
+ author TEXT,
+ license TEXT,
+ version REAL NOT NULL, -- example: 0.96
+
  is_static BOOLEAN DEFAULT 0, -- compiled static or dynamic.
 
  -- This is the name of the library (.so or .dll) file to download. This file
  -- will contain some or all the functions in the "table_rules". This file is
  -- located in the "dapp" directory.
- dapp_library TEXT
+ dapp_library TEXT,
+
+ run BOOLEAN DEFAULT 0, -- is this DApp to be run when calling bc_run_all_apps()?
+ is_downloaded BOOLEAN DEFAULT 0, -- the files are downloaded
+
+ -- The respository and signature, without this the app is considered malicious
+ repository INTEGER REFERENCES repositories(id),
+ rep_sig
 );
 
--- The first DApp is Bitcloud itself:
-INSERT INTO DApps VALUES (1, "Bitcloud", 1, "");
+
+-- DApps dependences. Multiple dependences per DApp are possible
+CREATE TABLE dependences (
+ dapp REFERENCES DApps(id),
+ dependence REFERENCES DApps(id), -- the DApp in dependence
+ min_versin REAL DEFAULT 0, -- the required minimum version
+ max_version REAL DEFAULT 999,
+ PRIMARY KEY (dapp, dependence)
+);
+
+
+CREATE TABLE repositories (
+ id INTEGER PRIMARY KEY,
+ name TEXT NOT NULL,
+ address TEXT NOT NULL,
+ public_key BLOB NOT NULL, -- for signing DApps
+ signature BLOB NOT NULL -- self signature of this row for security reasons
+);
+
+
+/*
+ Default values
+*/
+
+
+-- Fake first repository for testing purposes
+INSERT INTO repositories VALUES (
+ 1, --id
+ "Bitcloud Foundation Main Repository", --name
+ "127.0.0.1", --address
+ "foo", --public key
+ "bar" --signature
+);
+
+-- The first DApp is Bitcloud itself, some values faked
+INSERT INTO DApps VALUES (
+ 1, --id
+ "Bitcloud", --name
+ "Bitcloud bare bones.", --description
+ "Bitcloud Foundation", --author
+ "MIT", --license
+ 0.01, --version
+ 1, --is static
+ NULL, --library
+ 1, --run
+ 1, --is downloaded
+ 1, --bitcloud foundation repository
+ "foo" --signature
+);
+
+-- The default dependence only requires Bitcloud to run:
+INSERT INTO dependences VALUES (
+ 1, --Bitcloud dapp
+ 1, --Bitcloud dapp depends on itself
+ 0, --min version
+ 999 --max version
+);
+
+
 
 -- end
