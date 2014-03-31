@@ -193,7 +193,7 @@ CREATE TABLE publisher_grid_contracts (
  availability INTEGER NOT NULL, -- % of time online
  ping_average INTEGER DEFAULT 0,
  -- Coin terms
- coin TEXT /* ie: BTC */
+ coin TEXT /* example: BTC */
 );
 
 
@@ -368,7 +368,9 @@ CREATE TABLE logs (
 */
 
 CREATE TABLE table_rules (
- table_name TEXT PRIMARY KEY,
+ table_id INTEGER PRIMARY KEY NOT NULL, -- must be unique and assigned by the repository
+ table_name TEXT NOT NULL,
+ dapp INTEGER REFERENCES dapps(id),
 
  -- exposure of the table in the nodepool
  -- 0=private;  1=grid;  2=participants only; 3=full global (careful);
@@ -388,6 +390,8 @@ CREATE TABLE table_rules (
  -- in seconds, 0=nocheck
  check_every INTEGER DEFAULT 600,
 
+
+
  -- check function: this is a C function that checks the consistency of the
  -- last block across the nodes affected (from exposure).
  check_function TEXT DEFAULT "bc_check",
@@ -402,15 +406,23 @@ CREATE TABLE table_rules (
  max_transactions INTEGER DEFAULT 1,
  -- if max number of transaction must be specified per participant to avoid excess
  -- of flood or DDOS attacks:
- check_flood_function TEXT DEFAULT "bc_check_flood",
-
- -- filename of the plugin, without the .dll or .so extension, it must be in the
- -- path of bitcloud DA plugins:
- plugin_file_name TEXT DEFAULT NULL
+ check_flood_function TEXT DEFAULT "bc_check_flood"
 
 );
 
 
+CREATE TABLE DApps (
+ id INTEGER PRIMARY KEY NOT NULL, -- the ID must be unique and assigned by the repository
+ name TEXT NOT NULL,
+ is_static BOOLEAN DEFAULT 0, -- compiled static or dynamic.
 
+ -- This is the name of the library (.so or .dll) file to download. This file
+ -- will contain some or all the functions in the "table_rules". This file is
+ -- located in the "dapp" directory.
+ dapp_library TEXT
+);
+
+-- The first DApp is Bitcloud itself:
+INSERT INTO DApps VALUES (1, "Bitcloud", 1, "");
 
 -- end

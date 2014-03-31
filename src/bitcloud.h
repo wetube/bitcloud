@@ -29,12 +29,13 @@ typedef uint32_t BCKey[8]; /* 256bits for keys */
 typedef uint32_t BCID[5];  /* 160bits for the node Id */
 typedef int Bool;
 typedef time_t BCTime;
-typedef int32_t BCInteger;
+typedef int32_t BCInt;
 typedef int64_t BCSize;
 
 
 /*
   Nodepool database structures and functions
+  ==========================================
 */
 
 BCError  bc_open_nodepool (const char* filename);
@@ -47,13 +48,42 @@ BCError bc_auth (void *user_data,
                  const char *db_name,
                  const char *trigger);
 
-BCError bc_insert (int table, void **cells);
-BCError bc_update (int table, void *row_id, void **new_cells);
-BCError bc_delete (int table, void *row_id);
+/* The three main functions of the nodepool section, most of the
+   actions happen here, as each table has a different way to insert
+   data. These functions dispatch the data received to the DApp functions
+   using what is defined in the table_rules in nodepool.sql */
+
+BCError bc_insert (BCInt table_id, void **cells);
+BCError bc_update (BCInt table_id, void *row_id, void **cells);
+BCError bc_delete (BCInt table_id, void *row_id);
 
 
 /*
-  Connections structures and functions
+  DApps functions
+  ===============
+*/
+
+
+/* Load all the Dapps that are specified in "table_rules". Dynamic libraries
+   for the Dapps must be in the "dapps" directory, except if they are compiled
+   static. */
+BCError load_all_dapps (void);
+
+
+/* load a particual Dapp, as specified in the sqlfile. That sqlfile will
+   define a new row in "DApps" table, plus all the tables needed for the Dapp
+   with their respective "table_rules" row, plus all dynamic libraries needed
+   that must be present in the "dapps" directory previus to the load */
+BCError load_dapp (char *sqlfile);
+
+/* unload the Dapp specified by the id */
+BCError unload_dapp (BCInt id);
+
+
+
+/*
+  Sync structures and functions
+  =============================
 */
 
 BCError bc_prepare_sockets (void);
@@ -61,17 +91,17 @@ BCError bc_prepare_sockets (void);
 typedef struct BCNode {
   BCID id;
   char *address;        /* the sockaddr */
-  BCInteger port;
+  BCInt port;
   struct BCNode *next;  /* the neighboor */
 } BCNode;
 
 typedef struct BCConnection {
   BCNode node;
-  BCInteger bandwidth_quality;
-  BCInteger ping;
-  BCInteger storage_quality;
-  BCInteger availability;
-  BCInteger service_quality;
+  BCInt bandwidth_quality;
+  BCInt ping;
+  BCInt storage_quality;
+  BCInt availability;
+  BCInt service_quality;
   char address[0]; /* null terminated */
 } BCConnection;
 
