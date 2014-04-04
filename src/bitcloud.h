@@ -31,6 +31,9 @@ typedef enum BCError {
   BC_DAPP_BAD_REPOSITORY_SIGNATURE
 } BCError;
 
+/* log an error to the logs table and (optionally) prints a msg: */
+void bc_log (BCError error, char *msg, ...);
+
 typedef uint32_t BCKey[8]; /* 256bits for keys */
 typedef uint32_t BCID[5];  /* 160bits for the node Id */
 typedef int Bool;
@@ -46,6 +49,8 @@ typedef int64_t BCSize;
 
 BCError  bc_open_nodepool (const char* filename);
 
+extern sqlite3 *nodepool;
+
 /* general authorization callback function for sqlite: */
 BCError bc_auth (void *user_data,
                  int even_code,
@@ -54,14 +59,32 @@ BCError bc_auth (void *user_data,
                  const char *db_name,
                  const char *trigger);
 
+
+typedef struct BCRecord {
+  BCInt table_id;
+  union { /* the id, needed to identify the record */
+    BCKey key;
+    BCInt number;
+  } id;
+  struct {
+    BCSize length;
+    void *data;
+  } *cells;
+} BCRecord;
+
+
 /* The three main functions of the nodepool section, most of the
    actions happen here, as each table has a different way to insert
    data. These functions dispatch the data received to the DApp functions
    using what is defined in the table_rules in nodepool.sql */
 
-BCError bc_insert (BCInt table_id, void **cells);
-BCError bc_update (BCInt table_id, void *row_id, void **cells);
-BCError bc_delete (BCInt table_id, void *row_id);
+BCError bc_insert (BCRecord *record);
+BCError bc_update (BCRecord *record);
+BCError bc_delete (BCRecord *record);
+
+
+BCError bc_deserialize (void *data, BCRecord **dest);
+BCError bc_serialize (BCRecord *record, void **dest);
 
 
 /*
