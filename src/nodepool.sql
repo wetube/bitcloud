@@ -350,9 +350,9 @@ CREATE TABLE config (
 
 CREATE TABLE logs (
  num  INTEGER PRIMARY KEY AUTOINCREMENT,
- category TEXT,
+ error_code INTEGER NOT NULL,
  log TEXT,
- timestamp TEXT -- Timestamp of when the log occured
+ timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 

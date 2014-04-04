@@ -150,6 +150,22 @@ extern int n_Connections;
 
 BCError bc_find_proximity (BCID * dest);
 
+/*
+ Messagge system
+ ===============
+*/
+
+
+typedef struct BCMsg {
+  BCKey origin;
+  BCInt command;
+  void *data;
+} BCMsg;
+
+BCError bc_send (BCMsg);
+
+/* receives the msg */
+BCError bc_event_loop ();
 
 
 #endif /* _BITCLOUD_H */

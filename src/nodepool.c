@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "bitcloud.h"
 
 #include "nodepool_sql.h"
@@ -41,7 +43,7 @@ BCError bc_open_nodepool (const char* filename)
       bc_log (BC_DB_ERROR, "%s", err);
       return (BC_DB_ERROR);
     }
-    bc_log (BC_OK, "Nodepool created.");
+    bc_log (BC_OK, "Nodepool created");
   }
 
   return BC_OK;
@@ -78,13 +80,40 @@ void bc_log (BCError error, char *msg, ...)
   va_list args;
   va_start(args, msg);
   if (error!=BC_OK) {
-    fprintf (stderr, "ERROR %d: ", error);
+    printf ("ERROR %d: ", error);
   }
-  vfprintf (stderr, msg, args);
-  fprintf (stderr, "\n");
+  vprintf (msg, args);
+  printf ("\n");
   va_end(args);
 
+  /* log into the nodepool: */
   if (nodepool) {
-    /* TODO: insert log into the nodepool */
+    /* static variables and prepared statements to make it faster:*/
+    static sqlite3_stmt *stmt;
+    static char *sql = "INSERT INTO logs(error_code,log) VALUES(?,?)";
+    static const char *tail;
+    static int rc = -1;
+
+    if (rc==-1) {
+      rc = sqlite3_prepare(nodepool, sql, strlen(sql), &stmt, &tail);
+
+      if (rc!=SQLITE_OK) {
+        fprintf (stderr, "FATAL: error in the database, cannot log.\n");
+        sqlite3_close (nodepool);
+        exit(1);
+      }
+    }
+
+    sqlite3_bind_int(stmt, 1, error);
+    sqlite3_bind_text(stmt, 2, msg, -1, SQLITE_STATIC);
+
+
+    sqlite3_step(stmt);
+    int reset_err = sqlite3_reset(stmt);
+    if (reset_err) {
+      fprintf (stderr, "FATAL: database is corrupted (SQLite error %d).\n", reset_err);
+      exit(BC_DB_ERROR);
+    }
+
   }
 }
