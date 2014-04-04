@@ -2,8 +2,14 @@ CC=gcc
 CFLAGS=-Wall
 LDLIBS=-lsqlite3
 
-bitcloud: main.o nodepool.o
+bitcloud: main.o bitcloud.a
 	$(CC) -o $@ $^ $(LDLIBS)
+
+tests: bitcloud.a
+	cd tests && $(MAKE)
+
+bitcloud.a: nodepool.o
+	ar -cvq $@ $^
 
 main.o: main.c bitcloud.h
 	$(CC) $(CFLAGS) -c $<
@@ -17,4 +23,5 @@ nodepool_sql.h: nodepool.sql
 	xxd -i $< > nodepool_sql.h
 
 clean:
-	rm -f *.o nodepool nodepool_sql.h bitcloud
+	rm -f *.o *.a nodepool nodepool_sql.h bitcloud
+	cd tests && $(MAKE) clean

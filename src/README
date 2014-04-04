@@ -31,10 +31,23 @@ important to preserve.
 The generated nodepool can be open by sqlite3 or a client of it:
 
 # sqlite3 nodepool
-#  .schema
-#  .help
+>  .schema
+>  .help
 
 To see the logs from the command line:
 
 # sqlite3 nodepool "select * from logs"
 
+TESTS
+=====
+
+# make tests
+
+This will create a nodepool on "tests" directory and run tests.
+
+CLEAN
+=====
+
+# make clean
+
+This will remove all compiled files, the nodepool, and tests.
