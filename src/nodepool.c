@@ -67,24 +67,21 @@ BCError bc_auth (void *user_data,
   return SQLITE_DENY;
 }
 
-BCError bc_register_node (BCNode *node)
-{
-  if (!node) return BC_BAD_DATA;
-
-
-  return 0;
-}
+BCBool log_to_stdout = 1;
 
 void bc_log (BCError error, char *msg, ...)
 {
   va_list args;
+  char buffer[BC_MAX_LOG_SIZE];
+
   va_start(args, msg);
-  if (error!=BC_OK) {
-    printf ("ERROR %d: ", error);
-  }
-  vprintf (msg, args);
-  printf ("\n");
+  vsnprintf (buffer, 256, msg, args);
   va_end(args);
+
+  if (log_to_stdout) {
+    if (error!=BC_OK) printf ("ERROR %d: ", error);
+    printf ("%s\n", buffer);
+  }
 
   /* log into the nodepool: */
   if (nodepool) {
@@ -100,18 +97,18 @@ void bc_log (BCError error, char *msg, ...)
       if (rc!=SQLITE_OK) {
         fprintf (stderr, "FATAL: error in the database, cannot log.\n");
         sqlite3_close (nodepool);
-        exit(1);
+        exit(rc);
       }
     }
 
     sqlite3_bind_int(stmt, 1, error);
-    sqlite3_bind_text(stmt, 2, msg, -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, buffer, -1, SQLITE_STATIC);
 
 
     sqlite3_step(stmt);
     int reset_err = sqlite3_reset(stmt);
     if (reset_err) {
-      fprintf (stderr, "FATAL: database is corrupted (SQLite error %d).\n", reset_err);
+      fprintf (stderr, "FATAL: database error (SQLite error %d).\n", reset_err);
       exit(BC_DB_ERROR);
     }
 

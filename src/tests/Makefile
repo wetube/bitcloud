@@ -1,20 +1,20 @@
 CC=gcc
-LDLIBS=-lsqlite3 ../bitcloud.a
+LDLIBS=`pkg-config --libs sqlite3` ../bitcloud.a
 INCLUDES=-I..
-CFLAGS=-Wall
+CFLAGS=-Wall `pkg-config --cflags sqlite3`
 
 run_tests_and_clean: clean run_tests
 
 run_tests: tests
 	@echo -- STARTING TESTS --
-	@./tests
+	./tests
 	@echo -- ALL TESTS PASSED --
-	@echo -- LOGS --
+
+logs:
 	sqlite3 nodepool "select * from logs"
 
-
-tests: main.c
-	@$(CC) -o $@ $^ $(INCLUDES) $(LDLIBS)
+tests: main.c logs.c ../bitcloud.a
+	$(CC) -o $@ $< $(INCLUDES) $(LDLIBS) $(CFLAGS)
 
 clean:
-	@rm -f tests nodepool
+	rm -f tests nodepool

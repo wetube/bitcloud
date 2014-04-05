@@ -31,15 +31,19 @@ typedef enum BCError {
   BC_DAPP_BAD_REPOSITORY_SIGNATURE
 } BCError;
 
-/* log an error to the logs table and (optionally) prints a msg: */
-void bc_log (BCError error, char *msg, ...);
 
 typedef uint32_t BCKey[8]; /* 256bits for keys */
 typedef uint32_t BCID[5];  /* 160bits for the node Id */
-typedef int Bool;
+typedef int BCBool;
 typedef time_t BCTime;
 typedef int32_t BCInt;
 typedef int64_t BCSize;
+
+
+/* log an error to the logs table and (optionally) prints a msg: */
+void bc_log (BCError error, char *msg, ...);
+extern BCBool log_to_stdout;
+#define BC_MAX_LOG_SIZE 256
 
 
 /*

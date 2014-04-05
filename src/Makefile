@@ -1,15 +1,16 @@
 CC=gcc
-CFLAGS=-Wall
-LDLIBS=-lsqlite3
+CFLAGS=-Wall `pkg-config --cflags sqlite3`
+LDLIBS=`pkg-config --libs sqlite3`
 
 bitcloud: main.o bitcloud.a
 	$(CC) -o $@ $^ $(LDLIBS)
 
-tests: bitcloud.a
+tests: bitcloud.a tests/main.c tests/logs.c
 	cd tests && $(MAKE)
 
 bitcloud.a: nodepool.o
-	ar -cvq $@ $^
+	rm -f $@
+	ar rcs $@ $^
 
 main.o: main.c bitcloud.h
 	$(CC) $(CFLAGS) -c $<
