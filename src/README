@@ -6,6 +6,7 @@ Current requirements:
 - GCC and GNU make.
 - sqlite3-dev
 - xxd
+- pkg-config
 
 Tested on Debian 7, should be compatible with any Unix system.
 

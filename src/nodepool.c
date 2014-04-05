@@ -75,7 +75,7 @@ void bc_log (BCError error, char *msg, ...)
   char buffer[BC_MAX_LOG_SIZE];
 
   va_start(args, msg);
-  vsnprintf (buffer, 256, msg, args);
+  vsnprintf (buffer, BC_MAX_LOG_SIZE, msg, args);
   va_end(args);
 
   if (log_to_stdout) {
@@ -104,13 +104,14 @@ void bc_log (BCError error, char *msg, ...)
     sqlite3_bind_int(stmt, 1, error);
     sqlite3_bind_text(stmt, 2, buffer, -1, SQLITE_STATIC);
 
-
     sqlite3_step(stmt);
+
     int reset_err = sqlite3_reset(stmt);
     if (reset_err) {
-      fprintf (stderr, "FATAL: database error (SQLite error %d).\n", reset_err);
+      fprintf (stderr,
+               "FATAL: database error (SQLite error %d).\n",
+               reset_err);
       exit(BC_DB_ERROR);
     }
-
   }
 }
