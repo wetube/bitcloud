@@ -38,7 +38,7 @@ typedef int BCBool;
 typedef time_t BCTime;
 typedef int32_t BCInt;
 typedef int64_t BCSize;
-
+typedef unsigned char BCByte;
 
 /* log an error to the logs table and (optionally) prints a msg: */
 void bc_log (BCError error, char *msg, ...);
@@ -63,32 +63,63 @@ BCError bc_auth (void *user_data,
                  const char *db_name,
                  const char *trigger);
 
+/*
+ We use ubjson specification http://ubjson.org/ for all serialization
+ purposes.
+*/
 
-typedef struct BCRecord {
-  BCInt table_id;
-  union { /* the id, needed to identify the record */
-    BCKey key;
-    BCInt number;
-  } id;
-  struct {
-    BCSize length;
-    void *data;
-  } *cells;
-} BCRecord;
+typedef BCByte BCMsgType;
+
+#define BC_MSG_NULL 'Z'
+#define BC_MSG_NO_OP 'N'
+#define BC_MSG_TRUE 'T'
+#define BC_MSG_FALSE 'F'
+#define BC_MSG_INT8 'i'
+#define BC_MSG_UINT8 'U'
+#define BC_MSG_INT16 'I'
+#define BC_MSG_INT32 'l'
+#define BC_MSG_INT64 'L'
+#define BC_MSG_FLOAT32 'd'
+#define BC_MSG_FLOAT64 'D'
+#define BC_MSG_CHAT 'C'
+#define BC_MSG_STRING 'S' /* needs size */
+#define BC_MSG_ARRAY_START '[' /* needs size */
+#define BC_MSG_ARRAY_END ']' /* consistance check */
+#define BC_MSG_OBJECT_START '{'  /* needs size */
+#define BC_MSG_OBJECT_END '}' /* consistance check */
+/* extensions to ubjson: */
+#define BC_MSG_BLOB 'B' /* needs size */
+#define BC_MSG_TABLE_ID BC_MSG_INT16
+#define BC_MSG_INSERT_ROW 'R' /* needs table id and object */
+#define BC_MSG_UPDATE_ROW 'W' /* needs table id and object */
+#define BC_MSG_DELETE_ROW 'X' /* needs table id and object */
+
+/*
+  bc_deserialize assign data to variables. Ussage example:
+
+  BCInt table_id = <configs table id>;
+  void *record = <incoming data>;
+  char *var, *value;
+
+  bc_deserialize (table_id, data, &var, &value);
+  [ do something with var and value ]
+
+ */
+BCError bc_deserialize (BCInt table_id, void *record, ...);
+BCError bc_serialize (BCInt table_id, void **destination, ...);
 
 
 /* The three main functions of the nodepool section, most of the
    actions happen here, as each table has a different way to insert
    data. These functions dispatch the data received to the DApp functions
-   using what is defined in the table_rules in nodepool.sql */
+   using what is defined in the table_rules in nodepool.sql.
 
-BCError bc_insert (BCRecord *record);
-BCError bc_update (BCRecord *record);
-BCError bc_delete (BCRecord *record);
+   Normally the dispatched functions will use bc_deserialize internally.
+ */
 
-
-BCError bc_deserialize (void *data, BCRecord **dest);
-BCError bc_serialize (BCRecord *record, void **dest);
+BCError bc_insert (void *record);
+BCError bc_update (void *record);
+BCError bc_delete (void *record);
 
 
 /*

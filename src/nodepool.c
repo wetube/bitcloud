@@ -115,3 +115,14 @@ void bc_log (BCError error, char *msg, ...)
     }
   }
 }
+
+BCError bc_deserialize (BCInt table_id, void *record, ...)
+{
+  /* 1. obtain the structure of the table */
+
+  /* 2. check that we have the correct number of arguments */
+
+  /* 3. extract to the arguments */
+
+  return BC_OK;
+}
