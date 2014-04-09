@@ -13,6 +13,7 @@
 typedef enum BCError {
   BC_OK=0,
   BC_DB_ERROR,
+  BC_BAD_SQL,
   BC_BAD_DATA,
   BC_BAD_SIGNATURE,
   BC_NOT_FOUND,
@@ -28,7 +29,9 @@ typedef enum BCError {
   BC_DAPP_NOT_INSTALLED,
   BC_DAPP_BAD_TABLE_RULES,
   BC_DAPP_ID_CONFLICT,
-  BC_DAPP_BAD_REPOSITORY_SIGNATURE
+  BC_DAPP_BAD_REPOSITORY_SIGNATURE,
+  /* NON ERRORS: */
+  BC_NEXT_ROW,
 } BCError;
 
 
@@ -36,12 +39,10 @@ typedef uint32_t BCKey[8]; /* 256bits for keys */
 typedef uint32_t BCID[5];  /* 160bits for the node Id */
 typedef int BCBool;
 typedef time_t BCTime;
-typedef int32_t BCInt;
-typedef int64_t BCSize;
 typedef unsigned char BCByte;
 
 /* log an error to the logs table and (optionally) prints a msg: */
-void bc_log (BCError error, char *msg, ...);
+void bc_log (BCError error, const char *msg, ...);
 extern BCBool log_to_stdout;
 #define BC_MAX_LOG_SIZE 256
 
@@ -54,6 +55,11 @@ extern BCBool log_to_stdout;
 BCError  bc_open_nodepool (const char* filename);
 
 extern sqlite3 *nodepool;
+
+
+BCError bc_sql (sqlite3_stmt **stmt, const char* sql, char *format, ...);
+BCError bc_get_row (sqlite3_stmt *stmt, char *format, ...);
+
 
 /* general authorization callback function for sqlite: */
 BCError bc_auth (void *user_data,
@@ -97,7 +103,7 @@ typedef BCByte BCMsgType;
 /*
   bc_deserialize assign data to variables. Ussage example:
 
-  BCInt table_id = <configs table id>;
+  int table_id = <configs table id>;
   void *record = <incoming data>;
   char *var, *value;
 
@@ -105,8 +111,8 @@ typedef BCByte BCMsgType;
   [ do something with var and value ]
 
  */
-BCError bc_deserialize (BCInt table_id, void *record, ...);
-BCError bc_serialize (BCInt table_id, void **destination, ...);
+BCError bc_deserialize (int table_id, void *record, ...);
+BCError bc_serialize (int table_id, void **destination, ...);
 
 
 /* The three main functions of the nodepool section, most of the
@@ -134,15 +140,15 @@ BCError bc_run_all_dapps (void);
 
 /* load in memory and run or stop a specific Dapp defined in the DApps
    table: */
-BCError bc_run_dapp (BCInt id);
-BCError bc_stop_dapp (BCInt id);
+BCError bc_run_dapp (int id);
+BCError bc_stop_dapp (int id);
 
-BCError bc_update_repositories (BCInt id);
+BCError bc_update_repositories (int id);
 
 /* this downloads the DApp from the repository referenced by its ID, which is
    a ZIP file that contains the shared libraries, the sql file and auxiliary
    files specific to the DApp: */
-BCError bc_download_app (BCInt id);
+BCError bc_download_app (int id);
 
 /* install a particual Dapp. The DApp will contain a sqlfile with an INSERT
    command for a new row in "DApps" table, plus all the tables needed for the
@@ -152,7 +158,7 @@ BCError bc_install_dapp (char *zipfile);
 
 /* stops the Dapp specified by the id and delete all the tables owned by the
    DApp */
-BCError bc_uninstall_dapp (BCInt id);
+BCError bc_uninstall_dapp (int id);
 
 
 
@@ -166,17 +172,17 @@ BCError bc_prepare_sockets (void);
 typedef struct BCNode {
   BCID id;
   char *address;        /* the sockaddr */
-  BCInt port;
+  int port;
   struct BCNode *next;  /* the neighboor */
 } BCNode;
 
 typedef struct BCConnection {
   BCNode node;
-  BCInt bandwidth_quality;
-  BCInt ping;
-  BCInt storage_quality;
-  BCInt availability;
-  BCInt service_quality;
+  int bandwidth_quality;
+  int ping;
+  int storage_quality;
+  int availability;
+  int service_quality;
   char address[0]; /* null terminated */
 } BCConnection;
 
@@ -193,7 +199,7 @@ BCError bc_find_proximity (BCID * dest);
 
 typedef struct BCMsg {
   BCKey origin;
-  BCInt command;
+  int command;
   void *data;
 } BCMsg;
 

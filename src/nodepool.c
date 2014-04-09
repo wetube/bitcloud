@@ -69,7 +69,7 @@ BCError bc_auth (void *user_data,
 
 BCBool log_to_stdout = 1;
 
-void bc_log (BCError error, char *msg, ...)
+void bc_log (BCError error, const char *msg, ...)
 {
   va_list args;
   char buffer[BC_MAX_LOG_SIZE];
@@ -116,13 +116,139 @@ void bc_log (BCError error, char *msg, ...)
   }
 }
 
-BCError bc_deserialize (BCInt table_id, void *record, ...)
+
+sqlite3_stmt* bc_prepare_sql (const char *sql)
 {
-  /* 1. obtain the structure of the table */
+  sqlite3_stmt *stmt;
+  int rc = sqlite3_prepare(nodepool, sql, strlen(sql), &stmt, NULL);
+  if (rc!=SQLITE_OK) {
+    bc_log (BC_BAD_SQL, (const char*) sqlite3_errmsg(nodepool));
+    return NULL;
+  }
+  return stmt;
+}
 
-  /* 2. check that we have the correct number of arguments */
+BCError bc_sql (sqlite3_stmt **stmt, const char* sql, char *format, ...)
+{
+  va_list args;
+  int pos = 1;
 
-  /* 3. extract to the arguments */
+  if (!*stmt) {/* if NULL, create a new statement */
+    if (!sql) return BC_BAD_SQL;
+    else *stmt = bc_prepare_sql (sql);
+  }
+  if (!*stmt) return BC_BAD_SQL;
 
+  va_start (args, format);
+
+  for (pos=1; *format != 0; pos++, format++) {
+    switch (*format) {
+    case 'l':
+      sqlite3_bind_int(*stmt, pos, va_arg(args, int));
+      continue;
+    case 'S':
+      sqlite3_bind_text (*stmt, pos, va_arg(args, char*), -1, SQLITE_STATIC);
+      continue;
+    case 'D':
+      sqlite3_bind_double(*stmt, pos, va_arg(args, double));
+      continue;
+    case 'B':
+      /* TODO: BLOB CASE */
+      continue;
+    default:
+      bc_log (BC_BAD_SQL, "Incorrect bind format '%s'", format);
+      return BC_BAD_SQL;
+    }
+  }
+  sqlite3_step (*stmt);
+  va_end (args);
+  return BC_OK;
+}
+
+
+BCError bc_get_row (sqlite3_stmt *stmt, char *format, ...)
+{
+  va_list args;
+  int pos = 1;
+  BCError err;
+  char **text;
+
+  /* internal function to check that sqlite3 doesn't complain: */
+  BCError check_errors (void) {
+    int errcode;
+    errcode = sqlite3_errcode (nodepool);
+    if ((errcode!=SQLITE_OK) && (errcode!=SQLITE_ROW)) {
+      bc_log (BC_BAD_SQL,
+              "error getting a column in a record: %s",
+              sqlite3_errmsg(nodepool));
+      return BC_BAD_SQL;
+    }
+    return BC_OK;
+  }
+
+  if (!stmt) return BC_BAD_SQL;
+
+  va_start (args, format);
+
+  for (pos=0; *format != 0; pos++, format++) {
+    switch (*format) {
+    case 'l':
+      *va_arg (args, int*) = sqlite3_column_int(stmt, pos);
+      if ((err = check_errors ()) != BC_OK) return err;
+      continue;
+    case 'S':
+      text = va_arg (args, char**);
+      *text = (char*) sqlite3_column_text(stmt, pos);
+      if ((err = (check_errors ())) != BC_OK) {
+        *text = NULL; /* avoid further buffer overrun */
+        return err;
+      }
+      /* copy the string because sqlite3 deletes the string automatically: */
+      *text = strdup ((const char *)*text);
+      continue;
+    case 'D':
+      *va_arg (args, double*) = sqlite3_column_double(stmt, pos);
+      if ((err = check_errors ()) != BC_OK) return err;
+      continue;
+    case 'B':
+      /* TODO: BLOBS */
+      if ((err = check_errors ()) != BC_OK) return err;
+      continue;
+    default:
+      sqlite3_reset (stmt);
+      bc_log (BC_BAD_SQL, "Incorrect bind variables format '%s'", format);
+      return BC_BAD_SQL;
+    }
+  }
+  va_end (args);
+  /* if there are more rows available, return BC_NEXT_ROW, so the program
+     can continue to extract rows, otherwise return BC_OK which means there
+     are no more rows, and finalize the statement */
+  if (sqlite3_step (stmt) == SQLITE_ROW) return BC_NEXT_ROW;
+  else {
+    sqlite3_reset (stmt);
+    return BC_OK;
+  }
+}
+
+#define bc_stmt_reset sqlite3_reset
+
+char *bc_get_table_name (int table_id) {
+
+  char *name;
+  static sqlite3_stmt *stmt = NULL;
+
+  if (bc_sql (&stmt,
+              "SELECT table_name FROM table_rules WHERE table_id=?",
+              "l", table_id)
+      || bc_get_row (stmt, "S", &name))
+    return NULL;
+
+  return name;
+}
+
+BCError bc_deserialize (int table_id, void *record, ...)
+{
+  /* TODO */
   return BC_OK;
 }
