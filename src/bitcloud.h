@@ -29,21 +29,20 @@ typedef enum BCError {
   BC_DAPP_NOT_INSTALLED,
   BC_DAPP_BAD_TABLE_RULES,
   BC_DAPP_ID_CONFLICT,
-  BC_DAPP_BAD_REPOSITORY_SIGNATURE,
+  BC_DAPP_BAD_REPO_SIG,
   /* NON ERRORS: */
-  BC_NEXT_ROW,
+  BC_ROW, /* a new row is ready to read */
+  BC_DONE, /* done steping */
 } BCError;
 
 
 typedef uint32_t BCKey[8]; /* 256bits for keys */
 typedef uint32_t BCID[5];  /* 160bits for the node Id */
-typedef int BCBool;
-typedef time_t BCTime;
-typedef unsigned char BCByte;
+typedef sqlite3_stmt* BCStmt; /* statement for the db operations */
 
 /* log an error to the logs table and (optionally) prints a msg: */
 void bc_log (BCError error, const char *msg, ...);
-extern BCBool log_to_stdout;
+extern int BC_log_to_stdout;
 #define BC_MAX_LOG_SIZE 256
 
 
@@ -56,25 +55,27 @@ BCError  bc_open_nodepool (const char* filename);
 
 extern sqlite3 *nodepool;
 
+/* functions to use SQL inside BC and Dapps: */
+/* TODO: documentation */
+BCError bc_sql (BCStmt *stmt, const char* sql);
+BCError bc_step (BCStmt stmt);
+BCError bc_reset (BCStmt stmt);
+BCError bc_finalize (BCStmt stmt);
+BCError bc_binds (BCStmt stmt, int position, const char *value);
+BCError bc_bindi (BCStmt stmt, int position, int value);
+int bc_geti (BCStmt stmt, int column);
+char *bc_gets (BCStmt stmt, int column);
 
-BCError bc_sql (sqlite3_stmt **stmt, const char* sql, char *format, ...);
-BCError bc_get_row (sqlite3_stmt *stmt, char *format, ...);
+/* exit if there is an important SQL error */
+extern int BC_exit_on_sql_error;
 
-
-/* general authorization callback function for sqlite: */
-BCError bc_auth (void *user_data,
-                 int even_code,
-                 const char *event_spec,
-                 const char *event_spec2,
-                 const char *db_name,
-                 const char *trigger);
 
 /*
  We use ubjson specification http://ubjson.org/ for all serialization
  purposes.
 */
 
-typedef BCByte BCMsgType;
+typedef char BCMsgType;
 
 #define BC_MSG_NULL 'Z'
 #define BC_MSG_NO_OP 'N'

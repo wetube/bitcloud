@@ -1,21 +1,36 @@
 
 void serialization (void)
 {
-  static sqlite3_stmt *stmt = NULL, *stmt2 = NULL;
-  char *var, *value, *var1, *value1;
+  BCStmt stmt = NULL;
+  char
+    *var1 = "textvar",
+    *value1 ="textvalue",
+    *var2 = "intvar";
+  int value2 = 444;
 
-  var = "testvar";
-  value = "testvalue";
-  var1 = "bad";
-  value1 = "bad";
+  bc_sql (&stmt, "INSERT INTO config VALUES (?,?)");
+  bc_binds (stmt, 1, var1);
+  bc_binds (stmt, 2, value1);
+  bc_step (stmt);
+  bc_finalize (stmt);
+  bc_sql (&stmt,"SELECT val FROM config WHERE var=?");
+  bc_binds (stmt, 1, var1);
+  bc_step (stmt);
+  assert(!strcmp (bc_gets (stmt, 0), value1));
+  bc_finalize (stmt);
+  printf ("test\n");
 
-  assert (!bc_sql (&stmt,
-                   "INSERT INTO config VALUES (?,?)",
-                   "SS", var, value));
-  assert (!bc_sql (&stmt2,
-                   "SELECT * FROM config", ""));
-  assert (!bc_get_row (stmt2, "SS", &var1, &value1));
-  assert (!strcmp (var, var1));
-  assert (!strcmp (value, value1));
-  free (var1); free (value1);
+  /* test insertion and retrival of an integer: */
+
+  bc_sql (&stmt, "INSERT INTO config VALUES (?,?)");
+  bc_binds (stmt, 1, var2);
+  bc_bindi (stmt, 2, value2);
+  bc_step (stmt);
+  bc_finalize (stmt);
+  bc_sql (&stmt,"SELECT val FROM config WHERE var=?");
+  bc_binds (stmt, 1, var2);
+  bc_step (stmt);
+  assert(bc_geti (stmt, 0) == value2);
+  bc_finalize (stmt);
+
 }

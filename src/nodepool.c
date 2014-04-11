@@ -67,7 +67,8 @@ BCError bc_auth (void *user_data,
   return SQLITE_DENY;
 }
 
-BCBool log_to_stdout = 1;
+int BC_log_to_stdout = 1;
+int BC_exit_on_sql_error = 1;
 
 void bc_log (BCError error, const char *msg, ...)
 {
@@ -78,7 +79,7 @@ void bc_log (BCError error, const char *msg, ...)
   vsnprintf (buffer, BC_MAX_LOG_SIZE, msg, args);
   va_end(args);
 
-  if (log_to_stdout) {
+  if (BC_log_to_stdout) {
     if (error!=BC_OK) printf ("ERROR %d: ", error);
     printf ("%s\n", buffer);
   }
@@ -113,139 +114,99 @@ void bc_log (BCError error, const char *msg, ...)
                reset_err);
       exit(BC_DB_ERROR);
     }
-  }
-}
 
-
-sqlite3_stmt* bc_prepare_sql (const char *sql)
-{
-  sqlite3_stmt *stmt;
-  int rc = sqlite3_prepare(nodepool, sql, strlen(sql), &stmt, NULL);
-  if (rc!=SQLITE_OK) {
-    bc_log (BC_BAD_SQL, (const char*) sqlite3_errmsg(nodepool));
-    return NULL;
-  }
-  return stmt;
-}
-
-BCError bc_sql (sqlite3_stmt **stmt, const char* sql, char *format, ...)
-{
-  va_list args;
-  int pos = 1;
-
-  if (!*stmt) {/* if NULL, create a new statement */
-    if (!sql) return BC_BAD_SQL;
-    else *stmt = bc_prepare_sql (sql);
-  }
-  if (!*stmt) return BC_BAD_SQL;
-
-  va_start (args, format);
-
-  for (pos=1; *format != 0; pos++, format++) {
-    switch (*format) {
-    case 'l':
-      sqlite3_bind_int(*stmt, pos, va_arg(args, int));
-      continue;
-    case 'S':
-      sqlite3_bind_text (*stmt, pos, va_arg(args, char*), -1, SQLITE_STATIC);
-      continue;
-    case 'D':
-      sqlite3_bind_double(*stmt, pos, va_arg(args, double));
-      continue;
-    case 'B':
-      /* TODO: BLOB CASE */
-      continue;
-    default:
-      bc_log (BC_BAD_SQL, "Incorrect bind format '%s'", format);
-      return BC_BAD_SQL;
+    if (BC_exit_on_sql_error && (error == BC_BAD_SQL)) {
+      sqlite3_close (nodepool);
+      exit (BC_BAD_SQL);
     }
   }
-  sqlite3_step (*stmt);
-  va_end (args);
+}
+
+
+BCError bc_sql (BCStmt *stmt, const char* sql)
+{
+  if (sqlite3_prepare(nodepool, sql, strlen(sql), stmt, NULL)) {
+    bc_log (BC_BAD_SQL,
+            "bad SQL statement: %s",
+            (const char*) sqlite3_errmsg(nodepool));
+    return BC_BAD_SQL;
+  }
   return BC_OK;
 }
 
-
-BCError bc_get_row (sqlite3_stmt *stmt, char *format, ...)
+BCError bc_step (BCStmt stmt)
 {
-  va_list args;
-  int pos = 1;
-  BCError err;
-  char **text;
-
-  /* internal function to check that sqlite3 doesn't complain: */
-  BCError check_errors (void) {
-    int errcode;
-    errcode = sqlite3_errcode (nodepool);
-    if ((errcode!=SQLITE_OK) && (errcode!=SQLITE_ROW)) {
-      bc_log (BC_BAD_SQL,
-              "error getting a column in a record: %s",
-              sqlite3_errmsg(nodepool));
-      return BC_BAD_SQL;
-    }
-    return BC_OK;
+  int rc = sqlite3_step (stmt);
+  if (rc && (rc != SQLITE_ROW) && (rc != SQLITE_DONE)) {
+    bc_reset (stmt);
+    bc_log (BC_BAD_SQL,
+            "can not perform SQL step: %s",
+            (const char*) sqlite3_errmsg(nodepool));
+    return BC_BAD_SQL;
   }
-
-  if (!stmt) return BC_BAD_SQL;
-
-  va_start (args, format);
-
-  for (pos=0; *format != 0; pos++, format++) {
-    switch (*format) {
-    case 'l':
-      *va_arg (args, int*) = sqlite3_column_int(stmt, pos);
-      if ((err = check_errors ()) != BC_OK) return err;
-      continue;
-    case 'S':
-      text = va_arg (args, char**);
-      *text = (char*) sqlite3_column_text(stmt, pos);
-      if ((err = (check_errors ())) != BC_OK) {
-        *text = NULL; /* avoid further buffer overrun */
-        return err;
-      }
-      /* copy the string because sqlite3 deletes the string automatically: */
-      *text = strdup ((const char *)*text);
-      continue;
-    case 'D':
-      *va_arg (args, double*) = sqlite3_column_double(stmt, pos);
-      if ((err = check_errors ()) != BC_OK) return err;
-      continue;
-    case 'B':
-      /* TODO: BLOBS */
-      if ((err = check_errors ()) != BC_OK) return err;
-      continue;
-    default:
-      sqlite3_reset (stmt);
-      bc_log (BC_BAD_SQL, "Incorrect bind variables format '%s'", format);
-      return BC_BAD_SQL;
-    }
-  }
-  va_end (args);
-  /* if there are more rows available, return BC_NEXT_ROW, so the program
-     can continue to extract rows, otherwise return BC_OK which means there
-     are no more rows, and finalize the statement */
-  if (sqlite3_step (stmt) == SQLITE_ROW) return BC_NEXT_ROW;
-  else {
-    sqlite3_reset (stmt);
-    return BC_OK;
-  }
+  return (rc == SQLITE_ROW) ? BC_ROW : BC_OK;
 }
 
-#define bc_stmt_reset sqlite3_reset
-
-char *bc_get_table_name (int table_id) {
-
-  char *name;
-  static sqlite3_stmt *stmt = NULL;
-
-  if (bc_sql (&stmt,
-              "SELECT table_name FROM table_rules WHERE table_id=?",
-              "l", table_id)
-      || bc_get_row (stmt, "S", &name))
-    return NULL;
-
-  return name;
+BCError bc_reset (BCStmt stmt)
+{
+  if (sqlite3_reset (stmt)) {
+    bc_log (BC_BAD_SQL,
+            "can not perform SQL statement reset: %s",
+            (const char*) sqlite3_errmsg(nodepool));
+    return BC_BAD_SQL;
+  }
+  return BC_OK;
 }
+
+BCError bc_finalize (BCStmt stmt)
+{
+  if (sqlite3_finalize (stmt)) {
+    printf ("finalize\n");
+    bc_log (BC_BAD_SQL,
+            "can not perform SQL statement finalize: %s",
+            (const char*) sqlite3_errmsg(nodepool));
+    return BC_BAD_SQL;
+   }
+
+   return BC_OK;
+}
+
+BCError bc_binds (BCStmt stmt, int position, const char *value)
+{
+  int rc = sqlite3_bind_text(stmt, position, value, -1, SQLITE_STATIC);
+  if (rc) {
+    bc_reset (stmt);
+    bc_log (BC_BAD_SQL,
+            "can not perform SQL string bind: %d: %s", rc,
+            (const char*) sqlite3_errmsg(nodepool));
+    return BC_BAD_SQL;
+  }
+  return BC_OK;
+}
+
+BCError bc_bindi (BCStmt stmt, int position, int value)
+{
+  if (sqlite3_bind_int(stmt, position, value)) {
+    bc_reset (stmt);
+    bc_log (BC_BAD_SQL,
+            "can not perform SQL integer bind: %s",
+            (const char*) sqlite3_errmsg(nodepool));
+    return BC_BAD_SQL;
+  }
+  return BC_OK;
+}
+
+int bc_geti (BCStmt stmt, int column)
+{
+  return sqlite3_column_int(stmt, column);
+}
+
+char *bc_gets (BCStmt stmt, int column)
+{
+  return (char*) sqlite3_column_text (stmt, column);
+}
+
+
 
 BCError bc_deserialize (int table_id, void *record, ...)
 {
