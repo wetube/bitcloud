@@ -141,9 +141,9 @@ CREATE TABLE publisher_trusts (
 
 
 CREATE TABLE users (
- public_key PRIMARY KEY NOT NULL,
- publisher NOT NULL REFERENCES publishers(public_key),
- publisher_signature,
+ public_key BLOB PRIMARY KEY NOT NULL,
+ publisher BLOB NOT NULL REFERENCES publishers(public_key),
+ publisher_signature BLOB,
  address TEXT,
  nick TEXT COLLATE NOCASE,
  fixed_address BOOLEAN DEFAULT TRUE,
@@ -152,7 +152,7 @@ CREATE TABLE users (
  bandwidth_quota INTEGER DEFAULT 0,
  files_quota INTEGER DEFAULT 0, -- how many files can upload
  folder_quota INTEGER DEFAULT 0, -- how many folders allowed
- root_folder REFERENCES folders(id)
+ root_folder BLOB REFERENCES folders(id)
 );
 
 -- User requests sent to the grids, for example, creating
@@ -164,8 +164,8 @@ CREATE TABLE user_requests (
  grid TEXT NOT NULL REFERENCES grids(public_key),
  action INTEGER NOT NULL,
  -- every type of action will have a different param values
- param1,
- param2,
+ param1 BLOB,
+ param2 BLOB,
  /*
  1: Download file: param1=fileID, param2=offset
  2: Stream file: param1=fileID, param2=offset
@@ -209,8 +209,8 @@ CREATE TABLE grid_owner_requests (
  grid BLOB PRIMARY KEY REFERENCES grids(id),
  owner_sig BLOB NOT NULL,
  action INTEGER NOT NULL,
- param1,
- param2
+ param1 BLOB,
+ param2 BLOB
  /* possible actions
  1: Assign storage node: param1=nodeID, param2=gatewayID
  2: Upgrade storage node to gateway: param1=nodeID
@@ -225,8 +225,8 @@ CREATE TABLE publisher_requests (
  grid_sig BLOB NOT NULL,
  publisher_sig BLOB,
  action INTEGER NOT NULL,
- param1,
- param2,
+ param1 BLOB,
+ param2 BLOB,
  /* possible actions:
  1: Accept user: param1=userID, param2=due-time
  2: Revoke user: param1=userID
@@ -249,28 +249,28 @@ CREATE TABLE publisher_requests (
 -- present it to the users/publishers. Multiple gateways per grid
 -- are possible.
 CREATE TABLE gateways (
- node PRIMARY KEY REFERENCES node(public_key),
- grid NOT NULL REFERENCES grids(id),
- priority, --larger means more priority, in case of the gateway
-           --to have more than one grid associated.
- grid_sig,
- node_sig
+ node BLOB PRIMARY KEY REFERENCES nodes(public_key),
+ grid TEXT NOT NULL REFERENCES grids(id),
+ priority INTEGER, --larger means more priority, in case of the gateway
+                   --to have more than one grid associated.
+ grid_sig TEXT,
+ node_sig TEXT
 );
 
 CREATE TABLE grid_node_contracts (
  id BLOB PRIMARY KEY NOT NULL,
- grid REFERENCES grids(public_key),
- mode NOT NULL REFERENCES nodes(public_key),
- grid_sig,
- node_sig,
+ grid TEXT REFERENCES grids(public_key),
+ node BLOB NOT NULL REFERENCES nodes(public_key),
+ grid_sig TEXT,
+ node_sig TEXT,
  min_storage INTEGER NOT NULL,
  min_bandwidth INTEGER NOT NULL,
  start_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
  working_time INTEGER, -- only the grid can modify this
  -- Coin terms
  coin TEXT(4), -- ie: BTC
- bandwidth_block_size DEFAULT 100000000,
- price_per_block DEFAULT 0
+ bandwidth_block_size INTEGER DEFAULT 100000000,
+ price_per_block INTEGER DEFAULT 0
 );
 
 CREATE TABLE node_audits (
@@ -300,9 +300,9 @@ CREATE TABLE node_audits (
 
 CREATE TABLE folders (
  id BLOB NOT NULL PRIMARY KEY,
- parent REFERENCES folders(id),
+ parent BLOB REFERENCES folders(id),
  name TEXT,
- permissions REFERENCES permissions(id)
+ permission BLOB REFERENCES permissions(id)
 );
 
 CREATE TABLE files (
@@ -311,16 +311,16 @@ CREATE TABLE files (
  mime_type TEXT,
  content BLOB,
  rate INTEGER DEFAULT 0, --bandwidth rate at what must be streamed
- folder NOT NULL REFERENCES folders(id),
- user_sig NOT NULL,
- permissions REFERENCES permissions(id)
+ folder BLOB NOT NULL REFERENCES folders(id),
+ user_sig TEXT NOT NULL,
+ permissions BLOB REFERENCES permissions(id)
 );
 
 
 CREATE TABLE permissions (
- id BLOB,
- user REFERENCES users(public_key),
- publisher REFERENCES publishers(public_key),
+ id BLOB NOT NULL PRIMARY KEY,
+ user BLOB REFERENCES users(public_key),
+ publisher BLOB REFERENCES publishers(public_key),
  -- NULL user/publisher means permissions for everyone
  read BOOLEAN,
  read_quota INTEGER,
@@ -341,25 +341,25 @@ CREATE TABLE permissions (
 -- Tables not synced. Mostly internal configuration and convenient tables.
 
 CREATE TABLE CAs (
- public_key PRIMARY KEY NOT NULL,
- private_key NOT NULL,
- proof_of_generation,
+ public_key BLOB PRIMARY KEY NOT NULL,
+ private_key BLOB NOT NULL,
+ proof_of_generation BLOB,
  ssl_extra TEXT
 );
 
-CREATE TABLE config (
- var,
- val
+CREATE TABLE configs (
+ var BLOB PRIMARY KEY NOT NULL,
+ val BLOB NOT NULL
 );
 
 -- logs --
 ----------
 
 CREATE TABLE logs (
- num  INTEGER PRIMARY KEY AUTOINCREMENT,
+ num  INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
  error_code INTEGER NOT NULL,
  log TEXT,
- timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+ ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -377,7 +377,7 @@ CREATE TABLE logs (
 CREATE TABLE table_rules (
  table_id INTEGER PRIMARY KEY NOT NULL, -- must be unique and assigned by the repository
  table_name TEXT NOT NULL,
- dapp INTEGER REFERENCES dapps(id),
+ dapp INTEGER REFERENCES DApps(id),
 
  -- exposure of the table in the nodepool
  -- 0=private;  1=grid;  2=participants only; 3=full global (careful);
@@ -420,12 +420,12 @@ CREATE TABLE table_rules (
 
 -- Table for registering DApps using repositories
 CREATE TABLE DApps (
- id INTEGER PRIMARY KEY NOT NULL, -- the ID must be unique and assigned by the repository
+ id INTEGER NOT NULL PRIMARY KEY, -- the ID must be unique and assigned by the repository
  name TEXT NOT NULL UNIQUE,
  description TEXT,
  author TEXT,
  license TEXT,
- version REAL NOT NULL, -- example: 0.96
+ version FLOAT NOT NULL, -- example: 0.96
 
  is_static BOOLEAN DEFAULT 0, -- compiled static or dynamic.
 
@@ -439,22 +439,22 @@ CREATE TABLE DApps (
 
  -- The respository and signature, without this the app is considered malicious
  repository INTEGER REFERENCES repositories(id),
- rep_sig
+ rep_sig BLOB
 );
 
 
 -- DApps dependences. Multiple dependences per DApp are possible
-CREATE TABLE dependences (
- dapp REFERENCES DApps(id),
- dependence REFERENCES DApps(id), -- the DApp in dependence
- min_versin REAL DEFAULT 0, -- the required minimum version
- max_version REAL DEFAULT 999,
- PRIMARY KEY (dapp, dependence)
+CREATE TABLE dependencies (
+ dapp INTEGER REFERENCES DApps(id),
+ dependency INTEGER REFERENCES DApps(id), -- the DApp in dependency
+ min_version FLOAT DEFAULT 0, -- the required minimum version
+ max_version FLOAT DEFAULT 999,
+ PRIMARY KEY (dapp, dependency)
 );
 
 
 CREATE TABLE repositories (
- id INTEGER PRIMARY KEY,
+ id INTEGER NOT NULL PRIMARY KEY,
  name TEXT NOT NULL,
  address TEXT NOT NULL,
  public_key BLOB NOT NULL, -- for signing DApps
