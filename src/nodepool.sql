@@ -75,10 +75,10 @@ CREATE TABLE grids (
 
 
 CREATE TABLE publishers (
- public_key PRIMARY KEY NOT NULL,
- address TEXT ,
+ public_key BLOB PRIMARY KEY NOT NULL,
+ address TEXT,
  creation_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
- proof_of_creation, -- see CA generation in the protocol spec
+ proof_of_creation BLOB, -- see CA generation in the protocol spec
  nickname TEXT,
  -- is information about the content of this publisher public?:
  public_metadata BOOLEAN DEFAULT FALSE,
