@@ -124,12 +124,19 @@ CREATE TABLE publishers (
 
 
 CREATE TABLE publisher_trusts (
- from_publisher NOT NULL REFERENCES publishers(public_key),
- to_publisher REFERENCES publishers(public_key),
+ from_publisher BLOB NOT NULL REFERENCES publishers(public_key),
+ to_publisher BLOB REFERENCES publishers(public_key),
  trust_users BOOLEAN NOT NULL,
  trust_powers BOOLEAN NOT NULL, -- like baning users or moderate files
- signature NOT NULL, -- from signature
- reason REFERENCES reason(id) NOT NULL
+ signature BLOB NOT NULL, -- from signature
+ reason INTEGER NOT NULL,
+ /*
+ 1: Friend
+ 2: Banned
+ 3: Bad contracts
+ 4: ... to be continued
+ */
+ CHECK (reason>=1 and reason <=3)
 );
 
 
