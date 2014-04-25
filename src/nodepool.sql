@@ -356,7 +356,7 @@ CREATE TABLE configs (
 ----------
 
 CREATE TABLE logs (
- num  INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+ num  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
  error_code INTEGER NOT NULL,
  log TEXT,
  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -444,7 +444,7 @@ CREATE TABLE DApps (
 
 
 -- DApps dependences. Multiple dependences per DApp are possible
-CREATE TABLE dependencies (
+CREATE TABLE dependences (
  dapp INTEGER REFERENCES DApps(id),
  dependency INTEGER REFERENCES DApps(id), -- the DApp in dependency
  min_version FLOAT DEFAULT 0, -- the required minimum version

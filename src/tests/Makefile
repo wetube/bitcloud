@@ -1,7 +1,7 @@
 CC=gcc
 LDLIBS=`pkg-config --libs sqlite3` ../bitcloud.a
 INCLUDES=-I..
-CFLAGS=-Wall `pkg-config --cflags sqlite3`
+CFLAGS=-Wall -ansi `pkg-config --cflags sqlite3`
 
 run_tests_and_clean: clean run_tests
 

@@ -1,4 +1,3 @@
-CC=gcc
 CFLAGS=-Wall `pkg-config --cflags sqlite3`
 LDLIBS=`pkg-config --libs sqlite3`
 

@@ -206,10 +206,128 @@ char *bc_gets (BCStmt stmt, int column)
   return (char*) sqlite3_column_text (stmt, column);
 }
 
-
-
-BCError bc_deserialize (int table_id, void *record, ...)
+/* get the name of a serializable table or return NULL otherwise */
+char * bc_get_table_name (int table_id)
 {
-  /* TODO */
+  static BCStmt stmt = NULL;
+  char *table_name;
+
+  /* get the table name: */
+  if (!stmt)
+    bc_sql (&stmt, "SELECT table_name FROM table_rules WHERE table_id=?");
+
+  bc_bindi (stmt, 1, table_id);
+
+  if (bc_step (stmt) != BC_ROW) { /* table not found */
+    bc_finalize (stmt);
+    stmt = NULL;
+    return NULL;
+  }
+
+  table_name = strdup (bc_gets (stmt, 0));
+  bc_reset (stmt);
+  return table_name;
+}
+
+/* return the number of columns in a serialiable table given its id, 0 if
+   the table does not exist or is not serializable */
+int bc_num_columns (int table_id)
+{
+  return 0;
+}
+
+BCError bc_deserialize_row (int table_id, uint8_t *data, size_t length)
+{
+  BCStmt stmt;
+  char *table_name;
+  int pos;
+
+  if ((table_name = (bc_get_table_name (table_id))) == NULL) { /* table not found */
+    bc_log (BC_TABLE_NOT_SERIALIZABLE,
+            "attempt to write to a non-serializable table with id %d", table_id);
+    return BC_TABLE_NOT_SERIALIZABLE;
+  }
+
+  /* ubjson check this is an object */
+  if (*data != '{') {
+    bc_log (BC_BAD_DATA, "trying to deserialize something that is not a ubjson object");
+    goto bad_data;
+  }
+  data++;
+
+  /* check the number of columns in the table: */
+  int num_columns = bc_num_columns (table_id);
+
+  /* generate the insert: */
+
+  /* bind values */
+  for (pos = 1; *data!='}'; pos++) {
+    if (pos > num_columns) {
+      bc_finalize (stmt);
+      bc_log (BC_BAD_DATA,
+              "there is more data to deserialize than actual columns in the table %s",
+              table_name);
+      goto bad_data;
+    }
+    /* TODO: keep track of pointers */
+    switch (*data) {
+
+    case BC_MSG_INT32:
+      bc_bindi (stmt, pos, *(int*)++data);
+      data += 4;
+      continue;
+
+    case BC_MSG_STRING: {
+      uint32_t size = *(uint32_t*)++data;
+      if (length < size) { /* TODO: improve pointer checks */
+        bc_finalize (stmt);
+        bc_log (BC_BAD_DATA,
+                "incorrect string size when deserializing to table %s", table_name);
+        goto bad_data;
+      }
+      /* TODO: bc_bindns to use length for strings */
+      data += sizeof (uint32_t);
+      bc_binds (stmt, pos, (char*)data);
+      data += size;
+      continue;
+    }
+
+    case BC_MSG_FLOAT64:
+      /*TODO*/
+      continue;
+
+    case BC_MSG_BLOB:
+      /*TODO*/
+      continue;
+
+    default:
+      /*TODO*/
+      break;
+    }
+  }
+
+  /* execute the inserction: */
+  if (bc_step (stmt)) {
+    /* get the error from sqlite (copy it because it may change after
+       calling finalize): */
+    char *err = strdup ((char*) sqlite3_errmsg (nodepool));
+    bc_finalize (stmt);
+    bc_log (BC_DB_ERROR,
+            "error while deserializing in table %s: %s",
+            table_name,
+            err);
+    free (table_name);
+    free (err);
+    return BC_DB_ERROR;
+    /* TODO: ban system for nodes trying to cheat SQL checks */
+  }
+
+  bc_finalize (stmt);
+  free (table_name);
   return BC_OK;
+
+ bad_data:
+  free (table_name);
+  return BC_BAD_DATA;
+
 }

@@ -30,6 +30,8 @@ typedef enum BCError {
   BC_DAPP_BAD_TABLE_RULES,
   BC_DAPP_ID_CONFLICT,
   BC_DAPP_BAD_REPO_SIG,
+  /* attempt to write to a non serializable table: */
+  BC_TABLE_NOT_SERIALIZABLE,
   /* NON ERRORS: */
   BC_ROW, /* a new row is ready to read */
   BC_DONE, /* done steping */
@@ -102,18 +104,11 @@ typedef char BCMsgType;
 #define BC_MSG_DELETE_ROW 'X' /* needs table id and object */
 
 /*
-  bc_deserialize assign data to variables. Ussage example:
-
-  int table_id = <configs table id>;
-  void *record = <incoming data>;
-  char *var, *value;
-
-  bc_deserialize (table_id, data, &var, &value);
-  [ do something with var and value ]
-
+ Serialize and deserealize a row.
+ Serialization also involves inserting into the table.
  */
-BCError bc_deserialize (int table_id, void *record, ...);
-BCError bc_serialize (int table_id, void **destination, ...);
+BCError bc_deserialize_row (int table_id, uint8_t *data, size_t length);
+BCError bc_serialize_row (int table_id, uint8_t **destination);
 
 
 /* The three main functions of the nodepool section, most of the
@@ -124,9 +119,9 @@ BCError bc_serialize (int table_id, void **destination, ...);
    Normally the dispatched functions will use bc_deserialize internally.
  */
 
-BCError bc_insert (void *record);
-BCError bc_update (void *record);
-BCError bc_delete (void *record);
+BCError bc_insert (uint8_t *record);
+BCError bc_update (uint8_t *record);
+BCError bc_delete (uint8_t *record);
 
 
 /*
@@ -201,7 +196,7 @@ BCError bc_find_proximity (BCID * dest);
 typedef struct BCMsg {
   BCKey origin;
   int command;
-  void *data;
+  uint8_t *data;
 } BCMsg;
 
 BCError bc_send (BCMsg);
