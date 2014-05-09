@@ -1,5 +1,5 @@
 CC=gcc
-LDLIBS=`pkg-config --libs sqlite3` ../bitcloud.a
+LDLIBS=../bitcloud.a `pkg-config --libs sqlite3`
 INCLUDES=-I..
 CFLAGS=-Wall -ansi `pkg-config --cflags sqlite3`
 
