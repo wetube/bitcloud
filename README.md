@@ -14,7 +14,7 @@ nodepool. Bitcloud creates a new decentralized system of trust where entire
 web applications can be hosted without a centralized server.
 
 Bitcloud is *coin agnostic*, meaning that it only pretends to be the base for
-the storage needs of future DAs. Bitcloud can use the escrow capabilities of
+the storage needs of future Distributed Applications (DAs). Bitcloud can use the escrow capabilities of
 Bitcoin and/or the contracts of Ethereum. Bitcloud pretends to substitute the
 way in which servers interconnect today and make much easier, secure and
 private for users, publishers and DAs to share files, and will be *fundamental*
