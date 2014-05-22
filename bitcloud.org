@@ -1,8 +1,0 @@
-#+STARTUP: align fold hidestars indent
-#+OPTIONS: H:7 num:t toc:t \n:nil stat:nil timestamp:nil html-postamble:nil inline-images:t
-
-The new paper is here:
-
-http://bitcloudproject.org/w/Main_Page
-
-Please update your links.
