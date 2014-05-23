@@ -306,7 +306,7 @@ bc_error bc_deserialize_row (int table_id, uint8_t *data, size_t length)
     }
   }
 
-  /* execute the inserction: */
+  /* execute the insersection: */
   if (bc_step (stmt)) {
     /* get the error from sqlite (copy it because it may change after
        calling finalize): */
