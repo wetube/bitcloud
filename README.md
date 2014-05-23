@@ -1,10 +1,11 @@
-# Introduction
+# Welcome to Bitcloud
 
 Bitcloud is a universal protocol aiming to provide a massive distributed
 database and filesystem, or "virtual
 hard disk", capable of storing data encrypted and signed across all connected
 nodes, protecting privacy and guaranteeing quality of service (QoS).
 
+# Introduction
 
 Bitcloud can be the base for decentralized applications that require data
 storage and bandwidth. There are many Bitcoin 2.0 projects in the works right
@@ -13,22 +14,21 @@ blockchain is replaced by a distributed database, also known as the
 nodepool. Bitcloud creates a new decentralized system of trust where entire
 web applications can be hosted without a centralized server.
 
-Bitcloud is *coin agnostic*, meaning that it only pretends to be the base for
+Bitcloud is *coin agnostic*, meaning that it only intends to be the base for
 the storage needs of future Distributed Applications (DAs). Bitcloud can use the escrow capabilities of
-Bitcoin and/or the contracts of Ethereum. Bitcloud pretends to substitute the
-way in which servers interconnect today and make much easier, secure and
-private for users, publishers and DAs to share files, and will be *fundamental*
+Bitcoin and/or the contracts of Ethereum. Bitcloud intends to substitute the
+way in which servers interconnect today and make it much easier, more secure and
+more private for users, publishers and DAs to share files. It will be *fundamental*
 for the upcoming DAs.
-
 
 Whether you're watching videos from YouTube or listening to music on
 Soundcloud, you're getting all of your content through one centralized
 source. That centralized source could decide to delete certain content or be
 forced to delete controversial content by a local government. The core
-principles behind decentralized applications built on top of Bitcloud are
+principles behind the applications built on top of Bitcloud are
 decentralization, complete autonomy, open source, and the choice of anonymity.
 
-For a technical overview, read
+For further information and a technical overview, read
 [the White Paper](http://bitcloudproject.org/w/Main_Page).
 
 Why do we need Bitcloud? Read [this](http://bitcloudproject.org/w/Why_Do_We_Need_Bitcloud%3F)
@@ -46,4 +46,8 @@ Watch us at github.
 
 And, most importantly, join us [here](http://bitcloudproject.org/w/Join_Us).
 
-Thanks!
+# What are we doing now?
+
+We have mostly finished the design stage! We are fully entering the programming stage now.
+
+Heres the plan:
