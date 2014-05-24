@@ -50,4 +50,23 @@ And, most importantly, join us [here](http://bitcloudproject.org/w/Join_Us).
 
 We have mostly finished the design stage! We are fully entering the programming stage now.
 
-Heres the plan:
+Heres the plan for Alpha Development:
+
+Design Documentation: 
+  -Nodepool.sql Specifications
+  -Compnent Function Specification
+  -Functional Requirements
+  -Process Diagrams
+  -Compnent Dependencies 
+  -Possible UML, Schema, and other Diagrams
+  
+Develop Compnents: 
+  -
+  
+Testing:
+  -Test locally on many machines
+    -Solve any errors
+  -Build and test an Alpha Grid
+    -Fix Any Errors
+
+Move on to Beta!
