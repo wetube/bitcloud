@@ -17,7 +17,7 @@ $ git remote add upstream https://github.com/wetube/bitcloud
 
 **This part is incomplete**
 
-* Functions and types are prefixed with `bc_`, and macros with`BC_`.
+* Publicly available functions and types are prefixed with `bc_`, and macros with`BC_`.
 
 * Use two spaces and no tabs.
 
@@ -66,7 +66,7 @@ nicely even when it is indented.
 
 To have your pull request accepted you have to agree with the following 
 Developer's Certificate of Origin 1.1 by adding a "sign-off" line at the end of 
-your commit log :
+your pull request:
 ```
 Signed-off-by: Random Developer <random.developer@example.org>
 ```
@@ -121,3 +121,26 @@ Try to address all feedback/comments you receive, if you have to make changes
 apply them in a separate commit and push them using the command mentioned above.
 Post a comment in the pull request afterwards; GitHub does not send out 
 notifications when you add commits.
+
+### LICENSE HEADER
+
+
+All source files should have the following header, edit as needed:
+
+
+```
+
+/*
+ * This file is part of the bitcloud project.
+ * 
+ * Copyright (C) 2012-2013 Random Company, Inc.
+ * (Written by John Doe <john@example.com> for Random Company, Inc.)
+ *
+ * Copyright (C) 2014 Your name <your@email.com>
+ *
+ * See licensing conditions in "License.txt".
+ *
+ */
+
+```
+
