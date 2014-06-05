@@ -64,6 +64,27 @@ Do proper word-wrap and keep columns shorter than about
 nicely even when it is indented. 
 ```
 
+### REBASE
+
+Use `git rebase` when changes appear on upstream to make sure you're not editing 
+outdated code.
+
+```
+$ git fetch upstream
+$ git rebase upstream/master
+```
+
+### PUSH
+
+To push your local changes to your online repository.
+
+```
+$ git push origin master
+```
+
+Go to https://github.com/your-username/bitcloud/compare/wetube:master...master
+and click "Create Pull Request" and fill out the form
+
 To have your pull request accepted you have to agree with the following 
 Developer's Certificate of Origin 1.1 by adding a "sign-off" line at the end of 
 your pull request:
@@ -97,26 +118,6 @@ maintained indefinitely and may be redistributed consistent with this project or
  the open source license indicated in the file.
 ```
 
-### REBASE
-
-Use `git rebase` when changes appear on upstream to make sure you're not editing 
-outdated code.
-
-```
-$ git fetch upstream
-$ git rebase upstream/master
-```
-
-### PUSH
-
-To push your local changes to your online repository.
-
-```
-$ git push origin master
-```
-Go to https://github.com/your-username/bitcloud/compare/wetube:master...master
-and click "Create Pull Request" and fill out the form
-
 Try to address all feedback/comments you receive, if you have to make changes 
 apply them in a separate commit and push them using the command mentioned above.
 Post a comment in the pull request afterwards; GitHub does not send out 
@@ -124,23 +125,19 @@ notifications when you add commits.
 
 ### LICENSE HEADER
 
+**incomplete**
 
-All source files should have the following header, edit as needed:
+All source files should have the following header:
 
+```
+/* This file is part of the Bitcloud project
+ * Distributed under the MIT License, see the accompanying file License. */
 
 ```
 
-/*
- * This file is part of the bitcloud project.
- * 
- * Copyright (C) 2012-2013 Random Company, Inc.
- * (Written by John Doe <john@example.com> for Random Company, Inc.)
- *
- * Copyright (C) 2014 Your name <your@email.com>
- *
- * See licensing conditions in "License.txt".
- *
- */
+Do not add attributions (e.g. `Copyright (C) 2014 John Doe <john.doe@email.com>`) 
+to the source code, `git` maintains a history of who changed what, you can submit 
+a patch to the `Credits` file to add yourself.
 
-```
+
 
