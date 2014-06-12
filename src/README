@@ -8,7 +8,7 @@ Current requirements:
 - xxd
 - pkg-config
 
-Tested on Debian 7, should be compatible with any Unix system.
+Tested on Debian 7, Does not compile on Mac OSX 10.9.
 
 Compile instructions
 ====================
