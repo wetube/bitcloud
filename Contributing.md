@@ -15,23 +15,20 @@ $ git remote add upstream https://github.com/wetube/bitcloud
 
 ### CODE
 
-**This part is incomplete**
+Try to follow the whatever coding there is when editing code
 
 * Publicly available functions and types are prefixed with `bc_`, and macros with`BC_`.
 
-* Use two spaces and no tabs.
-
 * Don't leave whitespace at the end of lines.
 
-* Lines should be at most 80 characters long, but this isn't a hard limit.
+* Try to keep lines at around 80 characters long.
 
-* Use C89-style `/* ... */` comments.
-
-* All variables are assigned before use.
+* All variables are assigned before use(to avoid bugs).
 
 * All header files should have `#define` guards to prevent multiple inclusion. The format should be `<COMPONENT>_H` (e.g. `bitcloud.h` has `BITCLOUD_H`).
 
 * Use `0` for integers, `NULL` for pointers, and `'\0'` for chars.
+
 
 ### COMMIT
 
@@ -125,7 +122,6 @@ notifications when you add commits.
 
 ### LICENSE HEADER
 
-**incomplete**
 
 All source files should have the following header:
 
