@@ -1,7 +1,7 @@
 
 void serialization (void)
 {
-  BCStmt stmt = NULL;
+  bc_stmt stmt = NULL;
   char
     *var1 = "textvar",
     *value1 ="textvalue",
