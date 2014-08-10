@@ -57,16 +57,16 @@ Design Documentation:
   -Compnent Function Specification
   -Functional Requirements
   -Process Diagrams
-  -Compnent Dependencies 
+  -Component Dependencies 
   -Possible UML, Schema, and other Diagrams
   
-Develop Compnents: 
+Develop Components: 
   -
   
 Testing:
   -Test locally on many machines
     -Solve any errors
   -Build and test an Alpha Grid
-    -Fix Any Errors
+    -Fix any errors
 
 Move on to Beta!
