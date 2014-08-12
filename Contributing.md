@@ -4,7 +4,7 @@ If you have any questions feel free to contact us on our
 [IRC](http://webchat.freenode.net/?channels=bitcloud).
 
 ### FORK
-Fork bitcloud on [on GitHub](https://github.com/wetube/bitcloud/fork) and clone 
+Fork bitcloud [on GitHub](https://github.com/wetube/bitcloud/fork) and clone 
 your repository.
 
 ```
@@ -15,7 +15,7 @@ $ git remote add upstream https://github.com/wetube/bitcloud
 
 ### CODE
 
-Try to follow the whatever coding there is when editing code
+Try to follow the same format of coding there is when editing code
 
 * Publicly available functions and types are prefixed with `bc_`, and macros with`BC_`.
 
@@ -23,7 +23,7 @@ Try to follow the whatever coding there is when editing code
 
 * Try to keep lines at around 80 characters long.
 
-* All variables are assigned before use(to avoid bugs).
+* All variables are assigned before use (to avoid bugs).
 
 * All header files should have `#define` guards to prevent multiple inclusion. The format should be `<COMPONENT>_H` (e.g. `bitcloud.h` has `BITCLOUD_H`).
 
