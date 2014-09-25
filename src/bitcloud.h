@@ -48,6 +48,7 @@ extern int BC_log_to_stdout;
 #define BC_MAX_LOG_SIZE 256
 
 
+
 /*
   Nodepool database structures and functions
   ==========================================
@@ -73,12 +74,16 @@ extern int BC_exit_on_sql_error;
 
 
 /*
+  UBJSON
+  ======
+
  We use ubjson specification http://ubjson.org/ for all serialization
- purposes.
+ purposes, with some extensions like specified below:
 */
 
 typedef char bc_msgType;
 
+/* standard ubjson: */
 #define BC_MSG_NULL 'Z'
 #define BC_MSG_NO_OP 'N'
 #define BC_MSG_TRUE 'T'
@@ -97,19 +102,91 @@ typedef char bc_msgType;
 #define BC_MSG_OBJECT_START '{'  /* needs size */
 #define BC_MSG_OBJECT_END '}' /* consistance check */
 /* extensions to ubjson: */
+#define BC_MSG_ID 'Y' /*5 bytes ID*/
+#define BC_MSG_DATE 'E' /*date in unix timestamp format*/
 #define BC_MSG_BLOB 'B' /* needs size */
-#define BC_MSG_TABLE_ID BC_MSG_INT16
-#define BC_MSG_INSERT_ROW 'R' /* needs table id and object */
-#define BC_MSG_UPDATE_ROW 'W' /* needs table id and object */
-#define BC_MSG_DELETE_ROW 'X' /* needs table id and object */
+#define BC_MSG_TABLE_NAME 'A' /* name between {} */
+#define BC_MSG_INSERT_ROW 'R' /* size and serialized data between {} */
+#define BC_MSG_UPDATE_ROW 'W' /* size and serialized data between {} */
+#define BC_MSG_DELETE_ROW 'X' /* size and key between {} */
+/*
+  examples of a serialized table:
+
+  A{nodes}R{0123...serialized data here...}X{0123...key data...}
+              ^size of the data               ^size of the key
+
+  The serialized data in the example is also ubjson format, each column is a
+  value, like:
+  
+  R{0012Y12345E1411655029Sthis is a string}
+    ^siz^ID   ^date      ^string
+
+  So there is a size and 3 columns in the example, one of type ID, one of type date and
+  the other of type string.
+
+  It is important to take in consideration that numbers are really stored in
+  binary format, not in ASCII, but here we show them in ASCII for clarity of understanding.
+
+*/
+
 
 /*
- Serialize and deserealize a row.
- Serialization also involves inserting into the table.
- */
-bc_error bc_deserialize_row (int table_id, uint8_t *data, size_t length);
-bc_error bc_serialize_row (int table_id, uint8_t **destination);
+  CELLS
+  =====
 
+  A row is composed by a series of cells, corresponding to the columns in a
+  table. Each cell must have a type, typically in correspondence with the type
+  of the column.
+
+*/
+
+typedef enum bc_cell_type {
+  BC_TYPE_NULL=0,
+  BC_TYPE_ID,
+  BC_TYPE_KEY,
+  BC_TYPE_INTEGER,
+  BC_TYPE_REAL,
+  BC_TYPE_STRING,
+  BC_TYPE_BLOB
+} bc_cell_type;
+
+/* A cell in a table: */
+typedef struct  bc_cell {
+  bc_cell_type type;
+  union {
+    bc_key key;
+    bc_id id;
+    char *string;
+    double real;
+    struct {
+      size_t size;
+      uint8_t *data;
+    } blob;
+  } value;
+} bc_cell;
+
+
+/*
+  SERIALIZATION
+  =============
+*/
+
+bc_error bc_deserialize_row (const char *table_name, uint8_t *data, size_t length);
+bc_error bc_serialize_row (const char *table_name, bc_cell key, uint8_t **destination);
+/* // example:
+   bc_cell key; key.type=BC_TYPE_ID; key.value.id='12345';
+   uint8_t *destination = NULL;
+   my_error = bc_serialize_row ("nodes", key, &destination);
+   if (!my_error) {
+     .... do things with destination ....
+     free (destination);
+   }
+*/
+
+/*
+  DATABASE WRITING
+  ================
+*/
 
 /* The three main functions of the nodepool section, most of the
    actions happen here, as each table has a different way to insert
@@ -119,9 +196,9 @@ bc_error bc_serialize_row (int table_id, uint8_t **destination);
    Normally the dispatched functions will use bc_deserialize internally.
  */
 
-bc_error bc_insert (uint8_t *record);
-bc_error bc_update (uint8_t *record);
-bc_error bc_delete (uint8_t *record);
+bc_error bc_insert (char *table, uint8_t *record);
+bc_error bc_update (char *table, uint8_t *record);
+bc_error bc_delete (char *table, uint8_t *record);
 
 
 /*

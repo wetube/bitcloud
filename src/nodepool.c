@@ -229,25 +229,20 @@ char * bc_get_table_name (int table_id)
   return table_name;
 }
 
-/* return the number of columns in a serialiable table given its id, 0 if
+/* return the number of columns in a serialiable table given its name, 0 if
    the table does not exist or is not serializable */
-int bc_num_columns (int table_id)
+int bc_num_columns (const char *table_name)
 {
   return 0;
 }
 
-bc_error bc_deserialize_row (int table_id, uint8_t *data, size_t length)
+bc_error bc_deserialize_row (const char *table_name, uint8_t *data, size_t length)
 {
   bc_stmt stmt;
-  char *table_name;
   int pos;
 
-  if ((table_name = (bc_get_table_name (table_id))) == NULL) { /* table not found */
-    bc_log (BC_TABLE_NOT_SERIALIZABLE,
-            "attempt to write to a non-serializable table with id %d", table_id);
-    return BC_TABLE_NOT_SERIALIZABLE;
-  }
-
+  /* TODO: check table existance and permissions */
+  
   /* ubjson check this is an object */
   if (*data != '{') {
     bc_log (BC_BAD_DATA, "trying to deserialize something that is not a ubjson object");
@@ -256,7 +251,7 @@ bc_error bc_deserialize_row (int table_id, uint8_t *data, size_t length)
   data++;
 
   /* check the number of columns in the table: */
-  int num_columns = bc_num_columns (table_id);
+  int num_columns = bc_num_columns (table_name);
 
   /* generate the insert: */
 
@@ -316,18 +311,16 @@ bc_error bc_deserialize_row (int table_id, uint8_t *data, size_t length)
             "error while deserializing in table %s: %s",
             table_name,
             err);
-    free (table_name);
     free (err);
     return BC_DB_ERROR;
     /* TODO: ban system for nodes trying to cheat SQL checks */
   }
 
   bc_finalize (stmt);
-  free (table_name);
   return BC_OK;
 
  bad_data:
-  free (table_name);
   return BC_BAD_DATA;
 
 }
+  
