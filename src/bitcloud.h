@@ -34,12 +34,13 @@ typedef enum bc_error {
   BC_TABLE_NOT_SERIALIZABLE,
   /* NON ERRORS: */
   BC_ROW, /* a new row is ready to read */
-  BC_DONE, /* done steping */
+  BC_DONE, /* done steeping */
 } bc_error;
 
 
-typedef uint32_t bc_key[8]; /* 256bits for keys */
-typedef uint32_t bc_id[5];  /* 160bits for the node Id */
+typedef uint8_t bc_key[256]; /*2048 bits*/
+typedef uint8_t bc_signature[256];
+typedef uint8_t bc_id[40];  /* 160bits for the node Id */
 typedef sqlite3_stmt* bc_stmt; /* statement for the db operations */
 
 /* log an error to the logs table and (optionally) prints a msg: */
@@ -144,6 +145,7 @@ typedef enum bc_cell_type {
   BC_TYPE_NULL=0,
   BC_TYPE_ID,
   BC_TYPE_KEY,
+  BC_TYPE_SIGNATURE,
   BC_TYPE_INTEGER,
   BC_TYPE_REAL,
   BC_TYPE_STRING,
@@ -156,6 +158,8 @@ typedef struct  bc_cell {
   union {
     bc_key key;
     bc_id id;
+    bc_signature signature;
+    int integer;
     char *string;
     double real;
     struct {
@@ -165,19 +169,36 @@ typedef struct  bc_cell {
   } value;
 } bc_cell;
 
+/* A row is a null terminated (the type is BC_TYPE_NULL) array of cells: */
+typedef bc_cell *bc_row;
+
 
 /*
   SERIALIZATION
   =============
 */
 
-bc_error bc_deserialize_row (const char *table_name, uint8_t *data, size_t length);
-bc_error bc_serialize_row (const char *table_name, bc_cell key, uint8_t **destination);
+
+bc_error bc_deserialize_row (const char *table_name,
+                             uint8_t *origin,
+                             size_t size,
+                             bc_row *row);
+/* the row is initialized by the function, so it should not point to any
+   allocated memory or a memory leak may happen.
+
+   // example:
+   ... obtain 'origin' and 'size' from the net ...
+   bc_row row = NULL;
+   if (!bc_deserialize_rows ("nodes", origin, size, &row)) {
+     ... do things with the row ...
+     free (row);
+   }
+*/
+
+bc_error bc_serialize_row (const char *table_name, bc_row row, uint8_t **destination);
 /* // example:
-   bc_cell key; key.type=BC_TYPE_ID; key.value.id='12345';
-   uint8_t *destination = NULL;
-   my_error = bc_serialize_row ("nodes", key, &destination);
-   if (!my_error) {
+   ... obtain the row from other means ...
+   if (!bc_serialize_row ("nodes", row, &destination)) {
      .... do things with destination ....
      free (destination);
    }
@@ -196,9 +217,10 @@ bc_error bc_serialize_row (const char *table_name, bc_cell key, uint8_t **destin
    Normally the dispatched functions will use bc_deserialize internally.
  */
 
-bc_error bc_insert (char *table, uint8_t *record);
-bc_error bc_update (char *table, uint8_t *record);
-bc_error bc_delete (char *table, uint8_t *record);
+bc_error bc_insert (char *table, bc_cell *row);
+bc_error bc_update (char *table, bc_cell *row);
+bc_error bc_delete (char *table, bc_cell *row);
+
 
 
 /*

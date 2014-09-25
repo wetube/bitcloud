@@ -236,7 +236,8 @@ int bc_num_columns (const char *table_name)
   return 0;
 }
 
-bc_error bc_deserialize_row (const char *table_name, uint8_t *data, size_t length)
+/* TODO: function is absolete, must be update to use bc_rows */
+bc_error bc_deserialize_row (const char *table_name, uint8_t *data, size_t length, bc_row *row)
 {
   bc_stmt stmt;
   int pos;
