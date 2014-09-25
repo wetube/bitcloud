@@ -1,3 +1,7 @@
+/* About the comments: right now we are writing here the documentation and ideas as
+   we prototype. When we write the real documentation, most of the comments here will
+   be deleted and moved to the docs. */
+
 #ifndef _BITCLOUD_H
 #define _BITCLOUD_H
 
@@ -103,23 +107,32 @@ typedef char bc_msgType;
 #define BC_MSG_OBJECT_START '{'  /* needs size */
 #define BC_MSG_OBJECT_END '}' /* consistance check */
 /* extensions to ubjson: */
-#define BC_MSG_ID 'Y' /*5 bytes ID*/
+#define BC_MSG_ID 'Y' /*20 bytes (160bits)  ID*/
+#define BC_MSG_SIGNATURE 'G' /* public signature */
+#define BC_MSG_KEY 'K' /* public or private encryption key */
 #define BC_MSG_DATE 'E' /*date in unix timestamp format*/
-#define BC_MSG_BLOB 'B' /* needs size */
-#define BC_MSG_TABLE_NAME 'A' /* name between {} */
+#define BC_MSG_BLOB 'B' /* needs size which is 8 bytes length instead of 4 */
+#define BC_MSG_TABLE_NAME 'A' /* size of 1byte length and name */
 #define BC_MSG_INSERT_ROW 'R' /* size and serialized data between {} */
 #define BC_MSG_UPDATE_ROW 'W' /* size and serialized data between {} */
 #define BC_MSG_DELETE_ROW 'X' /* size and key between {} */
+
+/* All sizes are 4 bytes length, except for the blob which is 8 bytes, and the table
+name which is 1 byte */
+
+
 /*
   examples of a serialized table:
 
-  A{nodes}R{0123...serialized data here...}X{0123...key data...}
-              ^size of the data               ^size of the key
+  A5nodesR{0123...serialized data here...}X{0123...key data...}
+   ^1size   ^size of the data               ^size of the key
+
+   A is the marker, 5 the size of the name "nodes", R is the marker commanding to insert a row, { initiates the row, then it comes the count of elements, the elements themselves, and the } to check consistency.
 
   The serialized data in the example is also ubjson format, each column is a
   value, like:
   
-  R{0012Y12345E1411655029Sthis is a string}
+  R{0012Y12345E1411655029S16this is a string}
     ^siz^ID   ^date      ^string
 
   So there is a size and 3 columns in the example, one of type ID, one of type date and
