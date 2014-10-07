@@ -52,17 +52,17 @@ We have mostly finished the design stage! We are fully entering the programming 
 
 Heres the plan for Alpha Development:
 
-Design Documentation: 
+Design Documentation:
   -Nodepool.sql Specifications
   -Compnent Function Specification
   -Functional Requirements
   -Process Diagrams
-  -Component Dependencies 
+  -Component Dependencies
   -Possible UML, Schema, and other Diagrams
-  
-Develop Components: 
+
+Develop Components:
   -
-  
+
 Testing:
   -Test locally on many machines
     -Solve any errors
@@ -70,3 +70,10 @@ Testing:
     -Fix any errors
 
 Move on to Beta!
+
+# New node.js version for PoC
+
+We have decided to create the first PoC version using node.js.
+We hope that this decission will make many developers happy to contribute
+to the project.
+TODO
