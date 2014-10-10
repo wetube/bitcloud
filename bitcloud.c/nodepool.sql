@@ -364,17 +364,25 @@ CREATE TABLE logs (
 
 -- synch working tables --
 ----------
-CREATE TABLE current_pool (
+CREATE TABLE syncing_pool (
  node_id BLOB PRIMARY KEY NOT NULL REFERENCES nodes(public_key),
  num INTEGER, -- the number of the current synchronization round
  instance_num INTEGER  -- different synchronization pool per instance, since data may have different consistency
  -- anything else to add about the synch process?  random assignment info?
 );
 
+/*
+
 CREATE TABLE instance_index (
  node_key BLOB PRIMARY KEY NOT NULL REFERENCES nodes(public_key),
  instance_num INTEGER() -- size should be equivalent to number of different configurations/instances
 );
+
+--- this may be built out later.  this was an idea to not duplicate nodes table per instance
+
+*/
+
+
 /*
 
  Every table, including deriving DAs tables, need to meet certain rules. This
