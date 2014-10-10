@@ -362,6 +362,13 @@ CREATE TABLE logs (
  ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+-- synch working tables --
+----------
+CREATE TABLE current_pool (
+ node_id BLOB PRIMARY KEY NOT NULL,  -- the public/primary key for each node
+ num INTEGER -- the number of the current synchronization round
+ -- anything else to add about the synch process?  random assignment info?
+);
 
 /*
 
