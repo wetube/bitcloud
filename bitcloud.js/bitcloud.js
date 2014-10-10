@@ -6,6 +6,8 @@ var ub = require ("ubjson");
 var sqlite3 = require ("sqlite3");
 var net = require('net');
 var fs = require("fs");
+var crypto = require("crypto");
+var rsa = require("node-rsa");
 
 
 var LOGERROR = 0;
@@ -17,10 +19,13 @@ var nodes = [];
 
 function make_node (filename, init_admin) {
     var db = new sqlite3.Database(filename, sqlite3.OPEN_READWRITE);
+    var key = null;
     return {
     db          : db,
     id          : null, // the node id (extracted from the nodepool)
     connected   : false,
+    connections : [],  // current connections for this period
+    grids       : [], // grids in which to participate
     server      : null,
     filename    : filename,
 
@@ -30,7 +35,7 @@ function make_node (filename, init_admin) {
     running     : false,
     run         : function (port, ip) {
         var node = this;
-
+        // TODO: obtain id and key
         this.server = net.createServer(function(sockect) {
             sockect.write (node.filename);
             sockect.pipe (sockect);
@@ -60,6 +65,59 @@ function make_node (filename, init_admin) {
     log         : function (table, log_type, text) {
         if (this.log_console)
             console.log((table ? table + ': ' : '')  + text);
+    },
+
+    // ----- SYNCING
+    sync_period : 10, // global tables sync period
+    sync_with   : function (other) {
+        /* Sync with another node, given its id.
+        As the whitepaper specify, be careful with whom you sync, it should
+        be in the list of allowed (see 'get_sync_list'), or there is risk of
+        being banned.*/
+    },
+    get_sync_list   : function () {
+        // Get the list of nodes to sync with in this period
+    },
+
+    sync        : function () {
+        /* General sync, this normally calls sync_with at each period for every
+        needed node */
+    },
+
+    // ----- COMMANDS
+    command     : function (table, ubcommand) {
+        /* Process a command in UBJSON format and run the checks.
+        This is very often related to command parameters in the *_requests
+        tables.
+
+            table       : table name
+            ubcommand   : command as directly read from the sync function
+
+        TODO: define ubjson command  format */
+
+    },
+
+    // ----- CA
+    create_id   : function (country, region, city, center, array) {
+        /* Creates a random proximity ID.
+        TODO */
+    },
+    mine_CA     : function (problem) {
+        /* Given a problem based on a deterministic global table, mine a CA
+        TODO */
+        key = new rsa.NodeRSA({b: 2048});
+    },
+    register    : function () {
+        /* Register this node in the Bitcloud
+        TODO */
+        if (!key) throw ("Cannot register without a CA");
+    },
+    quick_start : function (grid) {
+        /* Do all the hard staff automatically:
+        - mine a CA
+        - create an ID
+        - register
+        - connect to the grid */
     }
 }}
 
