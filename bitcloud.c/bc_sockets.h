@@ -8,12 +8,13 @@
 typedef struct bc_socket {
   char *address;        /* the sockaddr */
   int port;
+  bc_error status;
   // what else?
 } bc_socket;
 
 // function prototypes/declarations
 
-bc_error bc_prepare_sockets (void);
+bc_socket bc_prepare_sockets (void);
 
 bc_error bc_open_sockets (bc_socket *cur_sock); // and initiate listening
 
