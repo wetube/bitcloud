@@ -5,13 +5,16 @@
 #ifndef _BITCLOUD_H
 #define _BITCLOUD_H
 
-/* #include "libuv/include/uv.h"*/
+#include "libuv/include/uv.h"
+#include "bc_sockets.h"
 /* #include <nss.h> */
 #include <sqlite3.h>
 
 #include <stdint.h>
 #include <stdarg.h>
 #include <time.h>
+
+
 
 /* Error codes: */
 typedef enum bc_error {
@@ -274,8 +277,6 @@ bc_error bc_uninstall_dapp (int id);
   Sync structures and functions
   =============================
 */
-
-bc_error bc_prepare_sockets (void);
 
 typedef struct bc_node {
   bc_id id;
