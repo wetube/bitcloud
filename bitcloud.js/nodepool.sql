@@ -365,11 +365,16 @@ CREATE TABLE logs (
 -- synch working tables --
 ----------
 CREATE TABLE current_pool (
- node_id BLOB PRIMARY KEY NOT NULL,  -- the public/primary key for each node
- num INTEGER -- the number of the current synchronization round
+ node_id BLOB PRIMARY KEY NOT NULL REFERENCES nodes(public_key),
+ num INTEGER, -- the number of the current synchronization round
+ instance_num INTEGER  -- different synchronization pool per instance, since data may have different consistency
  -- anything else to add about the synch process?  random assignment info?
 );
 
+CREATE TABLE instance_index (
+ node_key BLOB PRIMARY KEY NOT NULL REFERENCES nodes(public_key),
+ instance_num INTEGER() -- size should be equivalent to number of different configurations/instances
+);
 /*
 
  Every table, including deriving DAs tables, need to meet certain rules. This
@@ -380,6 +385,8 @@ CREATE TABLE current_pool (
  of the new tables.
 
 */
+
+
 
 CREATE TABLE table_rules (
  table_id INTEGER PRIMARY KEY NOT NULL, -- must be unique and assigned by the repository
