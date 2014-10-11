@@ -118,6 +118,37 @@ function make_node (filename, init_admin) {
         - create an ID
         - register
         - connect to the grid */
+    },
+
+    // ----- remote db management
+    insert      : function (id, table, values) {
+        /* Insert a record in the tables, given:
+            id      : id of the soliciting node
+            table   : table to insert (after verification)
+            value   : array consituting the elements of the record
+        Note: the signature of the operation is included in the record as stated
+        in nodepool.sql*/
+    },
+    delete      : function (id, table, key, signature) {
+        /* Delete a record in the tables, given:
+            id      : id of the soliciting
+            table   : table to insert (after verification)
+            key     : key to identify the record
+            signature: the node certificate of this operation*/
+    },
+    update      : function (id, table, key, values) {
+                /* Insert a record in the tables, given:
+            id      : id of the soliciting node
+            table   : table to insert (after verification)
+            value   : array consituting the elements of the record
+        Note: the signature of the operation is included in the record as stated
+        in nodepool.sql*/
+
+    },
+
+    // ----- local db management
+    sql         : function (statement, values) {
+        // A wrapper for sqlite3.Database.run() with some extra checks
     }
 }}
 
