@@ -6,6 +6,10 @@
         3. Videos
         4. Endorsements from various authority figures in each target group
         5. Marketing materials (flyers, buttons, stickers, brochures, etc.)
+        6. Design documentation:
+                - clear problem statement
+                - architecture (system design document)
+                - state diagrams (to specify protocol processes)
     c. What we do with the money
         1. Fund alpha release with X features.
     d. Who to target?
