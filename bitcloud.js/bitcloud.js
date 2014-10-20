@@ -1,7 +1,11 @@
+// Copyright Bitcloud Foundation (2014)
+
 // testing new js version
 
+// For local interface via Node.JS
 var repl = require('repl');
 
+// Include objects required for BC functionality <-- BC dependencies
 var ub = require ("ubjson");
 var sqlite3 = require ("sqlite3");
 var net = require('net');
@@ -14,10 +18,12 @@ var LOGERROR = 0;
 var LOGWARNING = 1;
 var LOGINFO = 2;
 
-// List of running nodes:
+// List of  nodes running locally:
 var nodes = [];
 
-function make_node (filename, init_admin) {
+// Returns a complete Node object
+
+function initialize_local_node (filename, init_admin) {
     var db = new sqlite3.Database(filename, sqlite3.OPEN_READWRITE);
     var key = null;
     return {
@@ -101,6 +107,8 @@ function make_node (filename, init_admin) {
     create_id   : function (country, region, city, center, array) {
         /* Creates a random proximity ID.
         TODO */
+        this.id = crypto.randomBytes(20); // provisional solution
+        return this.id;
     },
     mine_CA     : function (problem) {
         /* Given a problem based on a deterministic global table, mine a CA
@@ -128,6 +136,12 @@ function make_node (filename, init_admin) {
             value   : array consituting the elements of the record
         Note: the signature of the operation is included in the record as stated
         in nodepool.sql*/
+        db.serialize(function() {
+            var stmt = db.prepare("INSERT INTO " + table + " VALUES (?,?)");
+            stmt.run(values);
+            stmt.finalize();
+        });
+
     },
     delete      : function (id, table, key, signature) {
         /* Delete a record in the tables, given:
@@ -137,7 +151,7 @@ function make_node (filename, init_admin) {
             signature: the node certificate of this operation*/
     },
     update      : function (id, table, key, values) {
-                /* Insert a record in the tables, given:
+        /* Insert a record in the tables, given:
             id      : id of the soliciting node
             table   : table to insert (after verification)
             value   : array consituting the elements of the record
@@ -156,8 +170,10 @@ function make_node (filename, init_admin) {
 
 console.log("Bitcloud.js 0.1 PoC");
 
-var main_node = make_node ("nodepool.db");
+var main_node = initialize_local_node ("nodepool.db");
 main_node.run();
+
+nodes.push(main_node);  // not sure if this works. trying to use nodes[]
 
 //main_node.close();
 
