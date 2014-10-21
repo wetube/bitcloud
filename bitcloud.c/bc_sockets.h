@@ -2,6 +2,7 @@
 */
 
 #include "libuv/include/uv.h"   // make sure it is there
+#include "bitcloud.h"
 
 // socket structure 
 

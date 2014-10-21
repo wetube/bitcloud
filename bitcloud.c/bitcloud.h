@@ -6,7 +6,7 @@
 #define _BITCLOUD_H
 
 #include "libuv/include/uv.h"
-#include "bc_sockets.h"
+
 /* #include <nss.h> */
 #include <sqlite3.h>
 

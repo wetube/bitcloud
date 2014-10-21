@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "bitcloud.h"
-
+#include "bc_sockets.h"
 
 int main (int argc, char **argv)
 {
