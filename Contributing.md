@@ -57,9 +57,9 @@ input has been contributed to the forums for almost a year.
 We have Skype, but only very rarely are available for conversation.
 
 # CONTRIBUTING
-If you have any questions feel free to contact us on our 
-[mailing list](http://bitcloudproject.org/w/Mailing_list) or on 
-[IRC](http://webchat.freenode.net/?channels=bitcloud).
+If you have any questions about the code or are interested in contributing,
+feel free to contact us on our [mailing list](http://bitcloudproject.org/w/Mailing_list) 
+or on [IRC](http://webchat.freenode.net/?channels=bitcloud).
 
 ### FORK
 Fork bitcloud [on GitHub](https://github.com/wetube/bitcloud/fork) and clone 
