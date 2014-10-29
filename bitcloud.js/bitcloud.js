@@ -1,33 +1,32 @@
 // Copyright Bitcloud Foundation (2014)
 
-// testing new js version
-
-// For local interface via Node.JS
-var repl = require('repl');
 
 // Include objects required for BC functionality <-- BC dependencies
-var ub = require ("ubjson");
+//var ub = require ("ubjson");  // JSON for now
 var sqlite3 = require ("sqlite3");
 var net = require('net');
 var fs = require("fs");
 var crypto = require("crypto");
 var rsa = require("node-rsa");
 
-
 var LOGERROR = 0;
 var LOGWARNING = 1;
 var LOGINFO = 2;
 
-// List of  nodes running locally:
+// List of  nodes running locally
 var nodes = [];
 
-// Returns a complete Node object
 
-function initialize_local_node (filename, init_admin) {
+// Returns a complete Node object
+function create_node (filename, init_admin) {
     var db = new sqlite3.Database(filename, sqlite3.OPEN_READWRITE);
+    var block = new sqlite3.Database(":memory:");
+    var last_block = new sqlite3.Database(":memory");
     var key = null;
     return {
-    db          : db,
+    db          : db, // nodepool db
+    block       : block, // current block being synced in real time
+    last_block  : last_block, // last block to be hashed, signed and checked
     id          : null, // the node id (extracted from the nodepool)
     connected   : false,
     connections : [],  // current connections for this period
@@ -112,7 +111,9 @@ function initialize_local_node (filename, init_admin) {
     },
     mine_CA     : function (problem) {
         /* Given a problem based on a deterministic global table, mine a CA
-        TODO */
+            problem     : string that must be salted with previous hash
+        */
+
         key = new rsa.NodeRSA({b: 2048});
     },
     register    : function () {
@@ -163,21 +164,30 @@ function initialize_local_node (filename, init_admin) {
     // ----- local db management
     sql         : function (statement, values) {
         // A wrapper for sqlite3.Database.run() with some extra checks
+
     }
 }}
 
 
+function create_grid (name, owner) {
+return { // todo
+    id      : null
+}}
 
-console.log("Bitcloud.js 0.1 PoC");
+function create_publisher (name){
+return { // todo
+    id      : null
+}}
 
-var main_node = initialize_local_node ("nodepool.db");
-main_node.run();
 
-nodes.push(main_node);  // not sure if this works. trying to use nodes[]
+// EXPORTS
+exports.create_node = create_node;
+exports.create_grid = create_grid;
+exports.create_publisher = create_publisher;
 
-//main_node.close();
+exports.LOGERROR =   LOGERROR
+exports.LOGWARNING =LOGWARNING
+exports.LOGINFO =LOGINFO
 
-console.log("INFO: 'main_node' object contains the running node");
-var local_repl = repl.start("bitcloud> ");
+// TODO: command line options
 
-local_repl.context.main_node = main_node;
