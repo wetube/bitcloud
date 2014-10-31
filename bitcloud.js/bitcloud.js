@@ -21,8 +21,9 @@ var nodes = [];
 function create_node (filename, init_admin) {
     var db = new sqlite3.Database(filename, sqlite3.OPEN_READWRITE);
     var block = new sqlite3.Database(":memory:");
-    var last_block = new sqlite3.Database(":memory");
+    var last_block = new sqlite3.Database(":memory:");
     var key = null;
+    var sig = null;
     return {
     db          : db, // nodepool db
     block       : block, // current block being synced in real time
@@ -71,10 +72,53 @@ function create_node (filename, init_admin) {
         if (this.log_console)
             console.log((table ? table + ': ' : '')  + text);
     },
+    
+    // ----- COMMUNICATION
+    // - For networking and JSON messaging
+    receive_connect  : function () {
+        /*  Handle and process an incoming connection.  Either the incoming 
+            connection is a synch request, an external request (like Publisher, 
+            user, or even another grid/node), audit or other administration 
+            request, or someone trying to attack the node. Any other cnnection
+            types? Returns connection object. */
+    },
+    
+    send_connect    : function(node_id, connect_type) {
+        /*  Connect to another node or external entity. connect_type likely 
+            will be a multi-element object. May be used by sync functions 
+            below.  Returns connection object.  */
+        
+    },
+    
+    close_connect   : function(connection) {
+        /*  Close a connection.  Returns success/error code. */
+        
+    },
+    
+    msg_pack    : function(type, data) {
+        /*  Packing binary data into something transmittable. Returns packed 
+            message. */
+    },
+    
+    msg_transmit    : function(message, connection) {
+        /*  Send a message to a particule connection.  Returns success code. */
+    },
+    
+    msg_receive     : function(message) {
+        /*  Process an incoming message for unpacking. - validate compatible 
+            packing protocol (e.g., UBJSON, JSON, etc.) was used - validate 
+            that the message has no errors (e.g., checksum) */  
+    },
+    
+    msg_unpack      : function(message) {
+        /*  Unpack the message.  Returns list containing command type and any 
+            attached data.  Commands may be queries, synch RPCs, transmission 
+            of data slice, or other. */
+    },
 
     // ----- SYNCING
-    sync_period : 10, // global tables sync period
-    sync_with   : function (other) {
+    sync_period     : 10, // global tables sync period
+    sync_with       : function (other) {
         /* Sync with another node, given its id.
         As the whitepaper specify, be careful with whom you sync, it should
         be in the list of allowed (see 'get_sync_list'), or there is risk of
@@ -84,26 +128,33 @@ function create_node (filename, init_admin) {
         // Get the list of nodes to sync with in this period
     },
 
-    sync        : function () {
+    sync            : function () {
         /* General sync, this normally calls sync_with at each period for every
         needed node */
     },
 
     // ----- COMMANDS
-    command     : function (table, ubcommand) {
-        /* Process a command in UBJSON format and run the checks.
+    command_parse   : function(command_list) {
+        /* uses output of msg_unpack to process command.  May call qry_command
+        function below, if applicable to a DB query. */
+    },
+    
+    
+    qry_command         : function (table, command) {
+        /* Process a DB command and run the checks.
         This is very often related to command parameters in the *_requests
         tables.
 
             table       : table name
-            ubcommand   : command as directly read from the sync function
-
-        TODO: define ubjson command  format */
+            command   : DB command as directly read from the sync function */
 
     },
 
     // ----- CA
-    create_id   : function (country, region, city, center, array) {
+    create_id   : function (country, region, city, center, array) {     
+        // temp comment: why country, region, city, etc.?  is this really needed?  Especially in the PoC?
+        // also, what is "center" and "array"?
+        
         /* Creates a random proximity ID.
         TODO */
         this.id = crypto.randomBytes(20); // provisional solution
@@ -111,10 +162,13 @@ function create_node (filename, init_admin) {
     },
     mine_CA     : function (problem) {
         /* Given a problem based on a deterministic global table, mine a CA
-            problem     : string that must be salted with previous hash
+            problem     : string that must be salted with previous hash then hashed using CA
         */
-
         key = new rsa.NodeRSA({b: 2048});
+        sig = key.sign(problem, 'base64');
+    },
+    store_CA    : function(CA_key, CA_sig){
+        /* Save the mined CA in applicable private table */
     },
     register    : function () {
         /* Register this node in the Bitcloud
@@ -185,9 +239,9 @@ exports.create_node = create_node;
 exports.create_grid = create_grid;
 exports.create_publisher = create_publisher;
 
-exports.LOGERROR =   LOGERROR
-exports.LOGWARNING =LOGWARNING
-exports.LOGINFO =LOGINFO
+exports.LOGERROR =      LOGERROR
+exports.LOGWARNING =    LOGWARNING
+exports.LOGINFO =       LOGINFO
 
 // TODO: command line options
 
