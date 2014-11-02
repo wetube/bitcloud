@@ -13,7 +13,7 @@ var LOGERROR = 0;
 var LOGWARNING = 1;
 var LOGINFO = 2;
 
-// List of  nodes running locally
+// List of local Bitcloud node instances
 var nodes = [];
 
 
@@ -25,18 +25,14 @@ function create_node (filename, init_admin) {
     var key = null;
     var sig = null;
     return {
-    db          : db, // nodepool db
     block       : block, // current block being synced in real time
     last_block  : last_block, // last block to be hashed, signed and checked
     id          : null, // the node id (extracted from the nodepool)
-    connected   : false,
-    connections : [],  // current connections for this period
     grids       : [], // grids in which to participate
-    server      : null,
     filename    : filename,
 
     init_admin   : init_admin || false,
-    run_admin   : require("./admin.js").run,
+//    run_admin   : require("./admin.js").run,  // not needed right now
 
     running     : false,
     run         : function (port, ip) {
@@ -72,10 +68,23 @@ function create_node (filename, init_admin) {
         if (this.log_console)
             console.log((table ? table + ': ' : '')  + text);
     },
-    
+    //-------------------------------------
     // ----- COMMUNICATION
     // - For networking and JSON messaging
-    receive_connect  : function () {
+    // - First declaration of communication elements
+    // -----------------
+    connections : [],  // current connections for this period
+    server      : null,
+    connected   : false,
+    // -----------------
+    // - communication functions
+    // -----------------
+    open_listen     : function () {
+        /*  Opens a listening port to receive external connections */    
+        
+    },
+        
+    receive_connect : function () {
         /*  Handle and process an incoming connection.  Either the incoming 
             connection is a synch request, an external request (like Publisher, 
             user, or even another grid/node), audit or other administration 
@@ -83,21 +92,31 @@ function create_node (filename, init_admin) {
             types? Returns connection object. */
     },
     
-    send_connect    : function(node_id, connect_type) {
+    connect_node    : function(node_id, connect_type) {
         /*  Connect to another node or external entity. connect_type likely 
             will be a multi-element object. May be used by sync functions 
             below.  Returns connection object.  */
         
     },
+
+    connect_ip      : function(ip, connect_type) {
+        /*  Connect to another node or external entity. connect_type likely 
+            will be a multi-element object. May be used by sync functions 
+            below.  Returns connection object.  */
+        
+    },
+
     
     close_connect   : function(connection) {
-        /*  Close a connection.  Returns success/error code. */
+        /*  Close a connection.  Returns success/error code. 
+            Possibly also with an "all" input option to close out all.
+            Include connection garbage collection in this function. */
         
     },
     
     msg_pack    : function(type, data) {
-        /*  Packing binary data into something transmittable. Returns packed 
-            message. */
+        /*  Packing data/instructions into something transmittable. Returns 
+            packed message. */
     },
     
     msg_transmit    : function(message, connection) {
@@ -115,9 +134,18 @@ function create_node (filename, init_admin) {
             attached data.  Commands may be queries, synch RPCs, transmission 
             of data slice, or other. */
     },
-
-    // ----- SYNCING
+    
+    //-------------------------------------
+    // ----- SYNCHING
+    // - For all synchronization elements and functions
+    // -----------------
+    // - First declaration of synchronization elements    
+    // -----------------
     sync_period     : 10, // global tables sync period
+
+    // -----------------
+    // - synchronization functions
+    // -----------------
     sync_with       : function (other) {
         /* Sync with another node, given its id.
         As the whitepaper specify, be careful with whom you sync, it should
@@ -149,7 +177,8 @@ function create_node (filename, init_admin) {
             command   : DB command as directly read from the sync function */
 
     },
-
+    
+    //-------------------------------------
     // ----- CA
     create_id   : function (country, region, city, center, array) {     
         // temp comment: why country, region, city, etc.?  is this really needed?  Especially in the PoC?
@@ -182,7 +211,18 @@ function create_node (filename, init_admin) {
         - register
         - connect to the grid */
     },
+    //-------------------------------------
+    // ----- DB operations code
+    // -----------------
+    // - DB elements
+    // -----------------
+    db          : db, // nodepool db
+    // TODO: define the node object type, for working with various nodes at a time
 
+    // -----------------
+    // - DB functions
+    // -----------------    
+    
     // ----- remote db management
     insert      : function (id, table, values) {
         /* Insert a record in the tables, given:
@@ -219,6 +259,20 @@ function create_node (filename, init_admin) {
     sql         : function (statement, values) {
         // A wrapper for sqlite3.Database.run() with some extra checks
 
+    },
+    
+    get_node    : function (node_id) {
+        // returns a node object for the node "node_id"
+    },
+    
+    push_node   : function (node_obj) {
+        /*  takes a node object and serializes it into a record and adds the 
+            record to nodes table */
+    },
+    
+    update_node : function (node_obj) {
+        /*  updates the record for node_obj.node_id with all the current values
+            contained in node_obj */
     }
 }}
 
@@ -239,9 +293,9 @@ exports.create_node = create_node;
 exports.create_grid = create_grid;
 exports.create_publisher = create_publisher;
 
-exports.LOGERROR =      LOGERROR
-exports.LOGWARNING =    LOGWARNING
-exports.LOGINFO =       LOGINFO
+exports.LOGERROR =      LOGERROR;
+exports.LOGWARNING =    LOGWARNING;
+exports.LOGINFO =       LOGINFO;
 
 // TODO: command line options
 
