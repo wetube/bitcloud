@@ -1,0 +1,6 @@
+[submodule "bitcloud.c"]
+	path = bitcloud.c
+	url = https://github.com/Tux64/bitcloud.c
+[submodule "bitcloud.js"]
+	path = bitcloud.js
+	url = https://github.com/Tux64/bitcloud.js
